@@ -1,4 +1,4 @@
-# vuepress博客搭建及自动化部署
+<!-- # vuepress博客搭建及自动化部署 -->
 ## 1.博客搭建
 ### 1.1初始化项目
 ```
@@ -124,7 +124,38 @@ Settings -> Developer settings -> Personal access tokens，对应地址就是 To
 secrets Actions 下添加刚生成的token
 
 ### 2.3  项目下的action
-新建一个workflow
+新建一个workflow 新增main.yml
+配置添加，保留默认配置
+```
+name: CI
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+```
+新增配置
+```
+ # 生成静态文件
+      - name: Build
+        run: npm install && npm run docs:build
+
+      # 部署到 GitHub Pages
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }} # 也就是我们刚才生成的 secret
+          BRANCH: gh-page # 部署到 gh-pages 分支，因为 main 分支存放的一般是源码，而 gh-pages 分支则用来存放生成的静态文件
+          FOLDER: docs/.vuepress/dist # vuepress 生成的静态文件存放的地方
+```
 
 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
