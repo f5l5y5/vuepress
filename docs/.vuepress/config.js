@@ -3,7 +3,7 @@ module.exports = {
     title: '一诺滚雪球', //标题
     description: '前端知识',
     theme: 'reco',
-    base:'/',
+    base: '/',
     themeConfig: {
         sidebar: [
             {
@@ -12,7 +12,8 @@ module.exports = {
                 collapsable: true, // 可选的, 默认值是 true,
                 sidebarDepth: 1,    // 可选的, 默认值是 1
                 children: [
-                    {title:'介绍',path:'/home/intro'}
+                    { title: '介绍', path: '/home/intro' },
+                    { title: 'vuepress搭建过程', path: '/home/vuepress' }
                 ]
             },
             {
@@ -29,9 +30,16 @@ module.exports = {
             {
                 text: '博客地址',
                 items: [
-                    { text: 'Github', link: 'https://github.com/f5l5y5/f5l5y5vuepress' },
+                    { text: 'Github', link: 'https://github.com/f5l5y5/vuepress' },
                 ]
             }
         ]
-    }
+    },
+    configureWebpack: {
+        resolve: {
+          alias: {
+            '@alias': './public'
+          }
+        }
+      }
 }
