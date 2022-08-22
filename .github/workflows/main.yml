@@ -11,7 +11,7 @@ on:
   # branches: [ "master" ]
 
   # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+  # workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -24,7 +24,7 @@ jobs:
     steps:
        # 拉取代码
       - name: Checkout
-        uses: actions/checkout@v2.3
+        uses: actions/checkout@v3
 
       # 生成静态文件
       - name: Build
