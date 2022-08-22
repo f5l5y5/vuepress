@@ -3,7 +3,7 @@ module.exports = {
     title: '一诺滚雪球', //标题
     description: '前端知识',
     theme: 'reco',
-    base:'/f5l5y5vuepress/',
+    base:'/',
     themeConfig: {
         sidebar: [
             {
