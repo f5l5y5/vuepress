@@ -1,7 +1,19 @@
-let cache = new Map()
-cache.set('1', 1)
-cache.set('2', 2)
-cache.set('3', 3)
-// 生成器的代码
-console.log(cache.values().next());
-console.log(cache.keys().next());
+let obj = new Map()
+obj.set(2,4)
+obj.set(3,3)
+obj.set(4,1)
+
+for(let o of obj.keys()){
+    if(obj.get(o)===1){
+        console.log(o);
+    }
+}
+
+console.log('打印***1',1)
+
+
+
+
+
+
+

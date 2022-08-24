@@ -260,3 +260,164 @@ LRUCache.prototype.put = function (key, value) {
 ```
 
 ## 4 位运算
+<< >> &  | ^异或
+<< 左移动一位是 乘以2
+>> 右移动一位是 除以2
+|
+&
+^ 相同的位置不同为1
+2的整数总是 1 10 100 1000 10000 100000 以1为开头的数
+
+例如： 文本         html标签        组件
+     text=001   element=010    component=100
+    ｜ 进行授权
+例如想拥有文本和标签属性  则let target = text & element  多次进行& 还只有这两个属性
+    & 尽性校验
+例如 target & text   011 & 001 = 001 说明有text属性
+    target & element 011 & 010 = 010 有element属性
+    target & component 011 & 100 = 000 没有component属性
+### 4.1 leetCode-231   2 的幂
+
+```js
+/**
+ * @param {number} n
+ * @return {boolean}
+ */
+var isPowerOfTwo = function (n) {
+    // 运用n 与 n-1 之间的特点 进行&操作 1000 & 0111 = 0000
+    return n > 0 && (n & (n - 1)) === 0
+};
+//普通做法
+var isPowerOfTwo = function (n) {
+    if(n == 1){
+        return true;
+    }
+    if (n % 2 != 0) {
+        return false;
+    }
+    if (n == 0) {
+        return false;
+    }
+    return isPowerOfTwo(n / 2);
+};
+```
+
+### 4.2 leetCode-136    只出现一次的数字
+```js
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var singleNumber = function (nums) {
+    let ret = 0
+    nums.forEach(num=>[
+        ret ^= num 
+    ])
+    return ret 
+    // let obj = new Map()
+    // for (let i = 0; i < nums.length; i++) {
+    //     if (obj.has(nums[i])) {
+    //         let val = obj.get(nums[i])++
+    //         obj.set(nums[i],val)
+    //     } else {
+    //         obj.set[nums[i],1]
+    //     }
+    // }
+    // for(let o of obj.keys()){
+    //     if(obj.get(o)===1){
+    //         return o
+    //     }
+    // }
+};
+```
+组合权限认证 一个虚拟dom 很多属性是动态的 每一个状态标记一个2进制位
+let STYLE= 1
+let CLASS = 1 << 1
+let CHILDREN = 1<< 2
+//授权 
+let vnodeType = STYLE | CLASS
+判断 &
+!!(vnodeType & STYLE)
+删除授权 ^
+vnodeType ^ CLASS 
+
+## 5 树结构入门
+### 5.1 树概念
+树和链表所有结构的基础
+     1
+    /\
+    2 3
+二叉树 this.val= val   this.left=null  this.right=null
+
+### 5.2 leetCode-104 二叉树的最大深度
+```js
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var maxDepth = function(root) {
+    if(root===null){
+        return 0
+    }
+    // 最大深度是 左子树的深度 和右子树的深度 最大的那个+1？ 从null返回为0 返回到上层的时候+1
+    return Math.max(maxDepth(root.left),maxDepth(root.right))+1
+};
+```
+### 5.3 leetCode-226 翻转二叉树
+```js
+/**
+ * @param {TreeNode} root
+ * @return {TreeNode}
+ */
+var invertTree = function(root) {
+    if(root!==null){
+         // 递归子问题 循环遍历调用子节点进行调换
+        [root.left,root.right]=[invertTree(root.right),invertTree(root.left)]   
+    }
+    return root
+};
+```
+## 6 数据结构漫谈
+- 数组：连续存储
+  - 队列 jsx template 
+  - 栈  判断一段html合法
+  - 堆  
+
+- 链表：非连续存储
+    - 树 下个节点有几个
+    - 图 闭合的链表 
+例子 {a:1,b:2} 数组加链表
+a => 数字  hash算法  放入数组中存储 查找O(1)
+b => 数字 放入数组中 可以用链表进行存储
+
+## 7 React原理树和链表的关系
+两棵树进行对比 Vdom  嵌套调用 无法控制  60fps 是16.6ms
+之前是childre  现在是head 只需要找到下次执行的head继续执行即可
+## leetCode-20 有效的括号
+```js
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+var isValid = function (s) {
+    let stack = []
+    let obj = {
+        '(': ')',
+        '{': '}',
+        '[': ']'
+    }
+    for (let i = 0; i < s.length; i++) {
+        const ele = s[i]
+        if (ele in obj) {
+            stack.push(ele)
+        } else {
+            // 反括号场景
+            if (ele != obj[stack.pop()]) {
+                return false
+            }
+        }
+    }
+    return !stack.length
+};
+```
+## leetCode-71 简化路径
