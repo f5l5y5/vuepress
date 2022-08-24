@@ -22,15 +22,15 @@ echo '# Hello VuePress!' > docs/README.md
 ```
 {
   "scripts": {
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs",
+    "dev": "vuepress dev docs",
+    "build": "vuepress build docs",
     "deploy": "bash deploy.sh"
   }
 }
 
 ```
 ### 1.3 运行调试
-使用yarn docs:dev
+使用yarn docs
 
 ### 1.4 设置博客基本内容
 - 添加标题 在config.js中title 
@@ -122,6 +122,8 @@ Settings -> Developer settings -> Personal access tokens，对应地址就是 To
 
 ### 2.2 找到项目的setting 
 secrets Actions 下添加刚生成的token
+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
+
 
 ### 2.3  项目下的action
 新建一个workflow 新增main.yml
@@ -147,7 +149,7 @@ jobs:
 ```
  # 生成静态文件
       - name: Build
-        run: npm install && npm run docs:build
+        run: npm install && npm run build
 
       # 部署到 GitHub Pages
       - name: Deploy
@@ -158,4 +160,171 @@ jobs:
           FOLDER: docs/.vuepress/dist # vuepress 生成的静态文件存放的地方
 ```
 
-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
+如果直接时doc的整个文件git中设置为/root
+
+<img :src="$withBase('/engineer/vuepress/define-page.png')" alt="define-page">
+
+## 3.具体配置
+
+
+### 3.1 首页配置
+
+docs/README.md 
+
+```jsx
+---
+home: true
+heroImage: /logo.png
+heroText: 一诺滚雪球
+tagline: 前端知识体系
+actionText: 开始前端体系之旅 →
+actionLink: /guide
+features:
+- title: 全栈
+  details: 见其广，知其深
+- title: 每日一题
+  details: 勤学如春起之苗，不见其增，日有所长
+- title: 积累,
+  details: 不积跬步，无以至千里
+footer: 暮从碧山下，山月随人归。却顾所来径，苍苍横翠微。
+---
+```
+
+### 3.2 顶部名称和图片
+
+```jsx
+module.exports = {
+    base: '/',
+    title: '一诺滚雪球',
+    themeConfig: {
+        //头部logo
+        logo: '/logo.jpeg',
+		}
+}
+```
+
+### 3.3 顶部nav
+
+```jsx
+nav: [
+            { text: '首页', link: '/', target: '_blank' },
+            {
+                text: '前端三件套',
+                items: [
+                    { text: 'HTML', link: '/base/html/' },
+                    { text: 'CSS', link: '/base/css/' },
+                    { text: 'JS', link: '/base/js/' },
+                ]
+            },
+            {
+                text: '博客地址',
+                items: [
+                    { text: 'Github', link: 'https://github.com/f5l5y5/vuepress' },
+                    { text: '关于我', link: '/about/' },
+                ]
+            },
+            {
+                text: 'Languages',
+                //可以进行分组 在导航栏
+                items: [
+                    { text: '', items: [{ text: '导航', link: '/guide/' }] },
+                    { text: '', items: [{ text: '英文导航', link: '/guide/' }] }
+                ]
+            }
+        ],
+```
+
+### 3.4 侧边导航栏
+#### 3.4.1 数组形式
+
+```jsx
+sidebar: {
+            '/base/': [
+                '', //对应下面的readme.md
+								'input',//md文件中如果设置了一级标题，默认取里面的
+								'form'
+            ]
+        }
+```
+
+<img :src="$withBase('/engineer/vuepress/nav-array.png')" alt="define-page">
+
+#### 3.4.2 混合使用  
+如果md文件有一级标题，还是取这个
+```jsx
+'/base/html/': [
+                '',
+                'form',
+                {
+                    title: '表单',   // 必要的 
+                    path: 'input',      // 可选的, 标题的跳转链接，应为绝对路径且必须存在
+                    collapsable: true, // 可选的, 默认值是 true,
+                    sidebarDepth: 2,    // 可选的, 默认值是 1
+                },
+            ],
+```
+
+<img :src="$withBase('/engineer/vuepress/nav-mix.png')" alt="define-page">
+
+#### 3.4.3 正确配置
+
+```jsx
+sidebar: {
+            '/base/html/': [
+                {
+                    title: 'HTML',   
+                    collapsable: true, 
+                    sidebarDepth: 2,    // 可选的, 默认值是 1      此时生效上述写法不会生效
+                    children: [
+                        ['/base/html/form', 'form1'], //form1为左侧菜单的名称 
+                        ['/base/html/input', 'input']
+                    ]
+                },
+            ]
+        }
+```
+
+完整的配置  
+
+::: tip
+⚠️ 注意 children中路径不加/默认是找algorithm的sort.md ,加末尾加/ 说明是sort文件夹里面的README.md文件  ['/advanced/algorithm/sort', '排序算法'],
+:::
+
+```jsx
+
+{
+    text: '进阶',
+    //可以进行分组 在导航栏
+    items: [
+        { text: '数据结构算法', items: [{ text: '算法', link: '/advanced/algorithm/' }] },
+        { text: '设计模式', items: [{ text: 'js设计模式', link: '/advanced/design/' }] }
+    ]
+},
+'/advanced/algorithm/': [
+  {
+      title: '算法',
+      collapsable: true,
+      sidebarDepth: 2,
+      children: [
+          ['', 'js实现算法'],
+          ['/advanced/algorithm/sort', '排序算法'],
+      ]
+  },
+],
+'/advanced/design/': [
+  {
+      title: '设计模式',
+      collapsable: true,
+      sidebarDepth: 2,
+      children: [
+          ['', 'js实现'],
+      ]
+  },
+]
+
+```
+
+<img :src="$withBase('/engineer/vuepress/nav-siderbar.png')" alt="define-page">
+
+
+

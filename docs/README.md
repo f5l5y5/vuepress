@@ -4,7 +4,7 @@ heroImage: /logo.png
 heroText: 一诺滚雪球
 tagline: 前端知识体系
 actionText: 开始前端体系之旅 →
-actionLink: /base/
+actionLink: /guide
 features:
 - title: 全栈
   details: 见其广，知其深
