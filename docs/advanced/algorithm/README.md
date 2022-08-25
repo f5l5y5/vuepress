@@ -260,12 +260,12 @@ LRUCache.prototype.put = function (key, value) {
 ```
 
 ## 4 位运算
-<< >> &  | ^异或
-<< 左移动一位是 乘以2
->> 右移动一位是 除以2
-|
-&
-^ 相同的位置不同为1
+<<  >>  &   |  ^异或
+    << 左移动一位是 乘以2
+    >> 右移动一位是 除以2
+    |
+    &
+    ^ 相同的位置不同为1
 2的整数总是 1 10 100 1000 10000 100000 以1为开头的数
 
 例如： 文本         html标签        组件
@@ -289,16 +289,16 @@ var isPowerOfTwo = function (n) {
 };
 //普通做法
 var isPowerOfTwo = function (n) {
-    if(n == 1){
-        return true;
+    // 先判断跳出条件
+    if (n === 1) {
+        return true
     }
-    if (n % 2 != 0) {
-        return false;
+    // 判断失败的条件
+    if (n % 2 !== 0 || n === 0) {
+        return false
     }
-    if (n == 0) {
-        return false;
-    }
-    return isPowerOfTwo(n / 2);
+    // 二分进行递归
+    return isPowerOfTwo(n / 2)
 };
 ```
 
@@ -308,26 +308,29 @@ var isPowerOfTwo = function (n) {
  * @param {number[]} nums
  * @return {number}
  */
+//使用异或方法 任何两个相同的数异或后为0
 var singleNumber = function (nums) {
     let ret = 0
     nums.forEach(num=>[
         ret ^= num 
     ])
     return ret 
-    // let obj = new Map()
-    // for (let i = 0; i < nums.length; i++) {
-    //     if (obj.has(nums[i])) {
-    //         let val = obj.get(nums[i])++
-    //         obj.set(nums[i],val)
-    //     } else {
-    //         obj.set[nums[i],1]
-    //     }
-    // }
-    // for(let o of obj.keys()){
-    //     if(obj.get(o)===1){
-    //         return o
-    //     }
-    // }
+};
+//普通做法
+var singleNumber = function (nums) { 
+    let obj = new Map()
+    for (let i = 0; i < nums.length; i++) {
+        if (obj.has(nums[i])) {
+            obj.set(nums[i],2)
+        } else {
+            obj.set[nums[i],1]
+        }
+    }
+    for(let o of obj.keys()){
+        if(obj.get(o)===1){
+            return o
+        }
+    }
 };
 ```
 组合权限认证 一个虚拟dom 很多属性是动态的 每一个状态标记一个2进制位
@@ -393,31 +396,181 @@ b => 数字 放入数组中 可以用链表进行存储
 ## 7 React原理树和链表的关系
 两棵树进行对比 Vdom  嵌套调用 无法控制  60fps 是16.6ms
 之前是childre  现在是head 只需要找到下次执行的head继续执行即可
-## leetCode-20 有效的括号
+### leetCode-20 有效的括号
 ```js
 /**
  * @param {string} s
  * @return {boolean}
  */
-var isValid = function (s) {
+var isValid = function(s) {
+    // 解题思路： 用一个数组存放每次遍历的值  枚举这些对应的括号， 将左边括号进行存储，当遇到不是obj的规则
+    // 先比较stack中pop的值与当前的值是不是相等，不相等直接返回
+    // [{}()]   [{()}]   [({}) {}()]
     let stack = []
     let obj = {
         '(': ')',
         '{': '}',
         '[': ']'
     }
-    for (let i = 0; i < s.length; i++) {
-        const ele = s[i]
-        if (ele in obj) {
-            stack.push(ele)
-        } else {
-            // 反括号场景
-            if (ele != obj[stack.pop()]) {
+    for(let i=0;i<s.length;i++){
+        const el = s[i]
+        if(el in obj){
+            stack.push(el)
+        }else{
+            if(el!==obj[stack.pop()]){
                 return false
             }
         }
     }
+    // 所有stack中的数据匹配完成后，返回true
     return !stack.length
 };
 ```
-## leetCode-71 简化路径
+### leetCode-71 简化路径
+```js
+/**
+ * @param {string} path
+ * @return {string}
+ */
+var simplifyPath = function (path) {
+    //解题思路：栈 将path通过/分割成数组 只含有 .  ..  '' 字母 遇到. 直接删除 .. 删除上个path 
+    let pathArr = path.split('/')
+    const stack = []
+    for (let i = 0; i < pathArr.length; i++) {
+        let s = pathArr[i]
+        if (s === '..') {
+            stack.pop()
+        } else if (s && s !== '.') {
+            stack.push(s)
+        }
+    }
+    return '/' + stack.join('/')
+};
+```
+
+## 8 排序算法比较
+### 8.1 冒泡排序（Bubble Sort）
+#### 8.1.1 思路
+  - 每次较两个相邻的元素
+  - 如果第一个比第二个大，互换位置
+  - 重复上述步骤, 最后一个不需要比较
+<img :src="$withBase('/advanced/algorithm/81.webp')" alt="冒泡排序">
+
+#### 8.1.2 实现
+```js
+function bubbleSort(arr) {
+    console.time('改进前冒泡排序耗时');
+    if (arr.length <= 1) return
+    //1. 确定循环多少次 
+    for (let i = 0; i < arr.length - 1; i++) {
+        //2. 循环起始点 每次循环j与后一位进行比较 大于则调换位置
+        for (let j = 0; j < arr.length - i - 1; j++) {
+            if (arr[j] > arr[j+1]) {
+                [arr[j], arr[j+1]] = [arr[j+1], arr[j]]
+            }
+        }
+    }
+    console.timeEnd('改进前冒泡排序耗时');
+}
+//优化版本 当某次冒泡操作已经没有数据交换时，说明已经达到完全有序，不用再继续执行后续的冒泡操作。
+function bubbleSort1(arr) {
+    console.time('改进后冒泡排序耗时');
+    if (arr.length <= 1) return
+    //1. 确定循环多少次 
+    for (let i = 0; i < arr.length - 1; i++) {
+        // 确定内层循环是否是有序
+       let hasChange = false
+        //2. 循环起始点 每次循环j与后一位进行比较 大于则调换位置
+        for (let j = 0; j < arr.length - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]
+                hasChange = true
+            }
+        }
+        //如果有序直接跳出当前循环
+        if (!hasChange) break;
+    }
+    console.timeEnd('改进后冒泡排序耗时');
+}
+
+//测试 
+const arr = [3, 44, 38, 5, 47, 15, 36, 26, 27, 2, 46, 4, 19, 50, 48]
+bubbleSort(arr)  //改进前冒泡排序耗时: 0.106ms
+bubbleSort1(arr) //改进后冒泡排序耗时: 0.006ms
+```
+#### 8.1.3 分析
+- 第一，冒泡排序是原地排序算法吗 ？
+    - 冒泡的过程只涉及相邻数据的交换操作，只需要常量级的临时空间，所以它的空间复杂度为 O(1)，是一个原地排序算法。
+- 第二，冒泡排序是稳定的排序算法吗 ？
+    - 在冒泡排序中，只有交换才可以改变两个元素的前后顺序。
+    为了保证冒泡排序算法的稳定性，当有相邻的两个元素大小相等的时候，我们不做交换，相同大小的数据在排序前后不会改变顺序。
+    所以冒泡排序是稳定的排序算法。
+- 第三，冒泡排序的复杂度是多少 ？
+    - 时间复杂度 O(n^2)，空间复杂度 O(1)，稳定的内排序
+
+### 8.2 插入排序（Insertion Sort）
+插入排序又为分为 直接插入排序 和优化后的 拆半插入排序 与 希尔排序，我们通常说的插入排序是指直接插入排序。
+#### 8.2.1 思路
+插入排序的工作原理：通过构建有序序列，对于未排序数据，在已排序序列中从后向前扫描，找到相应位置并插入。
+<img :src="$withBase('/advanced/algorithm/82.webp')" alt="插入排序">
+步骤：
+  - 从第一个元素开始，该元素可以认为已经排序
+  - 取出下一个元素，在已经排序的序列中从后向前扫描
+  - 依次与之前的数进行比较，直到找到比自己小的的位置
+  - 重复2-3
+  
+#### 8.2.2 实现
+#### 8.2.3 分析
+### 8.3 选择排序
+#### 8.1.1 思路
+<img :src="$withBase('/advanced/algorithm/81.webp')" alt="冒泡排序">
+
+#### 8.1.2 实现
+#### 8.1.3 分析
+### 8.4 希尔排序
+#### 8.1.1 思路
+<img :src="$withBase('/advanced/algorithm/81.webp')" alt="冒泡排序">
+
+#### 8.1.2 实现
+#### 8.1.3 分析
+### 8.5 快速排序
+#### 8.1.1 思路
+<img :src="$withBase('/advanced/algorithm/81.webp')" alt="冒泡排序">
+
+#### 8.1.2 实现
+#### 8.1.3 分析
+### 8.6 归并排序
+#### 8.1.1 思路
+<img :src="$withBase('/advanced/algorithm/81.webp')" alt="冒泡排序">
+
+#### 8.1.2 实现
+#### 8.1.3 分析
+### 8.7 堆排序
+#### 8.1.1 思路
+<img :src="$withBase('/advanced/algorithm/81.webp')" alt="冒泡排序">
+
+#### 8.1.2 实现
+#### 8.1.3 分析
+### 8.8 计数排序
+#### 8.1.1 思路
+<img :src="$withBase('/advanced/algorithm/81.webp')" alt="冒泡排序">
+
+#### 8.1.2 实现
+#### 8.1.3 分析
+### 8.9 基数排序
+#### 8.1.1 思路
+<img :src="$withBase('/advanced/algorithm/81.webp')" alt="冒泡排序">
+
+#### 8.1.2 实现
+#### 8.1.3 分析
+### 8.10 桶排序
+#### 8.1.1 思路
+
+<img :src="$withBase('/advanced/algorithm/81.webp')" alt="冒泡排序">
+
+#### 8.1.2 实现
+#### 8.1.3 分析
+### 8.11 总结
+<img :src="$withBase('/advanced/algorithm/sortCompare.webp')" alt="sortCompare">
+
+
