@@ -1197,4 +1197,22 @@ console.log('newArr:', newArr);
 ### 8.11 总结
 <img :src="$withBase('/advanced/algorithm/sortCompare.webp')" alt="sortCompare">
 
+### 算法可视化工具
+1. 算法可视化工具 algorithm-visualizer 算法可视化工具 algorithm-visualizer 是一个交互式的在线平台，可以从代码中可视化算法，还可以看到代码执行的过程。旨在通过交互式可视化的执行来揭示算法背后的机制。
+<img :src="$withBase('/advanced/algorithm/8121.webp')" alt="sortCompare">
+
+2. 算法可视化动画网站 visualgo.net/en 效果如下图：
+
+<img :src="$withBase('/advanced/algorithm/8122.webp')" alt="sortCompare">
+
+3. 算法可视化动画网站 www.ee.ryerson.ca 效果如下图：
+
+<img :src="$withBase('/advanced/algorithm/8123.webp')" alt="sortCompare">
+
+4. illustrated-algorithms 变量和操作的可视化表示增强了控制流和实际源代码。您可以快速前进和后退执行，以密切观察算法的工作方式。 效果如下图：
+
+<img :src="$withBase('/advanced/algorithm/8124.webp')" alt="sortCompare">
+
+
+
 
