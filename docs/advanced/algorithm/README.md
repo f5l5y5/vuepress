@@ -692,7 +692,206 @@ var exist = function (board, word) {
 每一步都是当前的最优解 跟之前的没关系
 1. 找零钱  （最小张数）
 2. 100 50 20 10 5 1
-3. 先100
+3. 先100 每次都是先找最大值 最终找到全局的最后解
 
-## 动态规划
+### leetCode-860 柠檬水找零
+```js
+/**
+ * @param {number[]} bills
+ * @return {boolean}
+ */
+// 给5 收入
+// 给10 就找5
+// 给20 给个10+5 或者 5+5+5 优先给10
+var lemonadeChange = function (bills) {
+    let fiveNum = 0
+    let tenNum = 0
+    for (let i = 0; i < bills.length; i++) {
+        let bill = bills[i]
+        if (bill === 5) {
+            fiveNum += 1
+        } else if (bill === 10) {
+            //如果10块有5块找 就找没有就返回false
+            if (fiveNum > 0) {
+                fiveNum -= 1
+                tenNum += 1
+            } else {
+                return false
+            }
+        } else {
+            //20的情况
+            if (fiveNum > 0 && tenNum > 0) {
+                fiveNum -= 1
+                tenNum -= 1
+            } else if (fiveNum > 2) {
+                fiveNum -= 3
+            } else {
+                return false
+            }
+        }
+    }
+    return true
+};
+```
+
+### leetCode-55 跳跃游戏
+```js
+/**
+ * @param {number[]} nums
+ * @return {boolean}
+ */
+//跳跃的范围覆盖就可以
+var canJump = function (nums) {
+    //cover如果比length-1 大 认为可以跳过
+    let cover = 0
+    //遍历 到cover 如果cover小说明 遍历不到后面的值
+    for (let i = 0; i <= cover; i++) {
+        // 当前覆盖的范围是 cover到第i+nums[i]的值
+        cover = Math.max(cover, i + nums[i])
+        //如果覆盖的值大于等于nums的最后的下表 说明成功
+        if (cover >= nums.length - 1) {
+            return true
+        }
+    }
+    //一直没有匹配到 说明不可以
+    return false
+};
+```
+
+### leetCode-455 分发饼干
+```js
+/**
+ * @param {number[]} g
+ * @param {number[]} s
+ * @return {number}
+ */
+// g 胃口 s有的饼干
+// 贪心策略
+var findContentChildren = function (g, s) {
+    g.sort((a, b) => a - b)
+    s.sort((a, b) => a - b)
+    //饼干满足胃口最大的小朋友
+    let ret = 0
+    let index = s.length - 1
+    //找出胃口最大的小朋友
+    for (let i = g.length - 1; i >= 0; i--) {
+        //如果饼干数量>0 饼干大于小朋友的胃口 结果+1 最大数量的索引-1
+        if (index >= 0 && s[index] >= g[i]) {
+            ret++
+            index--
+        }
+    }
+    return ret
+
+};
+```
+
+
+## 动态规划 (递推)
 求极值
+- 每一步状态是前一步推导出来了
+   - 走迷宫 每一步都有数字 怎么走数字最小
+
+### 斐波那契数列
+- dp[i]中间值的推导
+- 确定推导公式
+- 确定初始化和遍历顺序
+  
+### leetCode-509 斐波那契数列
+```js
+/**
+ * @param {number} n
+ * @return {number}
+ */
+var fib = function (n) {
+    // 1.递归
+    if(n<=1){
+        return n
+    }
+    return fib(n-1)+fib(n-2)
+
+    //2.递推
+    // dp[i] 就是第i的值
+    // dp[i] = dp[i-1]+dp[i-2]
+
+    let dp = [0, 1]
+    for (let i = 2; i <= n; i++) {
+        dp[i] = dp[i - 1] + dp[i - 2]
+    }
+    return dp[n]
+
+
+    //3.备忘录
+    //备忘录+递推
+    function helper(meno,n){
+        if(n<=1){
+            return n
+        }
+        if(meno[n]){
+            return meno[n]
+        }
+        meno[n] = helper(meno,n-1)+helper(meno,n-2)
+        return meno[n]
+    }
+    let meno = []
+    return helper(meno,n)
+    
+
+
+
+    //熟组优化成两个数字
+    if(n<=1){
+        return n
+    }
+    let dp1 = 0
+    let dp2 = 1
+    let dp3
+    for (let i = 2; i <= n; i++) {
+        dp3 = dp1 + dp2
+        dp1 = dp2
+        dp2 = dp3
+    }
+    return dp3
+
+    //数学公式
+    //可以用矩阵
+};
+```
+
+### leetCode-322 零钱兑换
+```js
+/**
+ * @param {number[]} coins
+ * @param {number} amount
+ * @return {number}
+ */
+var coinChange = function (coins, amount) {
+    // 固定金额下，最少的个数
+    // 边界条件
+    //     循环
+    //         递推公式
+    // dp[n] n的钱数下最优解
+    //只有2，5 硬币 找12
+    // dp[n-coins[i]] + 1
+    // 10 + 2
+    // 7 + 5
+    //金额为0 直接返回0
+    if (!amount) {
+        return 0
+    }
+    //coins=[1,2,5] amount =11
+    let dp = Array(amount + 1).fill(Infinity)
+    dp[0] = 0
+    for (let i = 0; i < coins.length; i++) {
+        //针对每一个硬币
+        // i=0 j=1 
+        for (let j = coins[i]; j <= amount; j++) {
+            dp[j] = Math.min(dp[j - coins[i]] + 1, dp[j])
+        }
+    }
+        return dp[amount] === Infinity ? -1 : dp[amount]
+};
+```
+
+
+Vue最长递增子序列
