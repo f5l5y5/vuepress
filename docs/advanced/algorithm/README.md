@@ -962,4 +962,170 @@ renderer.ts--2387
 
 ## 刷题章节150左右
 
-1. 
+1. 链表
+```js
+遍历
+while (head) {
+    head = head.next
+}
+return head
+//定义一个哨兵节点
+let dummny = {
+    next:head.next
+}
+return dummny.next
+```
+2. 数组
+
+```js
+
+```
+3. **树** 前端最需要刷的数据结构
+```js
+二叉树
+function walk(treeNode){
+    if(treeNode===null){
+        return
+    }
+    //停止条件
+    //处理treeNode
+
+    //处理treeNode
+    walk(treeNode.left)
+    walk(treeNode.right)
+
+    walk(treeNode.left)
+    //处理treeNode
+    walk(treeNode.right)
+
+    walk(treeNode.left)
+    walk(treeNode.right)
+    //处理treeNode
+}
+```
+
+### leetCode-94 二叉树的中序遍历
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var inorderTraversal = function(root) {
+    let  arr = []
+    function dfs(r){
+        if(r===null){
+            return
+        }
+        dfs(r.left)
+        arr.push(r.val)
+        dfs(r.right)
+    }
+    dfs(root)
+    return arr
+};
+```
+### leetCode-144 二叉树的前序遍历
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var inorderTraversal = function(root) {
+    let  arr = []
+    function dfs(r){
+        if(r===null){
+            return
+        }
+        arr.push(r.val)
+        dfs(r.left)
+        dfs(r.right)
+    }
+    dfs(root)
+    return arr
+};
+```
+
+### leetCode-145 二叉树的后序遍历
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var inorderTraversal = function(root) {
+    let  arr = []
+    function dfs(r){
+        if(r===null){
+            return
+        }
+        dfs(r.left)
+        dfs(r.right)
+        arr.push(r.val)
+    }
+    dfs(root)
+    return arr
+};
+```
+
+### 算法思想
+1. 二分
+2. 双指针(快慢指针 头尾指针)
+   1. 链表数组
+```js
+let fast = null
+let slow = null
+if(fast&&fast.next){
+    处理
+}
+
+```
+3. 递归和回溯（递归树）
+```js
+function backtrack(数据，缓存路径){
+    循环
+        标记
+        backtrack(数据，缓存路径)
+        取消标记
+}
+
+```
+4. **动态规划** 重点
+
+```js
+想清楚结果怎么推导，找零钱
+1，2，5 
+dp[11] 11块钱找零的最佳解
+dp[10] dp[9] dp[6] 三个最优解 +1
+```
+5. 贪心
+```js
+
+```
+6. bfs(宽度优先) dfs(回溯 广度优先)
+
+
+
+## 刷题 
