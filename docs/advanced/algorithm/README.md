@@ -1130,16 +1130,16 @@ dp[10] dp[9] dp[6] 三个最优解 +1
 
 ## 刷题 
 - 算法复杂度
-  - 1.两数之和
+  <!-- - 1.两数之和 -->
 - 数据结构
   - 数组  （暴力破解 双指针）
-    - 26.删除有序数组中的重复项
-    - 27.移除元素
-    - 977.有序数组中的平方
-    - 209.长度最小的子数组
-    - 283.移动零
-    - 344.反转字符串
-    - 167.两数之和-ii-输入有序数组
+    <!-- - 26.删除有序数组中的重复项 -->
+    <!-- - 27.移除元素 -->
+    <!-- - 977.有序数组中的平方 -->
+    <!-- - 209.长度最小的子数组 -->
+    <!-- - 283.移动零 -->
+    <!-- - 344.反转字符串 -->
+    <!-- - 167.两数之和-ii-输入有序数组 -->
   - 数组进阶
   - 链表
     - 141.环形链表
@@ -1298,7 +1298,7 @@ var removeElement = function(nums, val) {
     return k
 };
 ```
-## leetCode-27 移除元素
+## leetCode-283 移动零
 ```js
 /**
  * @param {number[]} nums
@@ -1316,6 +1316,127 @@ var moveZeroes = function(nums) {
             slow++
         }
         fast++
+    }
+};
+```
+## leetCode-167. 两数之和 II - 输入有序数组
+```js
+/**
+ * @param {number[]} numbers
+ * @param {number} target
+ * @return {number[]}
+ */
+var twoSum = function (numbers, target) {
+    //两个递增相加之和 从两个方向进行移动
+    let left = 0
+    let right = numbers.length - 1
+    while (left <= right) {
+        let sum = numbers[left] + numbers[right]
+        //下标记从1开始
+        if (sum === target) {
+            return [left + 1, right + 1]
+        }
+        if (sum > target) {
+            right--
+        } else if (sum < target) {
+            left++
+        }
+    }
+};
+```
+## leetCode-977. 有序数组的平方
+```js
+/**
+ * 如何原地？
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var sortedSquares = function (nums) {
+    let left = 0
+    let right = nums.length - 1
+    let arr = Array(nums.length)
+    let k = right
+    while (left <= right) {
+        let l = nums[left] * nums[left]
+        let r = nums[right] * nums[right]
+        //最左边小于右边 进行赋值右边-- 
+        if (l < r) {
+            arr[k] = r
+            right--
+        } else {
+            arr[k] = l
+            left++
+        }
+        k--
+    }
+    return arr
+};
+```
+## leetCode-209. 长度最小的子数组
+```js
+/**
+ * @param {number} target
+ * @param {number[]} nums
+ * @return {number}
+ */
+var minSubArrayLen = function (target, nums) {
+    //暴力解法
+    let len = nums.length
+    let result = len + 1
+    for (let i = 0; i < len; i++) {
+        let sum = 0
+        for (let j = i; j < len; j++) {
+            sum += nums[j]
+            //如果找到sum大于等于target subLen 是j-i+1长度 
+            if (sum >= target) {
+                let subLen = j - i + 1
+                result = result < subLen ? result : subLen
+                break
+            }
+        }
+    }
+    return result > len ? 0 : result
+};
+```
+```js
+/**
+ * @param {number} target
+ * @param {number[]} nums
+ * @return {number}
+ */
+var minSubArrayLen = function (target, nums) {
+    //动态规划
+    let len = nums.length
+    let fast = slow = 0
+    let sum = 0
+    let result = len + 1
+    while (fast < len) {
+        sum += nums[fast++]
+        while (sum >= target) {
+            let subLen = fast - slow
+            result = result < subLen ? result : subLen
+            sum -= nums[slow++]
+        }
+    }
+    return result > len ? 0 : result
+};
+```
+
+## leetCode-344. 反转字符串
+```js
+/**
+ * @param {character[]} s
+ * @return {void} Do not return anything, modify s in-place instead.
+ */
+var reverseString = function(s) {
+    let left = 0
+    let right = s.length - 1
+    while(left<=right){
+        let tmp = s[left]
+        s[left] = s[right]
+        s[right] = tmp
+        left++
+        right--
     }
 };
 ```
