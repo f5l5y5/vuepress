@@ -58,9 +58,10 @@ module.exports = {
                 text: '进阶',
                 //可以进行分组 在导航栏
                 items: [
+                    { text: '测试', items: [{ text: '单元测试', link: '/advanced/test/' }] },
                     { text: '数据结构算法', items: [{ text: '算法', link: '/advanced/algorithm/' }] },
-                    { text: '设计模式', items: [{ text: 'js设计模式', link: '/advanced/design/' }] },
-                    { text: '重构', items: [{ text: '代码重构', link: '/advanced/refactoring/' }] },
+                    { text: '', items: [{ text: '设计模式', link: '/advanced/design/' }] },
+                    { text: '', items: [{ text: '重构', link: '/advanced/refactoring/' }] },
                 ]
             },
             {
@@ -202,6 +203,16 @@ module.exports = {
                     sidebarDepth: 2,
                     children: [
                         ['', '后台管理系统'],
+                    ]
+                },
+            ],
+            '/advanced/test/': [
+                {
+                    title: '测试',
+                    collapsable: true,
+                    sidebarDepth: 2,
+                    children: [
+                        ['', '单元测试']
                     ]
                 },
             ],
