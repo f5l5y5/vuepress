@@ -59,7 +59,8 @@ module.exports = {
                 //可以进行分组 在导航栏
                 items: [
                     { text: '数据结构算法', items: [{ text: '算法', link: '/advanced/algorithm/' }] },
-                    { text: '设计模式', items: [{ text: 'js设计模式', link: '/advanced/design/' }] }
+                    { text: '设计模式', items: [{ text: 'js设计模式', link: '/advanced/design/' }] },
+                    { text: '重构', items: [{ text: '代码重构', link: '/advanced/refactoring/' }] },
                 ]
             },
             {
@@ -110,7 +111,7 @@ module.exports = {
                     children: [
                         ['', 'vue笔记'],
                     ]
-                },
+                }
             ],
             '/frame/react/': [
                 {
@@ -122,83 +123,65 @@ module.exports = {
                     ]
                 },
             ],
-            '/build/module/webpack/': [
+            '/build/module/': [
                 {
                     title: 'webpack',
                     collapsable: true,
                     sidebarDepth: 2,
                     children: [
-                        ['', 'webpack笔记'],
+                        ['/build/module/webpack/', 'webpack笔记'],
                     ]
                 },
-            ],
-            '/build/module/rollup/': [
                 {
                     title: 'rollup',
                     collapsable: true,
                     sidebarDepth: 2,
                     children: [
-                        ['', 'rollup笔记'],
+                        ['/build/module/rollup/', 'rollup笔记'],
                     ]
                 },
-            ],
-            '/build/module/vite/': [
                 {
                     title: 'vite',
                     collapsable: true,
                     sidebarDepth: 2,
                     children: [
-                        ['', 'vite笔记'],
+                        ['/build/module/vite/', 'vite笔记'],
                     ]
                 },
             ],
-            '/git/cmd/': [
+            '/git/': [
                 {
                     title: 'Git命令',
                     collapsable: true,
                     sidebarDepth: 2,
                     children: [
-                        ['', '常用命令说明'],
+                        ['/git/cmd/', '常用命令说明'],
                     ]
                 },
-            ],
-            '/git/gitflow/': [
                 {
                     title: 'gitflow',
                     collapsable: true,
                     sidebarDepth: 2,
                     children: [
-                        ['', '说明'],
+                        ['/git/gitflow/', '说明'],
                     ]
                 },
             ],
-            '/engineer/deploy/': [
+            '/engineer/': [
                 {
                     title: '部署',
                     collapsable: true,
                     sidebarDepth: 2,
                     children: [
-                        ['', 'docker部署'],
+                        ['/engineer/deploy/', 'docker部署'],
                     ]
                 },
-            ],
-            '/engineer/deploy/': [
-                {
-                    title: '部署',
-                    collapsable: true,
-                    sidebarDepth: 2,
-                    children: [
-                        ['', 'docker部署'],
-                    ]
-                },
-            ],
-            '/engineer/vuepress/': [
                 {
                     title: 'vuepress',
                     collapsable: true,
                     sidebarDepth: 2,
                     children: [
-                        ['', 'vuepress笔记'],
+                        ['/engineer/vuepress/', 'vuepress笔记'],
                     ]
                 },
             ],
@@ -208,9 +191,9 @@ module.exports = {
                     collapsable: true,
                     sidebarDepth: 2,
                     children: [
-                        ['', 'h5项目说明'],
+                        ['/project/h5/', 'h5项目说明'],
                     ]
-                },
+                }
             ],
             '/project/system/': [
                 {
@@ -240,6 +223,17 @@ module.exports = {
                     sidebarDepth: 2,
                     children: [
                         ['', 'js实现'],
+                    ]
+                },
+            ],
+            '/advanced/refactoring/': [
+                {
+                    title: '重构',
+                    collapsable: true,
+                    sidebarDepth: 2,
+                    children: [
+                        ['', '重构原则'],
+                        ['/advanced/refactoring/refactoring-2', '代码重构']
                     ]
                 },
             ]

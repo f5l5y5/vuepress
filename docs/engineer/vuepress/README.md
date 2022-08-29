@@ -327,4 +327,28 @@ sidebar: {
 <img :src="$withBase('/engineer/vuepress/nav-siderbar.png')" alt="define-page">
 
 
+### 3.5 侧边栏简写
+```js
+'/engineer/': [
+    {
+        title: '部署',
+        collapsable: true,
+        sidebarDepth: 2,
+        children: [
+            ['/engineer/deploy/', 'docker部署'],
+        ]
+    },
+    {
+        title: 'vuepress',
+        collapsable: true,
+        sidebarDepth: 2,
+        children: [
+            ['/engineer/vuepress/', 'vuepress笔记'],
+        ]
+    },
+],
+```
+<img :src="$withBase('/engineer/vuepress/351.png')" alt="define-page">
+
+
 
