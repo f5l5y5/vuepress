@@ -186,7 +186,15 @@ module.exports = {
                     ]
                 },
             ],
-            '/project/h5/': [
+            '/project/': [
+                {
+                    title: '移动端开发基础',
+                    collapsable: true,
+                    sidebarDepth: 2,
+                    children: [
+                        ['/project/mobile/', '知识点'],
+                    ]
+                },
                 {
                     title: 'h5项目',
                     collapsable: true,
