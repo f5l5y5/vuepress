@@ -1,26 +1,11 @@
-function droidProducer(kind) {
-    if (kind === 'battle') return battleDroidFactory;
-    return pilotDroidFactory;
-}
-
-function battleDroidFactory() {
-    return new B1();
-}
-
-function pilotDroidFactory() {
-    return new Rx24();
-}
-
-class B1 {
-    info() {
-        return "B1, Battle Droid"
+class Person {
+    constructor() {
+        if (typeof Person.instance === 'object') {
+            return Person.instance
+        }
+        Person.instance = this
+        return this
     }
 }
 
-class Rx24 {
-    info() {
-        return "Rx24, Pilot Droid";
-    }
-}
-
-export default droidProducer;
+export default Person

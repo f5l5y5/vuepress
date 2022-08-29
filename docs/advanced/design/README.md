@@ -173,7 +173,63 @@ describe('抽象工厂es6 测试', () => {
 
 ```
 
-### 1.3 单例模式
+### 1.3 单例模式(singleton)
+- 确保一个类最多只有一个实例，并提供一个全局访问点 (预加载 懒加载？)
+```js
+function Person() {
+    if (typeof Person.instance === 'object') return Person.instance
+
+    Person.instance = this
+    return this
+}
+
+module.exports = Person
+```
+测试用例
+```js
+const expect = require('chai').expect;
+const Person = require('../tmp');
+
+describe('单例模式测试', () => {
+    it('单个实例', () => {
+        var john = new Person();
+        var john2 = new Person();
+
+        expect(john).to.equal(john2);
+    });
+});
+```
+
+es6实现
+```js
+class Person {
+    constructor() {
+        if (typeof Person.instance === 'object') {
+            return Person.instance
+        }
+        Person.instance = this
+        return this
+    }
+}
+
+export default Person
+```
+
+```js
+const expect = require('chai').expect;
+import Person from '../tmp'
+
+describe('单例模式测试 es6', () => {
+    it('单个实例 es6', () => {
+        var john = new Person();
+        var john2 = new Person();
+
+        expect(john).to.equal(john2);
+        expect(john===john2).to.be.true
+    });
+});
+```
+
 ### 1.4 建造者模式
 ### 1.5 原型模式
 
