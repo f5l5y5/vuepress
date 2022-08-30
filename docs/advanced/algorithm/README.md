@@ -1145,12 +1145,12 @@ dp[10] dp[9] dp[6] 三个最优解 +1
     - 141.环形链表
     - 203.移除链表元素
     - 202.快乐数
-    - 19.删除链表的倒数第N个结点
+    <!-- - 19.删除链表的倒数第N个结点 -->
     - 21.合并两个有序链表
     - 876.链表的中间结点
     - 160.相交链表
     - 142.环形链表II
-    - 206.反转链表
+    <!-- - 206.反转链表 -->
     - 234.回文链表
     - 92.反转链表-ii
   - 位运算
@@ -1440,7 +1440,89 @@ var reverseString = function(s) {
     }
 };
 ```
-## leetCode-27 移除元素
+## leetCode-206. 反转链表
+```js
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var reverseList = function (head) {
+    // 终止条件
+    if (!head || !head.next) {
+        return head
+    }
+    // 定义prev 保存前一个结点
+    let prev = null
+    // cur 当前结点
+    let cur = head
+    //如果cur存在 next结点需要找到下个结点，当前的节点的next需要进行反转，指向上个结点 ；继续进行上个结点的变成prev 当前结点需要指向下个结点
+    // 例如[1,2] => next = 2 => cur.next = null => prev = 1=> cur = 2=> [2,1]
+    while (cur) {
+        let next = cur.next
+        cur.next = prev
+        prev = cur
+        cur = next
+    }
+    return prev
+};
+```
+## leetCode-19. 删除链表的倒数第 N 个结点
+```js
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} n
+ * @return {ListNode}
+ */
+// 思路： 定义双指针 让fast先走n步，然后同时走，知道fast为null ，slow就是倒数第n个
+var removeNthFromEnd = function (head, n) {
+    let dummy = new ListNode(null, head) //[0,1,2,3,4,5]
+    // let dummy = {
+    //     next: head
+    // }
+    let slow = dummy
+    let fast = dummy
+    while (n--) {
+        fast = fast.next
+    }
+    while (fast.next !== null) {
+        fast = fast.next
+        slow = slow.next
+    }
+    slow.next = slow.next.next
+    return dummy.next
+};
+```
+## leetCode-
+```js
+
+```
+## leetCode-
+```js
+
+```
+## leetCode-
+```js
+
+```
+## leetCode-
+```js
+
+```
+## leetCode-
 ```js
 
 ```
