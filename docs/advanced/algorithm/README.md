@@ -1142,16 +1142,16 @@ dp[10] dp[9] dp[6] 三个最优解 +1
     <!-- - 167.两数之和-ii-输入有序数组 -->
   - 数组进阶
   - 链表
+    <!-- - 19.删除链表的倒数第N个结点 -->
+    <!-- - 206.反转链表 -->
+    <!-- - 21.合并两个有序链表 -->
+    <!-- - 876.链表的中间结点 -->
+    <!-- - 234.回文链表 -->
     - 141.环形链表
     - 203.移除链表元素
     - 202.快乐数
-    <!-- - 19.删除链表的倒数第N个结点 -->
-    - 21.合并两个有序链表
-    - 876.链表的中间结点
     - 160.相交链表
     - 142.环形链表II
-    <!-- - 206.反转链表 -->
-    - 234.回文链表
     - 92.反转链表-ii
   - 位运算
     - 136.只出现一次的数字
@@ -1506,17 +1506,110 @@ var removeNthFromEnd = function (head, n) {
     return dummy.next
 };
 ```
-## leetCode-
+## leetCode-21.合并两个有序链表
 ```js
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} list1
+ * @param {ListNode} list2
+ * @return {ListNode}
+ */
+var mergeTwoLists = function (list1, list2) {
+    // 遍历两个链表，每次对比两个结点头部的大小
+    // 优先把小的节点追加到新的链表
+    //定义头结点
+    let dummy = {
+        next: null
+    }
+    let tmp = dummy
+    while (list1 !== null && list2 !== null) {
+        if (list1.val <= list2.val) {
+            tmp.next = list1
+            list1 = list1.next
+        } else {
+            tmp.next = list2
+            list2 = list2.next
+        }
+        //每次遍历将tmp的next扩展
+        tmp = tmp.next
+    }
+    //最后判断两个链表有没有遍历完成
+    tmp.next = list1===null?list2:list1
 
+    return dummy.next
+};
 ```
-## leetCode-
+## leetCode-876.链表的中间结点
 ```js
-
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var middleNode = function (head) {
+    //使用双指针slow走一步 fast走两步 fast走完 slow刚好是一半
+    let slow = fast = head
+    while (fast && fast.next) {
+        slow = slow.next
+        fast = fast.next.next
+    }
+    return slow
+};
 ```
-## leetCode-
+## leetCode-234.回文链表
 ```js
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {boolean}
+ */
+var isPalindrome = function (head) {
+    // 通过双指针把前半个反转。1，2，3，2，1   2，1，2，1
+    let slow = fast = head
+    let prev = null
 
+    while (fast && fast.next) {
+        fast = fast.next.next
+// slow=1 现将slow下个结点找出 slow.next等于上个结点 等于后重置prev上个结点的值为当前的节点，slow节点更新为下个结点 
+        let next = slow.next
+        slow.next = prev
+        prev = slow
+        slow = next
+    }
+    //12321=>1 ,2=>2,2 
+    //slow 此时就在中间
+    //fast 还有说明是奇数 slow还要往中间走
+    if(fast){
+        slow = slow.next
+    }
+    //此时prev为[2,1,1][3,2,1]?
+    while(prev&&slow){
+        if(prev.val!==slow.val){
+            return false
+        }
+        prev = prev.next
+        slow = slow.next
+    }
+    return true
+};
 ```
 ## leetCode-
 ```js

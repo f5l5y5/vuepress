@@ -1,3 +1,22 @@
+let head = {
+    next: {
+        val: 1,
+        next: {
+            val: 2,
+            next: {
+                val: 3,
+                next: {
+                    val: 2,
+                    next: {
+                        val: 1,
+                        next: null
+                    }
+                }
+            }
+        }
+    },
+    value: 1
+}
 /**
  * Definition for singly-linked list.
  * function ListNode(val, next) {
@@ -7,42 +26,37 @@
  */
 /**
  * @param {ListNode} head
- * @param {number} n
- * @return {ListNode}
+ * @return {boolean}
  */
-let head = {
-    next:{
-        value:2,
-        next:{
-            value:3,
-            next:{
-                value:4,
-                next:{
-                    value:5,
-                    next:null
-                }
-            }
-        }
-    },
-    value:1
-}
-// 思路： 定义双指针 让fast先走n步，然后同时走，知道fast为null ，slow就是倒数第n个
-var removeNthFromEnd = function (head, n) {
-    // let dummy = new ListNode(null,head) //[0,1,2,3,4,5]
-    let dummy = {
-        next: head
+var isPalindrome = function (head) {
+    // 通过双指针把前半个反转。1，2，3，2，1   2，1，2，1
+    let slow = head
+    let fast = head
+    let prev = null
+
+    while (fast && fast.next) {
+        fast = fast.next.next
+        // slow=1 现将slow下个结点找出 slow.next等于上个结点 等于后重置prev上个结点的值为当前的节点，slow节点更新为下个结点 
+        let next = slow.next
+        slow.next = prev
+        prev = slow
+        slow = next
     }
-    let slow = dummy
-    let fast = dummy
-    while (n--) {
-        fast = fast.next
-    }
-    while (fast.next !== null) {
-        fast = fast.next
+    //12321=>1 ,2=>2,2 
+    //slow 此时就在中间
+    //fast 还有说明是奇数 slow还要往中间走
+    if (fast) {
         slow = slow.next
     }
-    slow.next = slow.next.next
-    return dummy.next
+    //此时prev为
+    while (prev && slow) {
+        if (prev.val !== slow.val) {
+            return false
+        }
+        prev = prev.next
+        slow = slow.next
+    }
+    return true
 };
 
-removeNthFromEnd(head,3)
+isPalindrome(head)
