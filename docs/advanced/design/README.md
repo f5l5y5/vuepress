@@ -334,8 +334,65 @@ describe('建造者模式 es6测试', () => {
 });
 ```
 
-### 1.5 原型模式
+### 1.5 原型模式(prototype)
+- 用原型实例指定创建对象的种类，并通过拷贝这些原型创建新的对象。
+```js
+function Sheep(name, weight) {
+    this.name = name
+    this.weight = weight
+}
 
+Sheep.prototype.clone = function () {
+    return new Sheep(this.name, this.weight)
+}
+
+module.exports = Sheep
+```
+
+```js
+const expect = require('chai').expect;
+const Sheep = require('../tmp')
+
+describe('原型模式 测试', () => {
+    it('sheep', () => {
+        var sheep = new Sheep('dolly', 10.3);
+        var dolly = sheep.clone()
+        expect(dolly.name).to.equal('dolly');
+    });
+});
+```
+
+es6实现
+
+```js
+class Sheep {
+    constructor(name, weight) {
+        this.name = name
+        this.weight = weight
+    }
+    clone() {
+        return new Sheep(this.name, this.weight)
+    }
+}
+
+export default Sheep
+```
+```js
+const expect = require('chai').expect;
+import Sheep from '../tmp'
+
+describe('原型模式 es6测试', () => {
+    it('sheep', () => {
+        var sheep = new Sheep('dolly', 10.3);
+        var dolly = sheep.clone()
+
+        expect(dolly.name).to.equal('dolly');
+        expect(dolly.weight).to.equal(10.3);
+        expect(dolly).to.be.instanceOf(Sheep);
+        expect(dolly === sheep).to.be.false
+    });
+});
+```
 
 ## 2.结构型模式(7)
 ### 2.1
