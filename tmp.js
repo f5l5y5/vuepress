@@ -1,11 +1,26 @@
-class Person {
-    constructor() {
-        if (typeof Person.instance === 'object') {
-            return Person.instance
-        }
-        Person.instance = this
-        return this
+class Car {
+    drive() {
+        return "driving"
     }
 }
 
-export default Person
+class CarProxy {
+    constructor(driver) {
+        this.driver = driver
+    }
+    drive() {
+        return (this.driver.age < 18) ? "too young to drive" : new Car().drive()
+    }
+}
+
+class Driver {
+    constructor(age) {
+        this.age = age
+    }
+}
+
+export {
+    Car,
+    CarProxy,
+    Driver
+}

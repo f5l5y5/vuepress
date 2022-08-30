@@ -493,39 +493,220 @@ describe('适配器 es6测试', () => {
 ```
 
 
-### 2.2
-- 
+### 2.2 装饰者模式(decorator)
+- 动态给一个对象添加一些额外的职责,就象在墙上刷油漆.使用Decorator模式相比用生成子类方式达到功能的扩充显得更为灵活。
+- 设计初衷:通常可以使用继承来实现功能的拓展,如果这些需要拓展的功能的种类很繁多,那么势必生成很多子类,增加系统的复杂性,同时,使用继承实现功能拓展,我们必须可预见这些拓展功能,这些功能是编译时就确定了,是静态的。
 ```js
+// 意大利面价格
+function Pasta() {
+    this.price = 0
+}
+Pasta.prototype.getPrice = function () {
+    return this.price
+}
+// 意面
+function Penne() {
+    this.price = 8
+}
+Penne.prototype = Object.create(Pasta.prototype)
 
+//调味汁
+function SauceDecorator(pasta) {
+    this.pasta = pasta
+}
+SauceDecorator.prototype.getPrice = function () {
+    return this.pasta.getPrice() + 5
+}
+
+//奶酪
+function CheeseDecorator(pasta) {
+    this.pasta = pasta
+}
+CheeseDecorator.prototype.getPrice = function () {
+    return this.pasta.getPrice() + 3
+}
+
+module.exports = [Penne, SauceDecorator, CheeseDecorator]
 ```
 
 ```js
+const expect = require('chai').expect;
+const [Penne, SauceDecorator, CheeseDecorator] = require('../tmp');
 
+describe('装饰模式测试', () => {
+    it('装饰', () => {
+        //每次new 添加新的装饰
+        var penne = new Penne()
+        var penneWithSauce = new SauceDecorator(penne)
+        var panneWithSauceAndCheese = new CheeseDecorator(penneWithSauce)
+
+        expect(penne.getPrice()).to.equal(8);
+        expect(penneWithSauce.getPrice()).to.equal(13)
+        expect(panneWithSauceAndCheese.getPrice()).to.equal(16)
+    });
+});
 ```
 es6实现
 ```js
+class Pasta {
+    constructor() {
+        this.price = 0
+    }
+    getPrice() {
+        return this.price
+    }
+}
 
+class Penne extends Pasta {
+    constructor() {
+        super()
+        this.price = 8
+    }
+}
+
+class PastaDecorator extends Pasta {
+    constructor(pasta) {
+        super()
+        this.pasta = pasta
+    }
+    getPrice() {
+        return this.pasta.getPrice()
+    }
+}
+
+class SauceDecorator extends PastaDecorator {
+    constructor(pasta) {
+        super(pasta)
+    }
+    getPrice() {
+        return super.getPrice() + 5
+    }
+}
+
+class CheeseDecorator extends PastaDecorator {
+    constructor(pasta) {
+        super(pasta)
+    }
+    getPrice() {
+        return super.getPrice() + 3
+    }
+}
+
+export {
+    Penne,
+    SauceDecorator,
+    CheeseDecorator
+}
 ```
 
 ```js
+const expect = require('chai').expect;
+import { Penne, SauceDecorator, CheeseDecorator } from '../tmp'
 
+
+describe('装饰模式 es6测试', () => {
+    it('装饰', () => {
+        //每次new 添加新的装饰
+        var penne = new Penne()
+        var penneWithSauce = new SauceDecorator(penne)
+        var panneWithSauceAndCheese = new CheeseDecorator(penneWithSauce)
+
+        expect(penne.getPrice()).to.equal(8);
+        expect(penneWithSauce.getPrice()).to.equal(13)
+        expect(panneWithSauceAndCheese.getPrice()).to.equal(16)
+    });
+});
 ```
-### 2.3
-- 
+### 2.3 代理模式(proxy)
+- 对一些对象提供代理，以限制那些对象去访问其它对象。
 ```js
+function Car() {
+    this.drive = function () {
+        return "driving"
+    }
+}
 
+function CarProxy(driver) {
+    this.driver = driver
+    this.drive = function () {
+        if (driver.age < 18)
+            return "too young to drive"
+        return new Car().drive()
+    }
+}
+
+function Driver(age) {
+    this.age = age
+}
+
+module.exports = [Car, CarProxy, Driver]
 ```
 
 ```js
+const expect = require('chai').expect
+const [Car, CarProxy, Driver] = require('../tmp')
 
+describe('代理模式测试', () => {
+  it('驾驶', () => {
+    var driver = new Driver(20)
+    var kid = new Driver(16)
+
+    var car = new CarProxy(driver)     
+    expect(car.drive()).to.equal('driving')
+
+    car = new CarProxy(kid)
+    expect(car.drive()).to.equal('too young to drive')
+    
+  })
+})
 ```
 es6实现
 ```js
+class Car {
+    drive() {
+        return "driving"
+    }
+}
 
+class CarProxy {
+    constructor(driver) {
+        this.driver = driver
+    }
+    drive() {
+        return (this.driver.age < 18) ? "too young to drive" : new Car().drive()
+    }
+}
+
+class Driver {
+    constructor(age) {
+        this.age = age
+    }
+}
+
+export {
+    Car,
+    CarProxy,
+    Driver
+}
 ```
 
 ```js
+const expect = require('chai').expect
+import { Car, CarProxy, Driver } from '../tmp'
 
+describe('代理模式 es6测试', () => {
+  it('驾驶', () => {
+    let driver = new Driver(28);
+    let kid = new Driver(10);
+
+    let car = new CarProxy(driver);
+    expect(car.drive()).to.equal('driving');
+
+    car = new CarProxy(kid);
+    expect(car.drive()).to.equal('too young to drive');
+
+  })
+})
 ```
 ### 2.4
 - 
