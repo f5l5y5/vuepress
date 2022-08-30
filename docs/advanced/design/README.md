@@ -1,7 +1,7 @@
 # 设计模式
 [git参考地址](https://github.com/fbeline/design-patterns-JS)
 
-## 1.创建型模式(5)
+## 1.创建型模式(creational 5)
 ### 1.1 工厂模式(factory)
 - 定义一个创建对象的接口，让子类决定具体实例化哪一个对象。
 ```js
@@ -394,26 +394,404 @@ describe('原型模式 es6测试', () => {
 });
 ```
 
-## 2.结构型模式(7)
-### 2.1
+## 2.结构型模式(structural 7)
+### 2.1 适配器模式(adapter)
+- 将一个类的接口转换成客户希望的另外一个接口。Adapter模式使得原本由于接口不兼容而不能一起工作的那些类可以在一起工作。
+
+```js
+function Soldier(lvl) {
+    this.lvl = lvl
+}
+//士兵攻击1
+Soldier.prototype.attack = function () {
+    return this.lvl * 1
+}
+
+function Jedi(lvl) {
+    this.lvl = lvl
+}
+//用剑100
+Jedi.prototype.attackWithSaber = function () {
+    return this.lvl * 100
+}
+
+// 创建适配器 传入不同的对象 攻击不同 
+// 需要将Jedi的attackWithSaber 适配成 attack
+function JediAdapter(jedi) {
+    this.jedi = jedi
+}
+
+JediAdapter.prototype.attack = function () {
+    return this.jedi.attackWithSaber()
+}
+
+module.exports = [Soldier, Jedi, JediAdapter]
+```
+```js
+const expect = require('chai').expect;
+const [Soldier, Jedi, JediAdapter] = require('../tmp')
+
+describe('适配器 测试', () => {
+    it('攻击', () => {
+        var stormrooper = new Soldier(1)
+        var yoda = new JediAdapter(new Jedi(10))
+        expect(yoda.attack()).to.equal(stormrooper.attack()*1000);
+    });
+});
+```
+
+es6实现
+```js
+class Soldier {
+    constructor(level) {
+        this.level = level
+    }
+
+    attack() {
+        return this.level * 1
+    }
+}
+
+class Jedi {
+    constructor(level) {
+        this.level = level
+    }
+
+    attackWithSaber() {
+        return this.level * 100
+    }
+}
+
+class JediAdapter {
+    constructor(jedi) {
+        this.jedi = jedi
+    }
+
+    attack() {
+        return this.jedi.attackWithSaber()
+    }
+}
+export {
+    Soldier,
+    Jedi,
+    JediAdapter
+}
+```
+
+```js
+const expect = require('chai').expect;
+import { Soldier, Jedi, JediAdapter } from '../tmp'
+
+
+describe('适配器 es6测试', () => {
+    it('攻击', () => {
+        var stormrooper = new Soldier(1)
+        var yoda = new JediAdapter(new Jedi(10))
+        expect(yoda.attack()).to.equal(stormrooper.attack() * 1000);
+    });
+});
+```
+
+
 ### 2.2
+- 
+```js
+
+```
+
+```js
+
+```
+es6实现
+```js
+
+```
+
+```js
+
+```
 ### 2.3
+- 
+```js
+
+```
+
+```js
+
+```
+es6实现
+```js
+
+```
+
+```js
+
+```
 ### 2.4
+- 
+```js
+
+```
+
+```js
+
+```
+es6实现
+```js
+
+```
+
+```js
+
+```
 ### 2.5
+- 
+```js
+
+```
+
+```js
+
+```
+es6实现
+```js
+
+```
+
+```js
+
+```
 ### 2.6
+- 
+```js
+
+```
+
+```js
+
+```
+es6实现
+```js
+
+```
+
+```js
+
+```
 ### 2.7
+- 
+```js
 
+```
 
-## 3.行为型模式(11)
+```js
+
+```
+es6实现
+```js
+
+```
+
+```js
+
+```
+
+## 3.行为型模式(behavioral 11)
 
 ### 3.1
+- 
+```js
+
+```
+
+```js
+
+```
+es6实现
+```js
+
+```
+
+```js
+
+```
+
 ### 3.2
+- 
+```js
+
+```
+
+```js
+
+```
+es6实现
+```js
+
+```
+
+```js
+
+```
+
 ### 3.3
+- 
+```js
+
+```
+
+```js
+
+```
+es6实现
+```js
+
+```
+
+```js
+
+```
+
 ### 3.4
+- 
+```js
+
+```
+
+```js
+
+```
+es6实现
+```js
+
+```
+
+```js
+
+```
+
 ### 3.5
+- 
+```js
+
+```
+
+```js
+
+```
+es6实现
+```js
+
+```
+
+```js
+
+```
+
 ### 3.6
+- 
+```js
+
+```
+
+```js
+
+```
+es6实现
+```js
+
+```
+
+```js
+
+```
+
 ### 3.7
+- 
+```js
+
+```
+
+```js
+
+```
+es6实现
+```js
+
+```
+
+```js
+
+```
+
 ### 3.8
+- 
+```js
+
+```
+
+```js
+
+```
+es6实现
+```js
+
+```
+
+```js
+
+```
+
 ### 3.9
-### 3.10
-### 3.11
+- 
+```js
+
+```
+
+```js
+
+```
+es6实现
+```js
+
+```
+
+```js
+
+```
+
+### 3.1
+- 
+```js
+
+```
+
+```js
+
+```
+es6实现
+```js
+
+```
+
+```js
+
+```
+
+### 3.1
+- 
+```js
+
+```
+
+```js
+
+```
+es6实现
+```js
+
+```
+
+```js
+
+```
