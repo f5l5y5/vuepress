@@ -230,7 +230,110 @@ describe('单例模式测试 es6', () => {
 });
 ```
 
-### 1.4 建造者模式
+### 1.4 建造者模式(builder)
+- 将一个复杂的对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。
+
+```js
+//对象构建
+function Request() {
+    this.url = ''
+    this.method = ''
+    this.payload = ''
+}
+//每个不同的表示 return this 支持链式调用
+function RequestBuilder() {
+    this.request = new Request()
+    this.forUrl = function (url) {
+        this.request.url = url
+        return this
+    }
+    this.useMethod = function (method) {
+        this.request.method = method
+        return this
+    }
+    this.payload = function (payload) {
+        this.request.payload = payload
+        return this
+    }
+    this.build = function () {
+        return this.request
+    }
+}
+module.exports = RequestBuilder
+```
+
+```js
+const expect = require('chai').expect;
+const RequestBuilder = require('../tmp');
+
+describe('建造者模式测试', () => {
+    it('构建行为分离 method', () => {
+        var requestBuilder = new RequestBuilder();
+        var request = requestBuilder
+            .forUrl('http://something/users')
+            .useMethod('GET')
+            .payload(null)
+            .build()
+
+        expect(request.method).to.equal('GET');
+    });
+});
+```
+
+es6实现
+
+```js
+class Request {
+    constructor() {
+        this.url = ''
+        this.method = ''
+        this.payload = ''
+    }
+}
+class RequestBuilder {
+    constructor() {
+        this.request = new Request()
+    }
+    forUrl(url) {
+        this.request.url = url
+        return this
+    }
+    useMethod(method) {
+        this.request.method = method
+        return this
+    }
+    payload(payload) {
+        this.request.payload = payload
+        return this
+    }
+    build() {
+        return this.request
+    }
+}
+export default RequestBuilder
+```
+```js
+const expect = require('chai').expect;
+import RequestBuilder from '../tmp'
+
+describe('建造者模式 es6测试', () => {
+    it('构建行为分离 es6', () => {
+        const requestBuilder = new RequestBuilder();
+        const url = 'http://something/users';
+        const method = 'GET';
+        const request = requestBuilder
+            .forUrl(url)
+            .useMethod(method)
+            .payload(null)
+            .build();
+
+        expect(request.method).to.equal(method);
+        expect(request.payload).to.be.null;
+        expect(request.url).to.equal(url);
+    });
+});
+```
+
 ### 1.5 原型模式
 
 
