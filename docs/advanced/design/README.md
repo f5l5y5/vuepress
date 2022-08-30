@@ -708,22 +708,90 @@ describe('代理模式 es6测试', () => {
   })
 })
 ```
-### 2.4
-- 
+### 2.4 外观模式(facade)
+- 设置一个门面,处理各种事务
 ```js
-
+var shopFacade = {
+    calc:function(price){
+        price = discount(price)
+        price = fees(price)
+        price += shipping()
+        return price
+    }
+}
+function discount(value){
+    return value * 0.9
+}
+function shipping(value){
+    return 5
+}
+function fees(value){
+    return value * 1.05
+}
+module.exports = shopFacade
 ```
 
 ```js
+const expect = require('chai').expect
+const shopFacade = require('../tmp')
 
+describe('外观模式测试', () => {
+  it('购物', () => {
+    var result = shopFacade.calc(100)
+
+    expect(result).to.equal(99.5)
+    
+  })
+})
 ```
 es6实现
 ```js
+class ShopFacade {
+    constructor(price) {
+        this.discount = new Discount()
+        this.shipping = new Shipping()
+        this.fees = new Fees()
+    }
+    calc(price) {
+        price = this.discount.calc(price)
+        price = this.fees.calc(price)
+        price += this.shipping.calc()
+        return price
+    }
+}
 
+class Discount {
+    calc(value) {
+        return value * 0.9
+    }
+}
+
+class Shipping {
+    calc() {
+        return 5
+    }
+}
+class Fees {
+    calc(value) {
+        return value * 1.05
+    }
+}
+export default ShopFacade
 ```
 
 ```js
+const expect = require('chai').expect
+import ShopFacade from '../tmp'
 
+describe('外观模式 es6测试', () => {
+  it('购物', () => {
+    const shop = new ShopFacade()
+    const result = shop.calc(100)
+
+    expect(result).to.equal(99.5)
+
+  })
+})
 ```
 ### 2.5
 - 

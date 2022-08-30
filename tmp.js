@@ -1,26 +1,31 @@
-class Car {
-    drive() {
-        return "driving"
+class ShopFacade {
+    constructor(price) {
+        this.discount = new Discount()
+        this.shipping = new Shipping()
+        this.fees = new Fees()
+    }
+    calc(price) {
+        price = this.discount.calc(price)
+        price = this.fees.calc(price)
+        price += this.shipping.calc()
+        return price
     }
 }
 
-class CarProxy {
-    constructor(driver) {
-        this.driver = driver
-    }
-    drive() {
-        return (this.driver.age < 18) ? "too young to drive" : new Car().drive()
+class Discount {
+    calc(value) {
+        return value * 0.9
     }
 }
 
-class Driver {
-    constructor(age) {
-        this.age = age
+class Shipping {
+    calc() {
+        return 5
     }
 }
-
-export {
-    Car,
-    CarProxy,
-    Driver
+class Fees {
+    calc(value) {
+        return value * 1.05
+    }
 }
+export default ShopFacade
