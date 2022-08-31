@@ -1,71 +1,67 @@
-class ShoppingCart {
+class Cockpit {
+    constructor(command) {
+        this.command = command
+    }
+    execute() {
+        this.command.execute()
+    }
+}
+
+class Turbine {
     constructor() {
-        this.products = []
+        this.state = false
+        this.speed = 0
     }
-
-    addProduct(p) {
-        this.products.push(p)
+    on() {
+        this.state = true
+        this.speed = 100
+    }
+    off() {
+        this.state = false
+        this.speed = 0
+    }
+    speedDown() {
+        if (!this.state) return
+        this.speed -= 100
+    }
+    speedUp() {
+        if (!this.state) return
+        this.speed += 100
     }
 }
 
-class Discount {
-    calc(products) {
-        let ndiscount = new NumberDiscount();
-        let pdiscount = new PriceDiscount();
-        let none = new NoneDiscount();
-        ndiscount.setNext(pdiscount);
-        pdiscount.setNext(none);
-        return ndiscount.exec(products);
+class OnCommand {
+    constructor(turbine) {
+        this.turbine = turbine
+    }
+    execute() {
+        this.turbine.on()
+    }
+}
+class OffCommand {
+    constructor(turbine) {
+        this.turbine = turbine
+    }
+    execute() {
+        this.turbine.off()
+    }
+}
+class SpeedUpCommand {
+    constructor(turbine) {
+        this.turbine = turbine
+    }
+    execute() {
+        this.turbine.speedUp()
+    }
+}
+class SpeedDownCommand {
+    constructor(turbine) {
+        this.turbine = turbine
+    }
+    execute() {
+        this.turbine.speedDown()
     }
 }
 
-class NumberDiscount {
 
-    constructor() {
-        this.next = null;
-    }
-
-    setNext(fn) {
-        this.next = fn;
-    };
-
-    exec(products) {
-        let result = 0;
-        if (products.length > 3)
-            result = 0.05;
-
-        return result + this.next.exec(products);
-    };
-}
-
-class PriceDiscount {
-
-    constructor() {
-        this.next = null;
-    }
-
-    setNext(fn) {
-        this.next = fn;
-    };
-
-    exec(products) {
-        let result = 0;
-        let total = products.reduce((a, b) => a + b);
-
-        if (total >= 500)
-            result = 0.1;
-
-        return result + this.next.exec(products);
-    };
-}
-
-class NoneDiscount {
-    exec() {
-        return 0;
-    };
-}
-
-export {
-    ShoppingCart,
-    Discount
-};
+export { Cockpit, Turbine, OffCommand, OnCommand, SpeedDownCommand, SpeedUpCommand }

@@ -1373,21 +1373,209 @@ describe('责任链模式 es6测试', () => {
 ```
 
 ### 3.2 命令模式(command)
-- 
+- 将来自客户端的请求传入一个对象，从而使你可用不同的请求对客户进行参数化。用于“行为请求者”与“行为实现者”解耦，可实现二者之间的松耦合，以便适应变化。分离变化与不变的因素。
+- 请求以命令的形式包裹在对象中，并传给调用对象。调用对象寻找可以处理该命令的合适的对象，并把该命令传给相应的对象，该对象执行命令。
+- 定义三个角色
+  - Command 定义命令的接口，声明执行的方法。
+    - ConcreteCommand  命令接口实现对象，是“虚”的实现；通常会持有接收者，并调用接收者的功能来完成命令要执行的操作。
+  - Receiver 接收者，真正执行命令的对象。
+  - Invoker 使用对象命令的入口 调用者
+    - Client 创建具体的命令对象，并且设置命令对象的接收者。
+**整体流程** 定义三个角色,command属于驾驶舱 receiver属于涡轮 invoker调用实际命令的入口；先创建具体的receiver 将receiver传入到invoker调用者,最后command调用invoker处理对应的命令 执行,具体的状态receiver会发生变化
 ```js
+//驾驶舱 接受命令 执行命令 command
+function Cockpit(command) {
+    this.command = command
+}
+Cockpit.prototype.execute = function () {
+    this.command.execute()
+}
+
+//涡轮  操作有开 关 加速 减速 receiver 命令真正执行的对象
+function Turbine() {
+    this.state = false
+    this.speed = 0
+}
+Turbine.prototype.on = function () {
+    this.state = true
+    this.speed = 100
+}
+Turbine.prototype.off = function () {
+    this.state = false
+    this.speed = 0
+}
+Turbine.prototype.speedDown = function () {
+    if (!this.state) return
+    this.speed -= 100
+}
+Turbine.prototype.speedUp = function () {
+    if (!this.state) return
+    this.speed += 100
+}
+//命令 操作开命令 调用turbine实例的开 
+// invoker 使用命令对象的入口
+function OnCommand(turbine) {
+    this.turbine = turbine
+}
+OnCommand.prototype.execute = function () {
+    this.turbine.on()
+}
+
+function OffCommand(turbine) {
+    this.turbine = turbine
+}
+OffCommand.prototype.execute = function () {
+    this.turbine.off()
+}
+
+function SpeedUpCommand(turbine) {
+    this.turbine = turbine
+}
+SpeedUpCommand.prototype.execute = function () {
+    this.turbine.speedUp()
+}
+
+function SpeedDownCommand(turbine) {
+    this.turbine = turbine
+}
+SpeedDownCommand.prototype.execute = function () {
+    this.turbine.speedDown()
+}
+
+module.exports = [Cockpit, Turbine, OffCommand, OnCommand, SpeedDownCommand, SpeedUpCommand]
 
 ```
 
 ```js
+const expect = require('chai').expect
+const [Cockpit, Turbine, OffCommand, OnCommand, SpeedDownCommand, SpeedUpCommand] = require('../tmp')
 
+describe('命令模式 测试', () => {
+  it('开/关 测试', () => {
+    //receiver 创建命令的具体对象 涡轮  真正命令执行的对象
+    var turbine = new Turbine()
+    //invoker 调用者 使用命令对象入口
+    const onCommand = new OnCommand(turbine)
+    //command 驾驶舱 
+    const cockpit = new Cockpit(onCommand)
+    cockpit.execute()
+    expect(turbine.state).to.be.true
+  })
+  it('加减速 测试', () => {
+    //先开启后加速
+    var turbine = new Turbine()
+    const onCommand = new OnCommand(turbine);
+    var cockpit = new Cockpit(onCommand);
+    cockpit.execute();
+
+    const speedUpCommand = new SpeedUpCommand(turbine)
+    cockpit = new Cockpit(speedUpCommand)
+    cockpit.execute()
+    expect(turbine.speed).to.equal(200)
+  })
+
+})
 ```
 es6实现
 ```js
+class Cockpit {
+    constructor(command) {
+        this.command = command
+    }
+    execute() {
+        this.command.execute()
+    }
+}
 
+class Turbine {
+    constructor() {
+        this.state = false
+        this.speed = 0
+    }
+    on() {
+        this.state = true
+        this.speed = 100
+    }
+    off() {
+        this.state = false
+        this.speed = 0
+    }
+    speedDown() {
+        if (!this.state) return
+        this.speed -= 100
+    }
+    speedUp() {
+        if (!this.state) return
+        this.speed += 100
+    }
+}
+
+class OnCommand {
+    constructor(turbine) {
+        this.turbine = turbine
+    }
+    execute() {
+        this.turbine.on()
+    }
+}
+class OffCommand {
+    constructor(turbine) {
+        this.turbine = turbine
+    }
+    execute() {
+        this.turbine.off()
+    }
+}
+class SpeedUpCommand {
+    constructor(turbine) {
+        this.turbine = turbine
+    }
+    execute() {
+        this.turbine.speedUp()
+    }
+}
+class SpeedDownCommand {
+    constructor(turbine) {
+        this.turbine = turbine
+    }
+    execute() {
+        this.turbine.speedDown()
+    }
+}
+
+
+export { Cockpit, Turbine, OffCommand, OnCommand, SpeedDownCommand, SpeedUpCommand }
 ```
 
 ```js
+const expect = require('chai').expect
+import { Cockpit, Turbine, OffCommand, OnCommand, SpeedDownCommand, SpeedUpCommand } from '../tmp'
 
+describe('命令模式 es6测试', () => {
+    it('开/关 测试', () => {
+        //receiver 创建命令的具体对象 涡轮  真正命令执行的对象
+        var turbine = new Turbine()
+        //invoker 调用者 使用命令对象入口
+        const onCommand = new OnCommand(turbine)
+        //command 驾驶舱 
+        const cockpit = new Cockpit(onCommand)
+        cockpit.execute()
+        expect(turbine.state).to.be.true
+    })
+    it('加减速 测试', () => {
+        //先开启后加速
+        var turbine = new Turbine()
+        const onCommand = new OnCommand(turbine);
+        var cockpit = new Cockpit(onCommand);
+        cockpit.execute();
+
+        const speedUpCommand = new SpeedUpCommand(turbine)
+        cockpit = new Cockpit(speedUpCommand)
+        cockpit.execute()
+        expect(turbine.speed).to.equal(200)
+    })
+
+})
 ```
 
 ### 3.3 解释器模式(interpreter)
