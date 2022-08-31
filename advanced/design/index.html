@@ -8,7 +8,7 @@
     
     <meta name="description" content="">
     
-    <link rel="preload" href="/assets/css/0.styles.4cea57cf.css" as="style"><link rel="preload" href="/assets/js/app.ef356e5a.js" as="script"><link rel="preload" href="/assets/js/2.de29bcd8.js" as="script"><link rel="preload" href="/assets/js/10.6ebec5ca.js" as="script"><link rel="prefetch" href="/assets/js/11.33759508.js"><link rel="prefetch" href="/assets/js/12.20352dbb.js"><link rel="prefetch" href="/assets/js/13.a4588d20.js"><link rel="prefetch" href="/assets/js/14.a77e8638.js"><link rel="prefetch" href="/assets/js/15.6074f0fb.js"><link rel="prefetch" href="/assets/js/16.b7d86094.js"><link rel="prefetch" href="/assets/js/17.5ba80938.js"><link rel="prefetch" href="/assets/js/18.ee56d860.js"><link rel="prefetch" href="/assets/js/19.f89f8c71.js"><link rel="prefetch" href="/assets/js/20.0533b408.js"><link rel="prefetch" href="/assets/js/21.b5189103.js"><link rel="prefetch" href="/assets/js/22.577b1386.js"><link rel="prefetch" href="/assets/js/23.54f79420.js"><link rel="prefetch" href="/assets/js/24.d2e6aecd.js"><link rel="prefetch" href="/assets/js/25.62a510c5.js"><link rel="prefetch" href="/assets/js/26.6e3caa9d.js"><link rel="prefetch" href="/assets/js/27.d05cf161.js"><link rel="prefetch" href="/assets/js/28.f1294312.js"><link rel="prefetch" href="/assets/js/29.d398984d.js"><link rel="prefetch" href="/assets/js/3.4a1c3e08.js"><link rel="prefetch" href="/assets/js/30.c6905fa7.js"><link rel="prefetch" href="/assets/js/31.321dd25a.js"><link rel="prefetch" href="/assets/js/32.a109380f.js"><link rel="prefetch" href="/assets/js/33.d370b5a3.js"><link rel="prefetch" href="/assets/js/4.734c6949.js"><link rel="prefetch" href="/assets/js/5.3d1ff5d4.js"><link rel="prefetch" href="/assets/js/6.efae1bb5.js"><link rel="prefetch" href="/assets/js/7.b5203b54.js"><link rel="prefetch" href="/assets/js/8.bc2817d6.js"><link rel="prefetch" href="/assets/js/9.9fde9d45.js">
+    <link rel="preload" href="/assets/css/0.styles.4cea57cf.css" as="style"><link rel="preload" href="/assets/js/app.b0ac4248.js" as="script"><link rel="preload" href="/assets/js/2.de29bcd8.js" as="script"><link rel="preload" href="/assets/js/10.1e5e02d2.js" as="script"><link rel="prefetch" href="/assets/js/11.33759508.js"><link rel="prefetch" href="/assets/js/12.20352dbb.js"><link rel="prefetch" href="/assets/js/13.a4588d20.js"><link rel="prefetch" href="/assets/js/14.a77e8638.js"><link rel="prefetch" href="/assets/js/15.6074f0fb.js"><link rel="prefetch" href="/assets/js/16.b7d86094.js"><link rel="prefetch" href="/assets/js/17.5ba80938.js"><link rel="prefetch" href="/assets/js/18.ee56d860.js"><link rel="prefetch" href="/assets/js/19.f89f8c71.js"><link rel="prefetch" href="/assets/js/20.0533b408.js"><link rel="prefetch" href="/assets/js/21.b5189103.js"><link rel="prefetch" href="/assets/js/22.577b1386.js"><link rel="prefetch" href="/assets/js/23.54f79420.js"><link rel="prefetch" href="/assets/js/24.d2e6aecd.js"><link rel="prefetch" href="/assets/js/25.62a510c5.js"><link rel="prefetch" href="/assets/js/26.6e3caa9d.js"><link rel="prefetch" href="/assets/js/27.d05cf161.js"><link rel="prefetch" href="/assets/js/28.f1294312.js"><link rel="prefetch" href="/assets/js/29.d398984d.js"><link rel="prefetch" href="/assets/js/3.4a1c3e08.js"><link rel="prefetch" href="/assets/js/30.c6905fa7.js"><link rel="prefetch" href="/assets/js/31.321dd25a.js"><link rel="prefetch" href="/assets/js/32.a109380f.js"><link rel="prefetch" href="/assets/js/33.d370b5a3.js"><link rel="prefetch" href="/assets/js/4.734c6949.js"><link rel="prefetch" href="/assets/js/5.3d1ff5d4.js"><link rel="prefetch" href="/assets/js/6.efae1bb5.js"><link rel="prefetch" href="/assets/js/7.b5203b54.js"><link rel="prefetch" href="/assets/js/8.bc2817d6.js"><link rel="prefetch" href="/assets/js/9.9fde9d45.js">
     <link rel="stylesheet" href="/assets/css/0.styles.4cea57cf.css">
   </head>
   <body>
@@ -1026,10 +1026,71 @@ module<span class="token punctuation">.</span>exports <span class="token operato
     <span class="token punctuation">}</span><span class="token punctuation">)</span>
   
   <span class="token punctuation">}</span><span class="token punctuation">)</span>
-</code></pre></div><h3 id="_2-7-享元模式-flyweight"><a href="#_2-7-享元模式-flyweight" class="header-anchor">#</a> 2.7 享元模式(flyweight)</h3> <ul><li></li></ul> <div class="language-js extra-class"><pre class="language-js"><code>
-</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code>
-</code></pre></div><p>es6实现</p> <div class="language-js extra-class"><pre class="language-js"><code>
-</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code>
+</code></pre></div><h3 id="_2-7-享元模式-flyweight"><a href="#_2-7-享元模式-flyweight" class="header-anchor">#</a> 2.7 享元模式(flyweight)</h3> <ul><li>一个系统中如果有多个相同的对象，那么只共享一份就可以了，不必每个都去实例化一个对象。
+<ul><li>比如说一个文本系统，每个字母定一个对象，那么大小写字母一共就是52个，那么就要定义52个对象。如果有一个1M的文本，那么字母是何其的多，如果每个字母都定义一个对象那么内存早就爆了。那么如果要是每个字母都共享一个对象，那么就大大节约了资源。</li></ul></li></ul> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">Color</span><span class="token punctuation">(</span><span class="token parameter">name</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name
+<span class="token punctuation">}</span>
+<span class="token comment">//使用对象池存放内部的状态对象，如果存在直接返回没有则创建</span>
+<span class="token keyword">var</span> colorFactory <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">colors</span><span class="token operator">:</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token function-variable function">create</span><span class="token operator">:</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">name</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">var</span> color <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>colors<span class="token punctuation">[</span>name<span class="token punctuation">]</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>color<span class="token punctuation">)</span> <span class="token keyword">return</span> color
+        <span class="token keyword">this</span><span class="token punctuation">.</span>colors<span class="token punctuation">[</span>name<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Color</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>colors<span class="token punctuation">[</span>name<span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> colorFactory
+</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> expect <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'chai'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>expect
+<span class="token keyword">const</span> colorFactory <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'../tmp'</span><span class="token punctuation">)</span>
+
+<span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">'享元模式 测试'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">'重复颜色'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    colorFactory<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token string">'RED'</span><span class="token punctuation">)</span>
+    colorFactory<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token string">'RED'</span><span class="token punctuation">)</span>
+    colorFactory<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token string">'RED'</span><span class="token punctuation">)</span>
+    colorFactory<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token string">'YELLOW'</span><span class="token punctuation">)</span>
+    colorFactory<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token string">'YELLOW'</span><span class="token punctuation">)</span>
+
+    <span class="token function">expect</span><span class="token punctuation">(</span>Object<span class="token punctuation">.</span><span class="token function">keys</span><span class="token punctuation">(</span>colorFactory<span class="token punctuation">.</span>colors<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>to<span class="token punctuation">.</span>have<span class="token punctuation">.</span><span class="token function">lengthOf</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>es6实现</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">class</span> <span class="token class-name">Color</span> <span class="token punctuation">{</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">name</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">colorFactory</span> <span class="token punctuation">{</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">name</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>colors <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">create</span><span class="token punctuation">(</span><span class="token parameter">name</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">let</span> color <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>colors<span class="token punctuation">[</span>name<span class="token punctuation">]</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>color<span class="token punctuation">)</span> <span class="token keyword">return</span> color
+        <span class="token keyword">this</span><span class="token punctuation">.</span>colors<span class="token punctuation">[</span>name<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Color</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>colors<span class="token punctuation">[</span>name<span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token punctuation">{</span> colorFactory <span class="token punctuation">}</span>
+
+</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> expect <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'chai'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>expect
+<span class="token keyword">import</span> <span class="token punctuation">{</span> colorFactory <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'../tmp'</span>
+
+<span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">'享元模式 es6测试'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">'重复颜色'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">const</span> cf <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">colorFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        cf<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token string">'RED'</span><span class="token punctuation">)</span>
+        cf<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token string">'RED'</span><span class="token punctuation">)</span>
+        cf<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token string">'YELLOW'</span><span class="token punctuation">)</span>
+        cf<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token string">'YELLOW'</span><span class="token punctuation">)</span>
+
+        <span class="token function">expect</span><span class="token punctuation">(</span>Object<span class="token punctuation">.</span><span class="token function">keys</span><span class="token punctuation">(</span>cf<span class="token punctuation">.</span>colors<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>to<span class="token punctuation">.</span>have<span class="token punctuation">.</span><span class="token function">lengthOf</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
 </code></pre></div><h2 id="_3-行为型模式-behavioral-11"><a href="#_3-行为型模式-behavioral-11" class="header-anchor">#</a> 3.行为型模式(behavioral 11)</h2> <h3 id="_3-1"><a href="#_3-1" class="header-anchor">#</a> 3.1</h3> <ul><li></li></ul> <div class="language-js extra-class"><pre class="language-js"><code>
 </code></pre></div><div class="language-js extra-class"><pre class="language-js"><code>
 </code></pre></div><p>es6实现</p> <div class="language-js extra-class"><pre class="language-js"><code>
@@ -1074,7 +1135,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 </code></pre></div><div class="language-js extra-class"><pre class="language-js"><code>
 </code></pre></div><p>es6实现</p> <div class="language-js extra-class"><pre class="language-js"><code>
 </code></pre></div><div class="language-js extra-class"><pre class="language-js"><code>
-</code></pre></div></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">8/31/2022, 2:50:07 AM</span></div></footer> <!----> </main></div><div class="global-ui"><!----></div></div>
-    <script src="/assets/js/app.ef356e5a.js" defer></script><script src="/assets/js/2.de29bcd8.js" defer></script><script src="/assets/js/10.6ebec5ca.js" defer></script>
+</code></pre></div></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">8/31/2022, 3:24:25 AM</span></div></footer> <!----> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.b0ac4248.js" defer></script><script src="/assets/js/2.de29bcd8.js" defer></script><script src="/assets/js/10.1e5e02d2.js" defer></script>
   </body>
 </html>
