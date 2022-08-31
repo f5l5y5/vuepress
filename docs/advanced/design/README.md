@@ -1746,39 +1746,197 @@ function test(Iterator) {
 ```
 
 ### 3.5 中介者模式(mediator)
-- 
+- 是用来降低多个对象和类之间的通信复杂性。
+- 用一个中介对象来封装一系列的对象交互，中介者使各对象不需要显式地相互引用，从而使其耦合松散，而且可以独立地改变它们之间的交互。
+- MVC 框架，其中C（控制器）就是 M（模型）和 V（视图）的中介者。
 ```js
+// 塔台 请求位置
+function TrafficTower() {
+    this.airplanes = []
+}
+TrafficTower.prototype.requestPositions = function () {
+    return this.airplanes.map(function (airplane) {
+        return airplane.position
+    })
+}
+// 飞机 位置 塔台
+function Airplane(position, trafficTower) {
+    this.position = position
+    this.trafficTower = trafficTower
+    this.trafficTower.airplanes.push(this)
+}
+Airplane.prototype.requestPositions = function () {
+    return this.trafficTower.requestPositions()
+}
 
+module.exports = [TrafficTower, Airplane]
 ```
 
 ```js
+const expect = require('chai').expect
+const [TrafficTower, Airplane] = require('../tmp')
+
+describe('中介者模式 测试', () => {
+  it('塔台', () => {
+    var trafficTower = new TrafficTower()
+    var boeing1 = new Airplane(10, trafficTower)
+    var boeing2 = new Airplane(15, trafficTower)
+    var boeing3 = new Airplane(55, trafficTower)
+    expect(boeing1.requestPositions()).to.deep.equals([10, 15, 55])
+  })
+})
 
 ```
 es6实现
 ```js
+class TrafficTower {
 
+  constructor() {
+    this.airplanes = [];
+  }
+
+  requestPositions() {
+    return this.airplanes.map(airplane => {
+      return airplane.position;
+    });
+  }
+}
+
+class Airplane {
+
+  constructor(position, trafficTower) {
+    this.position = position;
+    this.trafficTower = trafficTower;
+    this.trafficTower.airplanes.push(this);
+  }
+
+  requestPositions() {
+    return this.trafficTower.requestPositions();
+  }
+}
+
+export {
+  TrafficTower,
+  Airplane
+};
 ```
 
 ```js
+const expect = require('chai').expect
+import { TrafficTower, Airplane } from '../tmp'
 
+describe('中介者模式 es6测试', () => {
+  it('塔台', () => {
+    const trafficTower = new TrafficTower()
+    const boeing1 = new Airplane(10, trafficTower)
+    const boeing2 = new Airplane(15, trafficTower)
+    const boeing3 = new Airplane(55, trafficTower)
+    expect(boeing1.requestPositions()).to.deep.equals([10, 15, 55])
+  })
+})
 ```
 
 ### 3.6 备忘录模式(memento)
-- 
+- 保存一个对象的某个状态，以便在适当的时候恢复对象。
+- 在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。
 ```js
+function Memento(value) {
+    this.value = value
+}
+//创始者
+var originator = {
+    store: function (val) {
+        return new Memento(val)
+    },
+    restore: function (memento) {
+        return memento.value
+    }
+}
+// 守护者看门的
+function Caretaker() {
+    this.values = []
+}
 
+Caretaker.prototype.addMemento = function (memento) {
+    this.values.push(memento)
+}
+
+Caretaker.prototype.getMemento = function (index) {
+    return this.values[index]
+}
+
+module.exports = [originator, Caretaker]
 ```
 
 ```js
+const expect = require('chai').expect
+const [originator, Caretaker] = require('../tmp')
 
+describe('备忘录模式 测试', () => {
+  it('看门的', () => {
+    var careTaker = new Caretaker()
+    careTaker.addMemento(originator.store('hello'))
+    careTaker.addMemento(originator.store('hello world'))
+    careTaker.addMemento(originator.store('hello world !!!'))
+    var result = originator.restore(careTaker.getMemento(1))
+    expect(result).to.equal("hello world")
+  })
+
+})
 ```
 es6实现
 ```js
-
+class Memento {
+    constructor(value) {
+      this.value = value;
+    }
+  }
+  
+  const originator = {
+    store: function(val) {
+      return new Memento(val);
+    },
+    restore: function(memento) {
+      return memento.value;
+    }
+  };
+  
+  class Caretaker {
+  
+    constructor() {
+      this.values = [];
+    }
+  
+    addMemento(memento) {
+      this.values.push(memento);
+    }
+  
+    getMemento(index) {
+      return this.values[index];
+    }
+  }
+  
+  export {
+    originator,
+    Caretaker
+  };
 ```
 
 ```js
+const expect = require('chai').expect
+import { Caretaker, originator } from '../tmp'
 
+describe('备忘录模式 es6测试', () => {
+  it('看门的', () => {
+    var careTaker = new Caretaker()
+    careTaker.addMemento(originator.store('hello'))
+    careTaker.addMemento(originator.store('hello world'))
+    careTaker.addMemento(originator.store('hello world !!!'))
+    var result = originator.restore(careTaker.getMemento(1))
+    expect(result).to.equal("hello world")
+  })
+
+})
 ```
 
 ### 3.7 观察者模式(observer)

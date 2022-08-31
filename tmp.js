@@ -1,28 +1,35 @@
-class Sum {
-    constructor(left, right) {
-        this.left = left
-        this.right = right
+class Memento {
+    constructor(value) {
+      this.value = value;
     }
-    interpret() {
-        return this.left.interpret() + this.right.interpret()
+  }
+  
+  const originator = {
+    store: function(val) {
+      return new Memento(val);
+    },
+    restore: function(memento) {
+      return memento.value;
     }
-}
-class Min {
-    constructor(left, right) {
-        this.left = left
-        this.right = right
+  };
+  
+  class Caretaker {
+  
+    constructor() {
+      this.values = [];
     }
-    interpret() {
-        return this.left.interpret() - this.right.interpret()
+  
+    addMemento(memento) {
+      this.values.push(memento);
     }
-}
-class Num {
-    constructor(val) {
-        this.val = val
+  
+    getMemento(index) {
+      return this.values[index];
     }
-    interpret() {
-        return this.val
-    }
-}
-
-export { Num, Min, Sum }
+  }
+  
+  export {
+    originator,
+    Caretaker
+  };
+  
