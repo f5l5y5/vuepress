@@ -8,7 +8,7 @@
     
     <meta name="description" content="">
     
-    <link rel="preload" href="/assets/css/0.styles.27274be1.css" as="style"><link rel="preload" href="/assets/js/app.a265e921.js" as="script"><link rel="preload" href="/assets/js/2.de29bcd8.js" as="script"><link rel="preload" href="/assets/js/10.a68f9281.js" as="script"><link rel="prefetch" href="/assets/js/11.33759508.js"><link rel="prefetch" href="/assets/js/12.20352dbb.js"><link rel="prefetch" href="/assets/js/13.a4588d20.js"><link rel="prefetch" href="/assets/js/14.a77e8638.js"><link rel="prefetch" href="/assets/js/15.6074f0fb.js"><link rel="prefetch" href="/assets/js/16.b7d86094.js"><link rel="prefetch" href="/assets/js/17.5ba80938.js"><link rel="prefetch" href="/assets/js/18.ee56d860.js"><link rel="prefetch" href="/assets/js/19.f89f8c71.js"><link rel="prefetch" href="/assets/js/20.0533b408.js"><link rel="prefetch" href="/assets/js/21.b5189103.js"><link rel="prefetch" href="/assets/js/22.577b1386.js"><link rel="prefetch" href="/assets/js/23.54f79420.js"><link rel="prefetch" href="/assets/js/24.d2e6aecd.js"><link rel="prefetch" href="/assets/js/25.62a510c5.js"><link rel="prefetch" href="/assets/js/26.6e3caa9d.js"><link rel="prefetch" href="/assets/js/27.d05cf161.js"><link rel="prefetch" href="/assets/js/28.f1294312.js"><link rel="prefetch" href="/assets/js/29.d398984d.js"><link rel="prefetch" href="/assets/js/3.4a1c3e08.js"><link rel="prefetch" href="/assets/js/30.c6905fa7.js"><link rel="prefetch" href="/assets/js/31.321dd25a.js"><link rel="prefetch" href="/assets/js/32.a109380f.js"><link rel="prefetch" href="/assets/js/33.d370b5a3.js"><link rel="prefetch" href="/assets/js/4.734c6949.js"><link rel="prefetch" href="/assets/js/5.3d1ff5d4.js"><link rel="prefetch" href="/assets/js/6.efae1bb5.js"><link rel="prefetch" href="/assets/js/7.b5203b54.js"><link rel="prefetch" href="/assets/js/8.bc2817d6.js"><link rel="prefetch" href="/assets/js/9.9fde9d45.js">
+    <link rel="preload" href="/assets/css/0.styles.27274be1.css" as="style"><link rel="preload" href="/assets/js/app.5746a655.js" as="script"><link rel="preload" href="/assets/js/2.de29bcd8.js" as="script"><link rel="preload" href="/assets/js/10.5e90e00e.js" as="script"><link rel="prefetch" href="/assets/js/11.33759508.js"><link rel="prefetch" href="/assets/js/12.20352dbb.js"><link rel="prefetch" href="/assets/js/13.a4588d20.js"><link rel="prefetch" href="/assets/js/14.a77e8638.js"><link rel="prefetch" href="/assets/js/15.6074f0fb.js"><link rel="prefetch" href="/assets/js/16.b7d86094.js"><link rel="prefetch" href="/assets/js/17.5ba80938.js"><link rel="prefetch" href="/assets/js/18.ee56d860.js"><link rel="prefetch" href="/assets/js/19.f89f8c71.js"><link rel="prefetch" href="/assets/js/20.0533b408.js"><link rel="prefetch" href="/assets/js/21.b5189103.js"><link rel="prefetch" href="/assets/js/22.577b1386.js"><link rel="prefetch" href="/assets/js/23.54f79420.js"><link rel="prefetch" href="/assets/js/24.d2e6aecd.js"><link rel="prefetch" href="/assets/js/25.62a510c5.js"><link rel="prefetch" href="/assets/js/26.6e3caa9d.js"><link rel="prefetch" href="/assets/js/27.d05cf161.js"><link rel="prefetch" href="/assets/js/28.f1294312.js"><link rel="prefetch" href="/assets/js/29.d398984d.js"><link rel="prefetch" href="/assets/js/3.4a1c3e08.js"><link rel="prefetch" href="/assets/js/30.c6905fa7.js"><link rel="prefetch" href="/assets/js/31.321dd25a.js"><link rel="prefetch" href="/assets/js/32.a109380f.js"><link rel="prefetch" href="/assets/js/33.d370b5a3.js"><link rel="prefetch" href="/assets/js/4.734c6949.js"><link rel="prefetch" href="/assets/js/5.3d1ff5d4.js"><link rel="prefetch" href="/assets/js/6.efae1bb5.js"><link rel="prefetch" href="/assets/js/7.b5203b54.js"><link rel="prefetch" href="/assets/js/8.bc2817d6.js"><link rel="prefetch" href="/assets/js/9.9fde9d45.js">
     <link rel="stylesheet" href="/assets/css/0.styles.27274be1.css">
   </head>
   <body>
@@ -1289,10 +1289,194 @@ module<span class="token punctuation">.</span>exports <span class="token operato
   <span class="token punctuation">}</span><span class="token punctuation">)</span>
 
 <span class="token punctuation">}</span><span class="token punctuation">)</span>
-</code></pre></div><h3 id="_3-2-命令模式-command"><a href="#_3-2-命令模式-command" class="header-anchor">#</a> 3.2 命令模式(command)</h3> <ul><li></li></ul> <div class="language-js extra-class"><pre class="language-js"><code>
-</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code>
-</code></pre></div><p>es6实现</p> <div class="language-js extra-class"><pre class="language-js"><code>
-</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code>
+</code></pre></div><h3 id="_3-2-命令模式-command"><a href="#_3-2-命令模式-command" class="header-anchor">#</a> 3.2 命令模式(command)</h3> <ul><li>将来自客户端的请求传入一个对象，从而使你可用不同的请求对客户进行参数化。用于“行为请求者”与“行为实现者”解耦，可实现二者之间的松耦合，以便适应变化。分离变化与不变的因素。</li> <li>请求以命令的形式包裹在对象中，并传给调用对象。调用对象寻找可以处理该命令的合适的对象，并把该命令传给相应的对象，该对象执行命令。</li> <li>定义三个角色
+<ul><li>Command 定义命令的接口，声明执行的方法。
+<ul><li>ConcreteCommand  命令接口实现对象，是“虚”的实现；通常会持有接收者，并调用接收者的功能来完成命令要执行的操作。</li></ul></li> <li>Receiver 接收者，真正执行命令的对象。</li> <li>Invoker 使用对象命令的入口 调用者
+<ul><li>Client 创建具体的命令对象，并且设置命令对象的接收者。
+<strong>整体流程</strong> 定义三个角色,command属于驾驶舱 receiver属于涡轮 invoker调用实际命令的入口；先创建具体的receiver 将receiver传入到invoker调用者,最后command调用invoker处理对应的命令 执行,具体的状态receiver会发生变化</li></ul></li></ul></li></ul> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">//驾驶舱 接受命令 执行命令 command</span>
+<span class="token keyword">function</span> <span class="token function">Cockpit</span><span class="token punctuation">(</span><span class="token parameter">command</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>command <span class="token operator">=</span> command
+<span class="token punctuation">}</span>
+<span class="token class-name">Cockpit</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">execute</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>command<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//涡轮  操作有开 关 加速 减速 receiver 命令真正执行的对象</span>
+<span class="token keyword">function</span> <span class="token function">Turbine</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>state <span class="token operator">=</span> <span class="token boolean">false</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>speed <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token punctuation">}</span>
+<span class="token class-name">Turbine</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">on</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>state <span class="token operator">=</span> <span class="token boolean">true</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>speed <span class="token operator">=</span> <span class="token number">100</span>
+<span class="token punctuation">}</span>
+<span class="token class-name">Turbine</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">off</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>state <span class="token operator">=</span> <span class="token boolean">false</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>speed <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token punctuation">}</span>
+<span class="token class-name">Turbine</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">speedDown</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">)</span> <span class="token keyword">return</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>speed <span class="token operator">-=</span> <span class="token number">100</span>
+<span class="token punctuation">}</span>
+<span class="token class-name">Turbine</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">speedUp</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">)</span> <span class="token keyword">return</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>speed <span class="token operator">+=</span> <span class="token number">100</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//命令 操作开命令 调用turbine实例的开 </span>
+<span class="token comment">// invoker 使用命令对象的入口</span>
+<span class="token keyword">function</span> <span class="token function">OnCommand</span><span class="token punctuation">(</span><span class="token parameter">turbine</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>turbine <span class="token operator">=</span> turbine
+<span class="token punctuation">}</span>
+<span class="token class-name">OnCommand</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">execute</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>turbine<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">OffCommand</span><span class="token punctuation">(</span><span class="token parameter">turbine</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>turbine <span class="token operator">=</span> turbine
+<span class="token punctuation">}</span>
+<span class="token class-name">OffCommand</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">execute</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>turbine<span class="token punctuation">.</span><span class="token function">off</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">SpeedUpCommand</span><span class="token punctuation">(</span><span class="token parameter">turbine</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>turbine <span class="token operator">=</span> turbine
+<span class="token punctuation">}</span>
+<span class="token class-name">SpeedUpCommand</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">execute</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>turbine<span class="token punctuation">.</span><span class="token function">speedUp</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">SpeedDownCommand</span><span class="token punctuation">(</span><span class="token parameter">turbine</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>turbine <span class="token operator">=</span> turbine
+<span class="token punctuation">}</span>
+<span class="token class-name">SpeedDownCommand</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">execute</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>turbine<span class="token punctuation">.</span><span class="token function">speedDown</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">[</span>Cockpit<span class="token punctuation">,</span> Turbine<span class="token punctuation">,</span> OffCommand<span class="token punctuation">,</span> OnCommand<span class="token punctuation">,</span> SpeedDownCommand<span class="token punctuation">,</span> SpeedUpCommand<span class="token punctuation">]</span>
+
+</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> expect <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'chai'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>expect
+<span class="token keyword">const</span> <span class="token punctuation">[</span>Cockpit<span class="token punctuation">,</span> Turbine<span class="token punctuation">,</span> OffCommand<span class="token punctuation">,</span> OnCommand<span class="token punctuation">,</span> SpeedDownCommand<span class="token punctuation">,</span> SpeedUpCommand<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'../tmp'</span><span class="token punctuation">)</span>
+
+<span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">'命令模式 测试'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">'开/关 测试'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token comment">//receiver 创建命令的具体对象 涡轮  真正命令执行的对象</span>
+    <span class="token keyword">var</span> turbine <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Turbine</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment">//invoker 调用者 使用命令对象入口</span>
+    <span class="token keyword">const</span> onCommand <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">OnCommand</span><span class="token punctuation">(</span>turbine<span class="token punctuation">)</span>
+    <span class="token comment">//command 驾驶舱 </span>
+    <span class="token keyword">const</span> cockpit <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Cockpit</span><span class="token punctuation">(</span>onCommand<span class="token punctuation">)</span>
+    cockpit<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token function">expect</span><span class="token punctuation">(</span>turbine<span class="token punctuation">.</span>state<span class="token punctuation">)</span><span class="token punctuation">.</span>to<span class="token punctuation">.</span>be<span class="token punctuation">.</span><span class="token boolean">true</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">'加减速 测试'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token comment">//先开启后加速</span>
+    <span class="token keyword">var</span> turbine <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Turbine</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">const</span> onCommand <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">OnCommand</span><span class="token punctuation">(</span>turbine<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">var</span> cockpit <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Cockpit</span><span class="token punctuation">(</span>onCommand<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    cockpit<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">const</span> speedUpCommand <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SpeedUpCommand</span><span class="token punctuation">(</span>turbine<span class="token punctuation">)</span>
+    cockpit <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Cockpit</span><span class="token punctuation">(</span>speedUpCommand<span class="token punctuation">)</span>
+    cockpit<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token function">expect</span><span class="token punctuation">(</span>turbine<span class="token punctuation">.</span>speed<span class="token punctuation">)</span><span class="token punctuation">.</span>to<span class="token punctuation">.</span><span class="token function">equal</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>es6实现</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">class</span> <span class="token class-name">Cockpit</span> <span class="token punctuation">{</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">command</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>command <span class="token operator">=</span> command
+    <span class="token punctuation">}</span>
+    <span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>command<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Turbine</span> <span class="token punctuation">{</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>state <span class="token operator">=</span> <span class="token boolean">false</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>speed <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">on</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>state <span class="token operator">=</span> <span class="token boolean">true</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>speed <span class="token operator">=</span> <span class="token number">100</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">off</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>state <span class="token operator">=</span> <span class="token boolean">false</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>speed <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">speedDown</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">)</span> <span class="token keyword">return</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>speed <span class="token operator">-=</span> <span class="token number">100</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">speedUp</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">)</span> <span class="token keyword">return</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>speed <span class="token operator">+=</span> <span class="token number">100</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">OnCommand</span> <span class="token punctuation">{</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">turbine</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>turbine <span class="token operator">=</span> turbine
+    <span class="token punctuation">}</span>
+    <span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>turbine<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">OffCommand</span> <span class="token punctuation">{</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">turbine</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>turbine <span class="token operator">=</span> turbine
+    <span class="token punctuation">}</span>
+    <span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>turbine<span class="token punctuation">.</span><span class="token function">off</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">SpeedUpCommand</span> <span class="token punctuation">{</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">turbine</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>turbine <span class="token operator">=</span> turbine
+    <span class="token punctuation">}</span>
+    <span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>turbine<span class="token punctuation">.</span><span class="token function">speedUp</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">SpeedDownCommand</span> <span class="token punctuation">{</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">turbine</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>turbine <span class="token operator">=</span> turbine
+    <span class="token punctuation">}</span>
+    <span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>turbine<span class="token punctuation">.</span><span class="token function">speedDown</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token keyword">export</span> <span class="token punctuation">{</span> Cockpit<span class="token punctuation">,</span> Turbine<span class="token punctuation">,</span> OffCommand<span class="token punctuation">,</span> OnCommand<span class="token punctuation">,</span> SpeedDownCommand<span class="token punctuation">,</span> SpeedUpCommand <span class="token punctuation">}</span>
+</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> expect <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'chai'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>expect
+<span class="token keyword">import</span> <span class="token punctuation">{</span> Cockpit<span class="token punctuation">,</span> Turbine<span class="token punctuation">,</span> OffCommand<span class="token punctuation">,</span> OnCommand<span class="token punctuation">,</span> SpeedDownCommand<span class="token punctuation">,</span> SpeedUpCommand <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'../tmp'</span>
+
+<span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">'命令模式 es6测试'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">'开/关 测试'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token comment">//receiver 创建命令的具体对象 涡轮  真正命令执行的对象</span>
+        <span class="token keyword">var</span> turbine <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Turbine</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token comment">//invoker 调用者 使用命令对象入口</span>
+        <span class="token keyword">const</span> onCommand <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">OnCommand</span><span class="token punctuation">(</span>turbine<span class="token punctuation">)</span>
+        <span class="token comment">//command 驾驶舱 </span>
+        <span class="token keyword">const</span> cockpit <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Cockpit</span><span class="token punctuation">(</span>onCommand<span class="token punctuation">)</span>
+        cockpit<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token function">expect</span><span class="token punctuation">(</span>turbine<span class="token punctuation">.</span>state<span class="token punctuation">)</span><span class="token punctuation">.</span>to<span class="token punctuation">.</span>be<span class="token punctuation">.</span><span class="token boolean">true</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">'加减速 测试'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token comment">//先开启后加速</span>
+        <span class="token keyword">var</span> turbine <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Turbine</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">const</span> onCommand <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">OnCommand</span><span class="token punctuation">(</span>turbine<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">var</span> cockpit <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Cockpit</span><span class="token punctuation">(</span>onCommand<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        cockpit<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">const</span> speedUpCommand <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SpeedUpCommand</span><span class="token punctuation">(</span>turbine<span class="token punctuation">)</span>
+        cockpit <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Cockpit</span><span class="token punctuation">(</span>speedUpCommand<span class="token punctuation">)</span>
+        cockpit<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token function">expect</span><span class="token punctuation">(</span>turbine<span class="token punctuation">.</span>speed<span class="token punctuation">)</span><span class="token punctuation">.</span>to<span class="token punctuation">.</span><span class="token function">equal</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
 </code></pre></div><h3 id="_3-3-解释器模式-interpreter"><a href="#_3-3-解释器模式-interpreter" class="header-anchor">#</a> 3.3 解释器模式(interpreter)</h3> <ul><li></li></ul> <div class="language-js extra-class"><pre class="language-js"><code>
 </code></pre></div><div class="language-js extra-class"><pre class="language-js"><code>
 </code></pre></div><p>es6实现</p> <div class="language-js extra-class"><pre class="language-js"><code>
@@ -1329,7 +1513,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 </code></pre></div><div class="language-js extra-class"><pre class="language-js"><code>
 </code></pre></div><p>es6实现</p> <div class="language-js extra-class"><pre class="language-js"><code>
 </code></pre></div><div class="language-js extra-class"><pre class="language-js"><code>
-</code></pre></div></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">8/31/2022, 6:52:49 AM</span></div></footer> <!----> </main></div><div class="global-ui"><!----></div></div>
-    <script src="/assets/js/app.a265e921.js" defer></script><script src="/assets/js/2.de29bcd8.js" defer></script><script src="/assets/js/10.a68f9281.js" defer></script>
+</code></pre></div></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">8/31/2022, 8:10:09 AM</span></div></footer> <!----> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.5746a655.js" defer></script><script src="/assets/js/2.de29bcd8.js" defer></script><script src="/assets/js/10.5e90e00e.js" defer></script>
   </body>
 </html>
