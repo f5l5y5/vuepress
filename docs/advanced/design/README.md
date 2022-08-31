@@ -1080,21 +1080,82 @@ describe('组合模式 es6测试', () => {
   })
 ```
 ### 2.7 享元模式(flyweight)
-- 
+- 一个系统中如果有多个相同的对象，那么只共享一份就可以了，不必每个都去实例化一个对象。
+  - 比如说一个文本系统，每个字母定一个对象，那么大小写字母一共就是52个，那么就要定义52个对象。如果有一个1M的文本，那么字母是何其的多，如果每个字母都定义一个对象那么内存早就爆了。那么如果要是每个字母都共享一个对象，那么就大大节约了资源。
 ```js
-
+function Color(name){
+    this.name = name
+}
+//使用对象池存放内部的状态对象，如果存在直接返回没有则创建
+var colorFactory = {
+    colors:{},
+    create:function(name){
+        var color = this.colors[name]
+        if(color) return color
+        this.colors[name] = new Color(name)
+        return this.colors[name]
+    }
+}
+module.exports = colorFactory
 ```
 
 ```js
+const expect = require('chai').expect
+const colorFactory = require('../tmp')
 
+describe('享元模式 测试', () => {
+  it('重复颜色', () => {
+    colorFactory.create('RED')
+    colorFactory.create('RED')
+    colorFactory.create('RED')
+    colorFactory.create('YELLOW')
+    colorFactory.create('YELLOW')
+
+    expect(Object.keys(colorFactory.colors)).to.have.lengthOf(2)
+  })
+
+})
 ```
 es6实现
 ```js
+class Color {
+    constructor(name) {
+        this.name = name
+    }
+}
+
+class colorFactory {
+    constructor(name) {
+        this.colors = {}
+    }
+    create(name) {
+        let color = this.colors[name]
+        if (color) return color
+        this.colors[name] = new Color(name)
+        return this.colors[name]
+    }
+}
+
+export { colorFactory }
 
 ```
 
 ```js
+const expect = require('chai').expect
+import { colorFactory } from '../tmp'
 
+describe('享元模式 es6测试', () => {
+    it('重复颜色', () => {
+        const cf = new colorFactory()
+        cf.create('RED')
+        cf.create('RED')
+        cf.create('YELLOW')
+        cf.create('YELLOW')
+
+        expect(Object.keys(cf.colors)).to.have.lengthOf(2)
+    })
+
+})
 ```
 
 ## 3.行为型模式(behavioral 11)
