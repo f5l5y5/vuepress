@@ -1668,21 +1668,81 @@ describe('解释器模式 es6测试', () => {
 ```
 
 ### 3.4 迭代器模式(iterator)
-- 
+- 提供一种方法顺序访问一个聚合对象中各个元素, 而又无须暴露该对象的内部表示。
 ```js
+function Iterator(el) {
+    this.index = 0
+    this.elements = el
+}
 
+Iterator.prototype = {
+    next: function () {
+        return this.elements[this.index++]
+    },
+    hasNext: function () {
+        return this.index < this.elements.length
+    }
+}
+
+module.exports = Iterator
 ```
 
 ```js
+const expect = require('chai').expect
+const Iterator = require('../tmp')
 
+describe('迭代器模式 测试', () => {
+  it('遍历', () => {
+    test(Iterator)
+  })
+
+})
+
+function test(Iterator) {
+  var numbers = new Iterator([1, 2, 3])
+  expect(numbers.next()).to.equal(1);
+  expect(numbers.next()).to.equal(2);
+  expect(numbers.next()).to.equal(3);
+  expect(numbers.hasNext()).to.false;
+}
 ```
 es6实现
 ```js
+class Iterator {
+    constructor(el) {
+        this.index = 0
+        this.elements = el
+    }
+    next() {
+        return this.elements[this.index++];
+    }
 
+    hasNext() {
+        return this.index < this.elements.length;
+    }
+}
+
+export { Iterator }
 ```
 
 ```js
+const expect = require('chai').expect
+import {Iterator}  from '../tmp'
 
+describe('迭代器模式 es6测试', () => {
+  it('遍历', () => {
+    test(Iterator)
+  })
+
+})
+
+function test(Iterator) {
+  var numbers = new Iterator([1, 2, 3])
+  expect(numbers.next()).to.equal(1);
+  expect(numbers.next()).to.equal(2);
+  expect(numbers.next()).to.equal(3);
+  expect(numbers.hasNext()).to.false;
+}
 ```
 
 ### 3.5 中介者模式(mediator)
