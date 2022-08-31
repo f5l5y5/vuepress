@@ -65,7 +65,7 @@ module.exports = {
                 ]
             },
             {
-                text: '博客地址',
+                text: 'Github',
                 items: [
                     { text: 'Github', link: 'https://github.com/f5l5y5/vuepress' }
                 ]
