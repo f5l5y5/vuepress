@@ -920,24 +920,166 @@ describe('桥接模式 es6测试', () => {
     })
 })
 ```
-### 2.6
-- 
+### 2.6 组合模式(composite)
+- 将对象组合成树形结构以表示‘部分-整体’的层次结构。组合模式使得用户对单个对象和组合对象的使用具有一致性。
+- 例如 办了一张永辉超市充值卡 它可以在任何门店进行消费 组合抽象类-leaf-composite
 ```js
+//组合抽象类
+function EquipmentComposition(name) {
+    this.equipments = []
+    this.name = name
+}
 
+EquipmentComposition.prototype.add = function (equipment) {
+    this.equipments.push(equipment)
+}
+
+EquipmentComposition.prototype.getPrice = function () {
+    return this.equipments.map(function (equipment) {
+        return equipment.getPrice()
+    }).reduce(function (a, b) {
+        return a + b
+    })
+}
+
+// 设备
+function Equipment() { }
+Equipment.prototype.getPrice = function () {
+    return this.price
+}
+
+// --leaf 
+//软盘
+function FloppyDisk() {
+    this.name = 'Floppy Disk'
+    this.price = 70
+}
+FloppyDisk.prototype = Object.create(Equipment.prototype)
+
+//硬盘
+function HardDrive() {
+    this.name = "Hard Drive"
+    this.price = 250
+}
+HardDrive.prototype = Object.create(Equipment.prototype)
+//内存
+function Memory() {
+    this.name = '8gb memory'
+    this.price = 280
+}
+Memory.prototype = Object.create(Equipment.prototype)
+
+module.exports = [EquipmentComposition, FloppyDisk, HardDrive, Memory]
 ```
 
 ```js
+const expect = require('chai').expect
+const [EquipmentComposition, FloppyDisk, HardDrive, Memory] = require('../tmp')
 
+describe('组合模式 测试', () => {
+  it('机箱添加硬件 获取总价', () => {
+    var cabinet = new EquipmentComposition("cabinet")
+    cabinet.add(new FloppyDisk())
+    cabinet.add(new HardDrive())
+    cabinet.add(new Memory())
+
+    expect(cabinet.getPrice()).to.equal(600)
+
+  })
+
+})
 ```
 es6实现
 ```js
+//组合抽象类
+class Equipment {
+    getPrice() {
+        return this.price || 0
+    }
+    getName() {
+        return this.name
+    }
+    setName(name) {
+        this.name = name
+    }
+}
 
+// composite
+class Composite extends Equipment {
+    constructor() {
+        super()
+        this.equipments = []
+    }
+    add(equipment) {
+        this.equipments.push(equipment)
+    }
+    getPrice() {
+        return this.equipments.map(equipment => {
+            return equipment.getPrice();
+        }).reduce((a, b) => {
+            return a + b;
+        });
+    }
+
+}
+
+class Cabinet extends Composite{
+    constructor(){
+        super()
+        this.setName('cabinet')
+    }
+}
+
+// --leaf
+class FloppyDisk extends Equipment{
+    constructor(){
+        super()
+        this.setName('Floppy Disk')
+        this.price = 70
+    }
+}
+
+class HardDrive extends Equipment {
+    constructor(){
+        super()
+        this.setName('Hard Drive')
+        this.price = 250
+    }
+}
+
+class Memory extends Equipment{
+    constructor(){
+        super()
+        this.setName('Memory')
+        this.price = 280
+    }
+}
+export { Cabinet,FloppyDisk,HardDrive,Memory }
 ```
 
 ```js
+const expect = require('chai').expect
+import {
+    Cabinet,
+    FloppyDisk,
+    HardDrive,
+    Memory
+} from '../tmp'
 
+describe('组合模式 es6测试', () => {
+    it('设备添加硬件 获取总价', () => {
+      var cabinet = new Cabinet("cabinet")
+      cabinet.add(new FloppyDisk())
+      cabinet.add(new HardDrive())
+      cabinet.add(new Memory())
+  
+      expect(cabinet.getPrice()).to.equal(600)
+  
+    })
+  
+  })
 ```
-### 2.7
+### 2.7 享元模式(flyweight)
 - 
 ```js
 
