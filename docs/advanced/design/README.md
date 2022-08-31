@@ -1579,21 +1579,92 @@ describe('命令模式 es6测试', () => {
 ```
 
 ### 3.3 解释器模式(interpreter)
-- 
+- 给定一个语言，定义它的文法表示，并定义一个解释器，这个解释器使用该标识来解释语言中的句子。
 ```js
+function Sum(left, right) {
+    this.left = left
+    this.right = right
+}
+Sum.prototype.interpret = function () {
+    return this.left.interpret() + this.right.interpret()
+}
 
+function Min(left, right) {
+    this.left = left
+    this.right = right
+}
+
+Min.prototype.interpret = function () {
+    return this.left.interpret() - this.right.interpret()
+}
+
+function Num(val) {
+    this.val = val
+}
+Num.prototype.interpret = function () {
+    return this.val
+}
+
+module.exports = [Num, Min, Sum]
 ```
 
 ```js
+const expect = require('chai').expect
+const [Num, Min, Sum] = require('../tmp')
 
+describe('解释器模式 测试', () => {
+  it('加', () => {
+    var result = new Sum(new Num(100), new Min(new Num(100), new Num(50)))
+
+    expect(result.interpret()).to.equal(150)
+  })
+
+})
 ```
 es6实现
 ```js
+class Sum {
+    constructor(left, right) {
+        this.left = left
+        this.right = right
+    }
+    interpret() {
+        return this.left.interpret() + this.right.interpret()
+    }
+}
+class Min {
+    constructor(left, right) {
+        this.left = left
+        this.right = right
+    }
+    interpret() {
+        return this.left.interpret() - this.right.interpret()
+    }
+}
+class Num {
+    constructor(val) {
+        this.val = val
+    }
+    interpret() {
+        return this.val
+    }
+}
 
+export { Num, Min, Sum }
 ```
 
 ```js
+const expect = require('chai').expect
+import {Num, Min, Sum} from '../tmp'
 
+describe('解释器模式 es6测试', () => {
+  it('加', () => {
+    var result = new Sum(new Num(100), new Min(new Num(100), new Num(50)))
+
+    expect(result.interpret()).to.equal(150)
+  })
+
+})
 ```
 
 ### 3.4 迭代器模式(iterator)

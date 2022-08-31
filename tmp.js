@@ -1,67 +1,28 @@
-class Cockpit {
-    constructor(command) {
-        this.command = command
+class Sum {
+    constructor(left, right) {
+        this.left = left
+        this.right = right
     }
-    execute() {
-        this.command.execute()
+    interpret() {
+        return this.left.interpret() + this.right.interpret()
+    }
+}
+class Min {
+    constructor(left, right) {
+        this.left = left
+        this.right = right
+    }
+    interpret() {
+        return this.left.interpret() - this.right.interpret()
+    }
+}
+class Num {
+    constructor(val) {
+        this.val = val
+    }
+    interpret() {
+        return this.val
     }
 }
 
-class Turbine {
-    constructor() {
-        this.state = false
-        this.speed = 0
-    }
-    on() {
-        this.state = true
-        this.speed = 100
-    }
-    off() {
-        this.state = false
-        this.speed = 0
-    }
-    speedDown() {
-        if (!this.state) return
-        this.speed -= 100
-    }
-    speedUp() {
-        if (!this.state) return
-        this.speed += 100
-    }
-}
-
-class OnCommand {
-    constructor(turbine) {
-        this.turbine = turbine
-    }
-    execute() {
-        this.turbine.on()
-    }
-}
-class OffCommand {
-    constructor(turbine) {
-        this.turbine = turbine
-    }
-    execute() {
-        this.turbine.off()
-    }
-}
-class SpeedUpCommand {
-    constructor(turbine) {
-        this.turbine = turbine
-    }
-    execute() {
-        this.turbine.speedUp()
-    }
-}
-class SpeedDownCommand {
-    constructor(turbine) {
-        this.turbine = turbine
-    }
-    execute() {
-        this.turbine.speedDown()
-    }
-}
-
-
-export { Cockpit, Turbine, OffCommand, OnCommand, SpeedDownCommand, SpeedUpCommand }
+export { Num, Min, Sum }
