@@ -793,22 +793,132 @@ describe('外观模式 es6测试', () => {
   })
 })
 ```
-### 2.5
-- 
+### 2.5 桥接模式(bridge)
+- 通过组合的方式建立两个类之间的联系,而不是继承。将抽 象和实现解耦，让它们可以独立变化。
 ```js
+// 将基础什么材料生产的进行说明
+function EpsonPrinter(ink){
+    this.ink = ink()
+}
+EpsonPrinter.prototype.print = function(){
+    return "Printer: Epson, Ink: " + this.ink
+}
+
+function HPprinter(ink){
+    this.ink = ink()
+}
+HPprinter.prototype.print = function(){
+    return "Printer: HP, Ink: " + this.ink
+}
+// 基于丙烯酸
+function acrylicInk(){
+    return "acrylic-based"
+}
+//基于活性炭
+function alcoholInk(){
+    return "alcohol-based"
+}
+
+module.exports = [EpsonPrinter, HPprinter, acrylicInk, alcoholInk]
 
 ```
 
 ```js
+const expect = require('chai').expect
+const [EpsonPrinter, HPprinter, acrylicInk, alcoholInk] = require('../tmp')
 
+describe('桥接模式测试', () => {
+  it('爱普生打印机', () => {
+    const printer = new EpsonPrinter(alcoholInk)
+    const result = printer.print()
+
+    expect(result).to.equal("Printer: Epson, Ink: alcohol-based")
+  })
+  it('惠普打印机', () => {
+    const printer = new HPprinter(acrylicInk)
+    const result = printer.print()
+
+    expect(result).to.equal("Printer: HP, Ink: acrylic-based")
+  })
+})
 ```
 es6实现
 ```js
+class Printer {
+    constructor(ink) {
+        this.ink = ink
+    }
+}
 
+class EpsonPrinter extends Printer {
+    constructor(ink) {
+        super(ink)
+    }
+    print() {
+        return "Printer: Epson, Ink: " + this.ink.get();
+    }
+}
+
+class HPprinter extends Printer {
+    constructor(ink) {
+        super(ink)
+    }
+    print() {
+        return "Printer: HP, Ink: " + this.ink.get();
+    }
+}
+
+class Ink {
+    constructor(type) {
+        this.type = type
+    }
+    get() {
+        return this.type
+    }
+}
+
+class AcrylicInk extends Ink {
+    constructor() {
+        super("acrylic-based")
+    }
+}
+class AlcoholInk extends Ink {
+    constructor() {
+        super("alcohol-based")
+    }
+}
+
+export {
+    EpsonPrinter,
+    HPprinter,
+    AcrylicInk,
+    AlcoholInk
+}
 ```
 
 ```js
+const expect = require('chai').expect
+import {
+    EpsonPrinter,
+    HPprinter,
+    AcrylicInk,
+    AlcoholInk
+} from '../tmp'
 
+describe('桥接模式 es6测试', () => {
+    it('爱普生打印机', () => {
+        const printer = new EpsonPrinter(new AlcoholInk())
+        const result = printer.print()
+
+        expect(result).to.equal("Printer: Epson, Ink: alcohol-based")
+    })
+    it('惠普打印机', () => {
+        const printer = new HPprinter(new AcrylicInk())
+        const result = printer.print()
+
+        expect(result).to.equal("Printer: HP, Ink: acrylic-based")
+    })
+})
 ```
 ### 2.6
 - 
