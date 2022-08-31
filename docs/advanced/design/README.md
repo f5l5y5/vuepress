@@ -1160,7 +1160,219 @@ describe('享元模式 es6测试', () => {
 
 ## 3.行为型模式(behavioral 11)
 
-### 3.1
+### 3.1 责任链模式(chain-of-resp)
+- 使多个对象都有机会处理请求，从而避免请求的发送者和接受者之间的耦合关系，将这个对象连成一条链，并沿着这条链传递该请求，直到有一个对象处理他为止。
+```js
+//购物车 商品 添加商品
+function ShoppingCart() {
+    this.products = []
+
+    this.addProduct = function (p) {
+        this.products.push(p)
+    }
+}
+//折扣计算 看是否满足特定的折扣 形成链n->p->none 执行起始的exec 知道有返回
+function Discount() {
+    this.calc = function (products) {
+        var ndiscount = new NumberDiscount()
+        var pdiscount = new PriceDiscount()
+        var none = new NoneDiscount()
+
+        ndiscount.setNext(pdiscount)
+        pdiscount.setNext(none)
+
+        return ndiscount.exec(products)
+    }
+}
+
+function NumberDiscount() {
+    this.next = null
+    this.setNext = function (fn) {
+        this.next = fn
+    }
+    this.exec = function (products) {
+        var result = 0
+        if (products.length > 3) result = 0.05
+
+        return result += this.next.exec(products)
+    }
+}
+
+function PriceDiscount() {
+    this.next = null
+    this.setNext = function (fn) {
+        this.next = fn
+    }
+    this.exec = function (products) {
+        var result = 0
+        var total = products.reduce(function (a, b) {
+            return a + b
+        })
+        if (total >= 500) {
+            result = 0.1
+        }
+        return result + this.next.exec(products)
+    }
+}
+
+function NoneDiscount() {
+    this.exec = function () {
+        return 0
+    }
+}
+
+module.exports = [ShoppingCart, Discount]
+```
+
+```js
+const expect = require('chai').expect
+const [ShoppingCart, Discount] = require('../tmp')
+
+describe('责任链模式 测试', () => {
+  it('购物车金额 > $500', () => {
+    const discount = new Discount()
+    const sc = new ShoppingCart()
+    sc.addProduct(1000)
+    let resp = discount.calc(sc.products)
+
+    expect(resp).to.equal(0.1)
+  })
+  it('大于三个商品', () => {
+    const discount = new Discount()
+    const sc = new ShoppingCart()
+    sc.addProduct(100)
+    sc.addProduct(100)
+    sc.addProduct(100)
+    sc.addProduct(100)
+    let resp = discount.calc(sc.products)
+    expect(resp).to.equal(0.05)
+  })
+  it('大于三个商品并且 >$500', () => {
+    const discount = new Discount()
+    const sc = new ShoppingCart()
+    sc.addProduct(1000)
+    sc.addProduct(100)
+    sc.addProduct(100)
+    sc.addProduct(100)
+    let resp = discount.calc(sc.products)
+    expect(resp.toFixed(2)).to.equal('0.15')
+  })
+
+})
+```
+es6实现
+```js
+class ShoppingCart {
+    constructor() {
+        this.products = []
+    }
+
+    addProduct(p) {
+        this.products.push(p)
+    }
+}
+
+class Discount {
+    calc(products) {
+        let ndiscount = new NumberDiscount();
+        let pdiscount = new PriceDiscount();
+        let none = new NoneDiscount();
+        ndiscount.setNext(pdiscount);
+        pdiscount.setNext(none);
+        return ndiscount.exec(products);
+    }
+}
+
+class NumberDiscount {
+
+    constructor() {
+        this.next = null;
+    }
+
+    setNext(fn) {
+        this.next = fn;
+    };
+
+    exec(products) {
+        let result = 0;
+        if (products.length > 3)
+            result = 0.05;
+
+        return result + this.next.exec(products);
+    };
+}
+
+class PriceDiscount {
+
+    constructor() {
+        this.next = null;
+    }
+
+    setNext(fn) {
+        this.next = fn;
+    };
+
+    exec(products) {
+        let result = 0;
+        let total = products.reduce((a, b) => a + b);
+
+        if (total >= 500)
+            result = 0.1;
+
+        return result + this.next.exec(products);
+    };
+}
+
+class NoneDiscount {
+    exec() {
+        return 0;
+    };
+}
+
+export {
+    ShoppingCart,
+    Discount
+};
+```
+
+```js
+const expect = require('chai').expect
+import { ShoppingCart, Discount } from '../tmp'
+
+describe('责任链模式 es6测试', () => {
+  it('购物车金额 > $500', () => {
+    const discount = new Discount()
+    const sc = new ShoppingCart()
+    sc.addProduct(1000)
+    let resp = discount.calc(sc.products)
+
+    expect(resp).to.equal(0.1)
+  })
+  it('大于三个商品', () => {
+    const discount = new Discount()
+    const sc = new ShoppingCart()
+    sc.addProduct(100)
+    sc.addProduct(100)
+    sc.addProduct(100)
+    sc.addProduct(100)
+    let resp = discount.calc(sc.products)
+    expect(resp).to.equal(0.05)
+  })
+  it('大于三个商品并且 >$500', () => {
+    const discount = new Discount()
+    const sc = new ShoppingCart()
+    sc.addProduct(1000)
+    sc.addProduct(100)
+    sc.addProduct(100)
+    sc.addProduct(100)
+    let resp = discount.calc(sc.products)
+    expect(resp.toFixed(2)).to.equal('0.15')
+  })
+
+})
+```
+
+### 3.2 命令模式(command)
 - 
 ```js
 
@@ -1178,7 +1390,7 @@ es6实现
 
 ```
 
-### 3.2
+### 3.3 解释器模式(interpreter)
 - 
 ```js
 
@@ -1196,7 +1408,7 @@ es6实现
 
 ```
 
-### 3.3
+### 3.4 迭代器模式(iterator)
 - 
 ```js
 
@@ -1214,7 +1426,7 @@ es6实现
 
 ```
 
-### 3.4
+### 3.5 中介者模式(mediator)
 - 
 ```js
 
@@ -1232,7 +1444,7 @@ es6实现
 
 ```
 
-### 3.5
+### 3.6 备忘录模式(memento)
 - 
 ```js
 
@@ -1250,7 +1462,7 @@ es6实现
 
 ```
 
-### 3.6
+### 3.7 观察者模式(observer)
 - 
 ```js
 
@@ -1268,7 +1480,7 @@ es6实现
 
 ```
 
-### 3.7
+### 3.8 状态模式(state)
 - 
 ```js
 
@@ -1286,7 +1498,7 @@ es6实现
 
 ```
 
-### 3.8
+### 3.9 策略模式(strategy)
 - 
 ```js
 
@@ -1304,7 +1516,7 @@ es6实现
 
 ```
 
-### 3.9
+### 3.10 模板方法模式(template)
 - 
 ```js
 
@@ -1322,25 +1534,7 @@ es6实现
 
 ```
 
-### 3.1
-- 
-```js
-
-```
-
-```js
-
-```
-es6实现
-```js
-
-```
-
-```js
-
-```
-
-### 3.1
+### 3.11 访问者模式(visitor)
 - 
 ```js
 
