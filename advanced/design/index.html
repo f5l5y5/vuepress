@@ -8,7 +8,7 @@
     
     <meta name="description" content="">
     
-    <link rel="preload" href="/assets/css/0.styles.27274be1.css" as="style"><link rel="preload" href="/assets/js/app.3a6096ea.js" as="script"><link rel="preload" href="/assets/js/2.de29bcd8.js" as="script"><link rel="preload" href="/assets/js/10.882ab537.js" as="script"><link rel="prefetch" href="/assets/js/11.33759508.js"><link rel="prefetch" href="/assets/js/12.20352dbb.js"><link rel="prefetch" href="/assets/js/13.a4588d20.js"><link rel="prefetch" href="/assets/js/14.a77e8638.js"><link rel="prefetch" href="/assets/js/15.6074f0fb.js"><link rel="prefetch" href="/assets/js/16.b7d86094.js"><link rel="prefetch" href="/assets/js/17.5ba80938.js"><link rel="prefetch" href="/assets/js/18.ee56d860.js"><link rel="prefetch" href="/assets/js/19.f89f8c71.js"><link rel="prefetch" href="/assets/js/20.0533b408.js"><link rel="prefetch" href="/assets/js/21.b5189103.js"><link rel="prefetch" href="/assets/js/22.577b1386.js"><link rel="prefetch" href="/assets/js/23.54f79420.js"><link rel="prefetch" href="/assets/js/24.d2e6aecd.js"><link rel="prefetch" href="/assets/js/25.62a510c5.js"><link rel="prefetch" href="/assets/js/26.6e3caa9d.js"><link rel="prefetch" href="/assets/js/27.d05cf161.js"><link rel="prefetch" href="/assets/js/28.f1294312.js"><link rel="prefetch" href="/assets/js/29.d398984d.js"><link rel="prefetch" href="/assets/js/3.4a1c3e08.js"><link rel="prefetch" href="/assets/js/30.c6905fa7.js"><link rel="prefetch" href="/assets/js/31.321dd25a.js"><link rel="prefetch" href="/assets/js/32.a109380f.js"><link rel="prefetch" href="/assets/js/33.d370b5a3.js"><link rel="prefetch" href="/assets/js/4.734c6949.js"><link rel="prefetch" href="/assets/js/5.3d1ff5d4.js"><link rel="prefetch" href="/assets/js/6.efae1bb5.js"><link rel="prefetch" href="/assets/js/7.b5203b54.js"><link rel="prefetch" href="/assets/js/8.bc2817d6.js"><link rel="prefetch" href="/assets/js/9.9fde9d45.js">
+    <link rel="preload" href="/assets/css/0.styles.27274be1.css" as="style"><link rel="preload" href="/assets/js/app.1f4d334f.js" as="script"><link rel="preload" href="/assets/js/2.de29bcd8.js" as="script"><link rel="preload" href="/assets/js/10.9b71cc68.js" as="script"><link rel="prefetch" href="/assets/js/11.33759508.js"><link rel="prefetch" href="/assets/js/12.20352dbb.js"><link rel="prefetch" href="/assets/js/13.a4588d20.js"><link rel="prefetch" href="/assets/js/14.a77e8638.js"><link rel="prefetch" href="/assets/js/15.6074f0fb.js"><link rel="prefetch" href="/assets/js/16.b7d86094.js"><link rel="prefetch" href="/assets/js/17.5ba80938.js"><link rel="prefetch" href="/assets/js/18.ee56d860.js"><link rel="prefetch" href="/assets/js/19.f89f8c71.js"><link rel="prefetch" href="/assets/js/20.0533b408.js"><link rel="prefetch" href="/assets/js/21.b5189103.js"><link rel="prefetch" href="/assets/js/22.577b1386.js"><link rel="prefetch" href="/assets/js/23.54f79420.js"><link rel="prefetch" href="/assets/js/24.d2e6aecd.js"><link rel="prefetch" href="/assets/js/25.62a510c5.js"><link rel="prefetch" href="/assets/js/26.6e3caa9d.js"><link rel="prefetch" href="/assets/js/27.d05cf161.js"><link rel="prefetch" href="/assets/js/28.f1294312.js"><link rel="prefetch" href="/assets/js/29.d398984d.js"><link rel="prefetch" href="/assets/js/3.4a1c3e08.js"><link rel="prefetch" href="/assets/js/30.c6905fa7.js"><link rel="prefetch" href="/assets/js/31.321dd25a.js"><link rel="prefetch" href="/assets/js/32.a109380f.js"><link rel="prefetch" href="/assets/js/33.d370b5a3.js"><link rel="prefetch" href="/assets/js/4.734c6949.js"><link rel="prefetch" href="/assets/js/5.3d1ff5d4.js"><link rel="prefetch" href="/assets/js/6.efae1bb5.js"><link rel="prefetch" href="/assets/js/7.b5203b54.js"><link rel="prefetch" href="/assets/js/8.bc2817d6.js"><link rel="prefetch" href="/assets/js/9.9fde9d45.js">
     <link rel="stylesheet" href="/assets/css/0.styles.27274be1.css">
   </head>
   <body>
@@ -1779,10 +1779,139 @@ module<span class="token punctuation">.</span>exports <span class="token operato
   <span class="token punctuation">}</span><span class="token punctuation">)</span>
 
 <span class="token punctuation">}</span><span class="token punctuation">)</span>
-</code></pre></div><h3 id="_3-7-观察者模式-observer"><a href="#_3-7-观察者模式-observer" class="header-anchor">#</a> 3.7 观察者模式(observer)</h3> <ul><li></li></ul> <div class="language-js extra-class"><pre class="language-js"><code>
-</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code>
-</code></pre></div><p>es6实现</p> <div class="language-js extra-class"><pre class="language-js"><code>
-</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code>
+</code></pre></div><h3 id="_3-7-观察者模式-observer"><a href="#_3-7-观察者模式-observer" class="header-anchor">#</a> 3.7 观察者模式(observer)</h3> <ul><li>定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。</li></ul> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">//定义对象价格 收集订阅者</span>
+<span class="token keyword">function</span> <span class="token function">Product</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>price <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>actions <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// 每次价格改变 通知订阅者</span>
+<span class="token class-name">Product</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">setBasePrice</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">val</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>price <span class="token operator">=</span> val
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">notifyAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// 订阅</span>
+<span class="token class-name">Product</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">register</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">observer</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>actions<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>observer<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// 取消订阅</span>
+<span class="token class-name">Product</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">unregister</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">observer</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>actions <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>actions<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">el</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> el <span class="token operator">!==</span> observer
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// 通知所有的依赖进行更新</span>
+<span class="token class-name">Product</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">notifyAll</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>actions<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">el</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        el<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">var</span> fees <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token function-variable function">update</span><span class="token operator">:</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">product</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        product<span class="token punctuation">.</span>price <span class="token operator">=</span> product<span class="token punctuation">.</span>price <span class="token operator">*</span> <span class="token number">1.2</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">var</span> proft <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token function-variable function">update</span><span class="token operator">:</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">product</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        product<span class="token punctuation">.</span>price <span class="token operator">=</span> product<span class="token punctuation">.</span>price <span class="token operator">*</span> <span class="token number">2</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">[</span>Product<span class="token punctuation">,</span> fees<span class="token punctuation">,</span> proft<span class="token punctuation">]</span>
+</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> expect <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'chai'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>expect
+<span class="token keyword">const</span> <span class="token punctuation">[</span>Product<span class="token punctuation">,</span> fees<span class="token punctuation">,</span> proft<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'../tmp'</span><span class="token punctuation">)</span>
+<span class="token comment">/**
+ * @describe 注册变量 
+ * @param {*} p 商品
+ * @param {*} f 费用
+ * @param {*} t 
+ * @returns 
+ */</span>
+<span class="token keyword">function</span> <span class="token function">register</span><span class="token punctuation">(</span><span class="token parameter">p<span class="token punctuation">,</span> f<span class="token punctuation">,</span> t</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  p<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span>
+  p<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span>
+  <span class="token keyword">return</span> p
+<span class="token punctuation">}</span>
+
+<span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">'观察者模式 测试'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">'订阅者触发'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> product <span class="token operator">=</span> <span class="token function">register</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Product</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> fees<span class="token punctuation">,</span> proft<span class="token punctuation">)</span>
+    product<span class="token punctuation">.</span><span class="token function">setBasePrice</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span>
+    <span class="token function">expect</span><span class="token punctuation">(</span>product<span class="token punctuation">.</span>price<span class="token punctuation">)</span><span class="token punctuation">.</span>to<span class="token punctuation">.</span><span class="token function">equal</span><span class="token punctuation">(</span><span class="token number">240</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">'取消一个订阅'</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    <span class="token keyword">let</span> product <span class="token operator">=</span> <span class="token function">register</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Product</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>fees<span class="token punctuation">,</span>proft<span class="token punctuation">)</span>
+    product<span class="token punctuation">.</span><span class="token function">unregister</span><span class="token punctuation">(</span>proft<span class="token punctuation">)</span>
+
+    product<span class="token punctuation">.</span><span class="token function">setBasePrice</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span>
+    <span class="token function">expect</span><span class="token punctuation">(</span>product<span class="token punctuation">.</span>price<span class="token punctuation">)</span><span class="token punctuation">.</span>to<span class="token punctuation">.</span><span class="token function">equal</span><span class="token punctuation">(</span><span class="token number">120</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>es6实现</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">class</span> <span class="token class-name">Product</span> <span class="token punctuation">{</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>price <span class="token operator">=</span> <span class="token number">0</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>actions <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">setBasePrice</span><span class="token punctuation">(</span><span class="token parameter">val</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>price <span class="token operator">=</span> val
+        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">notifyAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">register</span><span class="token punctuation">(</span><span class="token parameter">observer</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>actions<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>observer<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">unregister</span><span class="token punctuation">(</span><span class="token parameter">observer</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>actions <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>actions<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span><span class="token parameter">el</span> <span class="token operator">=&gt;</span> <span class="token operator">!</span><span class="token punctuation">(</span>el <span class="token keyword">instanceof</span> <span class="token class-name">observer</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">notifyAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>actions<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">el</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> el<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Fees</span> <span class="token punctuation">{</span>
+    <span class="token function">update</span><span class="token punctuation">(</span><span class="token parameter">product</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        product<span class="token punctuation">.</span>price <span class="token operator">=</span> product<span class="token punctuation">.</span>price <span class="token operator">*</span> <span class="token number">1.2</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Proft</span> <span class="token punctuation">{</span>
+    <span class="token function">update</span><span class="token punctuation">(</span><span class="token parameter">product</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        product<span class="token punctuation">.</span>price <span class="token operator">=</span> product<span class="token punctuation">.</span>price <span class="token operator">*</span> <span class="token number">2</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token punctuation">{</span> Product<span class="token punctuation">,</span> Fees<span class="token punctuation">,</span> Proft <span class="token punctuation">}</span>
+</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> expect <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'chai'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>expect
+<span class="token keyword">import</span> <span class="token punctuation">{</span> Product<span class="token punctuation">,</span> Fees<span class="token punctuation">,</span> Proft <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'../tmp'</span>
+<span class="token comment">/**
+ * @describe 注册变量 
+ * @param {*} p 商品
+ * @param {*} f 费用
+ * @param {*} t 
+ * @returns 
+ */</span>
+<span class="token keyword">function</span> <span class="token function">register</span><span class="token punctuation">(</span><span class="token parameter">p<span class="token punctuation">,</span> f<span class="token punctuation">,</span> t</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  p<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span>
+  p<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span>
+  <span class="token keyword">return</span> p
+<span class="token punctuation">}</span>
+
+<span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">'观察者模式 es6测试'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">'订阅者触发'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> product <span class="token operator">=</span> <span class="token function">register</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Product</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Fees</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Proft</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    product<span class="token punctuation">.</span><span class="token function">setBasePrice</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span>
+    <span class="token function">expect</span><span class="token punctuation">(</span>product<span class="token punctuation">.</span>price<span class="token punctuation">)</span><span class="token punctuation">.</span>to<span class="token punctuation">.</span><span class="token function">equal</span><span class="token punctuation">(</span><span class="token number">240</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">'取消一个订阅'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> product <span class="token operator">=</span> <span class="token function">register</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Product</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Fees</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Proft</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    product<span class="token punctuation">.</span><span class="token function">unregister</span><span class="token punctuation">(</span>Proft<span class="token punctuation">)</span>
+
+    product<span class="token punctuation">.</span><span class="token function">setBasePrice</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span>
+    <span class="token function">expect</span><span class="token punctuation">(</span>product<span class="token punctuation">.</span>price<span class="token punctuation">)</span><span class="token punctuation">.</span>to<span class="token punctuation">.</span><span class="token function">equal</span><span class="token punctuation">(</span><span class="token number">120</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
 </code></pre></div><h3 id="_3-8-状态模式-state"><a href="#_3-8-状态模式-state" class="header-anchor">#</a> 3.8 状态模式(state)</h3> <ul><li></li></ul> <div class="language-js extra-class"><pre class="language-js"><code>
 </code></pre></div><div class="language-js extra-class"><pre class="language-js"><code>
 </code></pre></div><p>es6实现</p> <div class="language-js extra-class"><pre class="language-js"><code>
@@ -1799,7 +1928,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 </code></pre></div><div class="language-js extra-class"><pre class="language-js"><code>
 </code></pre></div><p>es6实现</p> <div class="language-js extra-class"><pre class="language-js"><code>
 </code></pre></div><div class="language-js extra-class"><pre class="language-js"><code>
-</code></pre></div></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">8/31/2022, 3:32:04 PM</span></div></footer> <!----> </main></div><div class="global-ui"><!----></div></div>
-    <script src="/assets/js/app.3a6096ea.js" defer></script><script src="/assets/js/2.de29bcd8.js" defer></script><script src="/assets/js/10.882ab537.js" defer></script>
+</code></pre></div></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">9/1/2022, 2:03:43 AM</span></div></footer> <!----> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.1f4d334f.js" defer></script><script src="/assets/js/2.de29bcd8.js" defer></script><script src="/assets/js/10.9b71cc68.js" defer></script>
   </body>
 </html>
