@@ -5,7 +5,7 @@ module.exports = {
     title: '一诺滚雪球',
     themeConfig: {
         //头部logo
-        logo: '/logo.jpeg',
+        // logo: '/logo.jpeg',
         lastUpdated: 'Last Updated', // string | boolean
         smoothScroll: true,
         nav: [
@@ -26,25 +26,30 @@ module.exports = {
                 ]
             },
             {
-                text: '构建工具',
-                items: [
-                    { text: 'webpack', link: '/build/module/webpack/' },
-                    { text: 'rollup', link: '/build/module/rollup/' },
-                    { text: 'vite', link: '/build/module/vite/' }
-                ]
-            },
-            {
-                text: 'git',
-                items: [
-                    { text: '常用命令', link: '/git/cmd/' },
-                    { text: '工作流', link: '/git/gitflow/' }
-                ]
-            },
-            {
                 text: '工程化',
                 items: [
-                    { text: '部署', link: '/engineer/deploy/' },
-                    { text: 'vuepress', link: '/engineer/vuepress/' }
+                    {
+                        text: '部署',
+                        items: [
+                            { text: 'CICD', link: '/engineer/deploy/' },
+                            { text: 'vuepress', link: '/engineer/vuepress/' },
+                        ]
+                    },
+                    {
+                        text: '构建工具',
+                        items: [
+                            { text: 'webpack', link: '/engineer/build/module/webpack/' },
+                            { text: 'rollup', link: '/engineer/build/module/rollup/' },
+                            { text: 'vite', link: '/engineer/build/module/vite/' }
+                        ]
+                    },
+                    {
+                        text: 'git',
+                        items: [
+                            { text: '常用命令', link: '/engineer/git/cmd/' },
+                            { text: '工作流', link: '/engineer/git/gitflow/' }
+                        ]
+                    }
                 ]
             },
             {
@@ -62,6 +67,12 @@ module.exports = {
                     { text: '数据结构算法', items: [{ text: '算法', link: '/advanced/algorithm/' }] },
                     { text: '', items: [{ text: '设计模式', link: '/advanced/design/' }] },
                     { text: '', items: [{ text: '重构', link: '/advanced/refactoring/' }] },
+                ]
+            },
+            {
+                text: '书籍',
+                items: [
+                    { text: '书籍清单',  link: '/books/' },
                 ]
             },
             {
@@ -124,50 +135,6 @@ module.exports = {
                     ]
                 },
             ],
-            '/build/module/': [
-                {
-                    title: 'webpack',
-                    collapsable: true,
-                    sidebarDepth: 2,
-                    children: [
-                        ['/build/module/webpack/', 'webpack笔记'],
-                    ]
-                },
-                {
-                    title: 'rollup',
-                    collapsable: true,
-                    sidebarDepth: 2,
-                    children: [
-                        ['/build/module/rollup/', 'rollup笔记'],
-                    ]
-                },
-                {
-                    title: 'vite',
-                    collapsable: true,
-                    sidebarDepth: 2,
-                    children: [
-                        ['/build/module/vite/', 'vite笔记'],
-                    ]
-                },
-            ],
-            '/git/': [
-                {
-                    title: 'Git命令',
-                    collapsable: true,
-                    sidebarDepth: 2,
-                    children: [
-                        ['/git/cmd/', '常用命令说明'],
-                    ]
-                },
-                {
-                    title: 'gitflow',
-                    collapsable: true,
-                    sidebarDepth: 2,
-                    children: [
-                        ['/git/gitflow/', '说明'],
-                    ]
-                },
-            ],
             '/engineer/': [
                 {
                     title: '部署',
@@ -183,6 +150,46 @@ module.exports = {
                     sidebarDepth: 2,
                     children: [
                         ['/engineer/vuepress/', 'vuepress笔记'],
+                    ]
+                },
+                {
+                    title: 'webpack',
+                    collapsable: true,
+                    sidebarDepth: 2,
+                    children: [
+                        ['/engineer/build/module/webpack/', 'webpack笔记'],
+                    ]
+                },
+                {
+                    title: 'rollup',
+                    collapsable: true,
+                    sidebarDepth: 2,
+                    children: [
+                        ['/engineer/build/module/rollup/', 'rollup笔记'],
+                    ]
+                },
+                {
+                    title: 'vite',
+                    collapsable: true,
+                    sidebarDepth: 2,
+                    children: [
+                        ['/engineer/build/module/vite/', 'vite笔记'],
+                    ]
+                },
+                {
+                    title: 'Git命令',
+                    collapsable: true,
+                    sidebarDepth: 2,
+                    children: [
+                        ['/engineer/git/cmd/', '常用命令说明'],
+                    ]
+                },
+                {
+                    title: 'gitflow',
+                    collapsable: true,
+                    sidebarDepth: 2,
+                    children: [
+                        ['/engineer/git/gitflow/', '说明'],
                     ]
                 },
             ],
@@ -253,6 +260,17 @@ module.exports = {
                     children: [
                         ['', '重构原则'],
                         ['/advanced/refactoring/refactoring-2', '代码重构']
+                    ]
+                },
+            ],
+            '/books/': [
+                {
+                    title: '前端书籍',
+                    collapsable: true,
+                    sidebarDepth: 2,
+                    children: [
+                        ['/books/', '清单'],
+                        ['/books/js-pattern-excise', 'js设计模式'],
                     ]
                 },
             ]
