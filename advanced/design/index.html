@@ -8,7 +8,7 @@
     
     <meta name="description" content="">
     
-    <link rel="preload" href="/assets/css/0.styles.27274be1.css" as="style"><link rel="preload" href="/assets/js/app.6cbd4f40.js" as="script"><link rel="preload" href="/assets/js/2.de29bcd8.js" as="script"><link rel="preload" href="/assets/js/10.3d3fbc78.js" as="script"><link rel="prefetch" href="/assets/js/11.33759508.js"><link rel="prefetch" href="/assets/js/12.20352dbb.js"><link rel="prefetch" href="/assets/js/13.a4588d20.js"><link rel="prefetch" href="/assets/js/14.a77e8638.js"><link rel="prefetch" href="/assets/js/15.6074f0fb.js"><link rel="prefetch" href="/assets/js/16.b7d86094.js"><link rel="prefetch" href="/assets/js/17.5ba80938.js"><link rel="prefetch" href="/assets/js/18.ee56d860.js"><link rel="prefetch" href="/assets/js/19.f89f8c71.js"><link rel="prefetch" href="/assets/js/20.0533b408.js"><link rel="prefetch" href="/assets/js/21.b5189103.js"><link rel="prefetch" href="/assets/js/22.577b1386.js"><link rel="prefetch" href="/assets/js/23.54f79420.js"><link rel="prefetch" href="/assets/js/24.d2e6aecd.js"><link rel="prefetch" href="/assets/js/25.62a510c5.js"><link rel="prefetch" href="/assets/js/26.6e3caa9d.js"><link rel="prefetch" href="/assets/js/27.d05cf161.js"><link rel="prefetch" href="/assets/js/28.f1294312.js"><link rel="prefetch" href="/assets/js/29.d398984d.js"><link rel="prefetch" href="/assets/js/3.4a1c3e08.js"><link rel="prefetch" href="/assets/js/30.c6905fa7.js"><link rel="prefetch" href="/assets/js/31.321dd25a.js"><link rel="prefetch" href="/assets/js/32.a109380f.js"><link rel="prefetch" href="/assets/js/33.d370b5a3.js"><link rel="prefetch" href="/assets/js/4.734c6949.js"><link rel="prefetch" href="/assets/js/5.3d1ff5d4.js"><link rel="prefetch" href="/assets/js/6.efae1bb5.js"><link rel="prefetch" href="/assets/js/7.b5203b54.js"><link rel="prefetch" href="/assets/js/8.bc2817d6.js"><link rel="prefetch" href="/assets/js/9.9fde9d45.js">
+    <link rel="preload" href="/assets/css/0.styles.27274be1.css" as="style"><link rel="preload" href="/assets/js/app.cd40c836.js" as="script"><link rel="preload" href="/assets/js/2.de29bcd8.js" as="script"><link rel="preload" href="/assets/js/10.1c9d90f6.js" as="script"><link rel="prefetch" href="/assets/js/11.33759508.js"><link rel="prefetch" href="/assets/js/12.20352dbb.js"><link rel="prefetch" href="/assets/js/13.a4588d20.js"><link rel="prefetch" href="/assets/js/14.a77e8638.js"><link rel="prefetch" href="/assets/js/15.6074f0fb.js"><link rel="prefetch" href="/assets/js/16.b7d86094.js"><link rel="prefetch" href="/assets/js/17.5ba80938.js"><link rel="prefetch" href="/assets/js/18.ee56d860.js"><link rel="prefetch" href="/assets/js/19.f89f8c71.js"><link rel="prefetch" href="/assets/js/20.0533b408.js"><link rel="prefetch" href="/assets/js/21.b5189103.js"><link rel="prefetch" href="/assets/js/22.577b1386.js"><link rel="prefetch" href="/assets/js/23.54f79420.js"><link rel="prefetch" href="/assets/js/24.d2e6aecd.js"><link rel="prefetch" href="/assets/js/25.62a510c5.js"><link rel="prefetch" href="/assets/js/26.6e3caa9d.js"><link rel="prefetch" href="/assets/js/27.d05cf161.js"><link rel="prefetch" href="/assets/js/28.f1294312.js"><link rel="prefetch" href="/assets/js/29.d398984d.js"><link rel="prefetch" href="/assets/js/3.4a1c3e08.js"><link rel="prefetch" href="/assets/js/30.c6905fa7.js"><link rel="prefetch" href="/assets/js/31.321dd25a.js"><link rel="prefetch" href="/assets/js/32.a109380f.js"><link rel="prefetch" href="/assets/js/33.d370b5a3.js"><link rel="prefetch" href="/assets/js/4.734c6949.js"><link rel="prefetch" href="/assets/js/5.3d1ff5d4.js"><link rel="prefetch" href="/assets/js/6.efae1bb5.js"><link rel="prefetch" href="/assets/js/7.b5203b54.js"><link rel="prefetch" href="/assets/js/8.bc2817d6.js"><link rel="prefetch" href="/assets/js/9.9fde9d45.js">
     <link rel="stylesheet" href="/assets/css/0.styles.27274be1.css">
   </head>
   <body>
@@ -2015,10 +2015,103 @@ module<span class="token punctuation">.</span>exports <span class="token operato
   <span class="token punctuation">}</span><span class="token punctuation">)</span>
 
 <span class="token punctuation">}</span><span class="token punctuation">)</span>
-</code></pre></div><h3 id="_3-9-策略模式-strategy"><a href="#_3-9-策略模式-strategy" class="header-anchor">#</a> 3.9 策略模式(strategy)</h3> <ul><li></li></ul> <div class="language-js extra-class"><pre class="language-js"><code>
-</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code>
-</code></pre></div><p>es6实现</p> <div class="language-js extra-class"><pre class="language-js"><code>
-</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code>
+</code></pre></div><h3 id="_3-9-策略模式-strategy"><a href="#_3-9-策略模式-strategy" class="header-anchor">#</a> 3.9 策略模式(strategy)</h3> <ul><li>一个类的行为或其算法可以在运行时更改。
+<ul><li>创建表示各种策略的对象和一个行为随着策略对象改变而改变的 context 对象。策略对象改变 context 对象的执行算法。</li> <li>定义一系列的算法,把它们一个个封装起来, 并且使它们可相互替换。</li></ul></li></ul> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// 策略对象 discount对应不同的折扣算法</span>
+<span class="token keyword">function</span> <span class="token function">ShoppingCart</span><span class="token punctuation">(</span><span class="token parameter">discount</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>discount <span class="token operator">=</span> discount
+    <span class="token keyword">this</span><span class="token punctuation">.</span>amount <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token punctuation">}</span>
+<span class="token class-name">ShoppingCart</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">setAmount</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">amount</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>amount <span class="token operator">=</span> amount
+<span class="token punctuation">}</span>
+<span class="token class-name">ShoppingCart</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">checkout</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">discount</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>amount<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// 策略算法</span>
+<span class="token keyword">function</span> <span class="token function">guestStrategy</span><span class="token punctuation">(</span><span class="token parameter">amount</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> amount
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">regularStrategy</span><span class="token punctuation">(</span><span class="token parameter">amount</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> amount <span class="token operator">*</span> <span class="token number">0.9</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">premiumStrategy</span><span class="token punctuation">(</span><span class="token parameter">amount</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> amount <span class="token operator">*</span> <span class="token number">0.8</span>
+<span class="token punctuation">}</span>
+
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">[</span>ShoppingCart<span class="token punctuation">,</span> guestStrategy<span class="token punctuation">,</span> regularStrategy<span class="token punctuation">,</span> premiumStrategy<span class="token punctuation">]</span>
+</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> expect <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'chai'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>expect
+<span class="token keyword">const</span> <span class="token punctuation">[</span>ShoppingCart<span class="token punctuation">,</span> guestStrategy<span class="token punctuation">,</span> regularStrategy<span class="token punctuation">,</span> premiumStrategy<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'../tmp'</span><span class="token punctuation">)</span>
+
+<span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">'策略模式 测试'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">'客人购物折扣'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> guestCart <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ShoppingCart</span><span class="token punctuation">(</span>guestStrategy<span class="token punctuation">)</span>
+    guestCart<span class="token punctuation">.</span><span class="token function">setAmount</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span>
+    <span class="token function">expect</span><span class="token punctuation">(</span>guestCart<span class="token punctuation">.</span><span class="token function">checkout</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>to<span class="token punctuation">.</span><span class="token function">equal</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">'常规折扣'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> guestCart <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ShoppingCart</span><span class="token punctuation">(</span>regularStrategy<span class="token punctuation">)</span>
+    guestCart<span class="token punctuation">.</span><span class="token function">setAmount</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span>
+    <span class="token function">expect</span><span class="token punctuation">(</span>guestCart<span class="token punctuation">.</span><span class="token function">checkout</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>to<span class="token punctuation">.</span><span class="token function">equal</span><span class="token punctuation">(</span><span class="token number">90</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">'赠品折扣'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> guestCart <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ShoppingCart</span><span class="token punctuation">(</span>premiumStrategy<span class="token punctuation">)</span>
+    guestCart<span class="token punctuation">.</span><span class="token function">setAmount</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span>
+    <span class="token function">expect</span><span class="token punctuation">(</span>guestCart<span class="token punctuation">.</span><span class="token function">checkout</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>to<span class="token punctuation">.</span><span class="token function">equal</span><span class="token punctuation">(</span><span class="token number">80</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>es6实现</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// 策略对象 discount对应不同的折扣算法</span>
+<span class="token keyword">class</span> <span class="token class-name">ShoppingCart</span> <span class="token punctuation">{</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">discount</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>discount <span class="token operator">=</span> discount
+        <span class="token keyword">this</span><span class="token punctuation">.</span>amount <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">setAmount</span><span class="token punctuation">(</span><span class="token parameter">amount</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>amount <span class="token operator">=</span> amount
+    <span class="token punctuation">}</span>
+    <span class="token function">checkout</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">discount</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>amount<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 策略算法</span>
+
+<span class="token keyword">function</span> <span class="token function">guestStrategy</span><span class="token punctuation">(</span><span class="token parameter">amount</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> amount
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">regularStrategy</span><span class="token punctuation">(</span><span class="token parameter">amount</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> amount <span class="token operator">*</span> <span class="token number">0.9</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">premiumStrategy</span><span class="token punctuation">(</span><span class="token parameter">amount</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> amount <span class="token operator">*</span> <span class="token number">0.8</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token punctuation">{</span> ShoppingCart<span class="token punctuation">,</span> guestStrategy<span class="token punctuation">,</span> regularStrategy<span class="token punctuation">,</span> premiumStrategy <span class="token punctuation">}</span>
+</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> expect <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'chai'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>expect
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ShoppingCart<span class="token punctuation">,</span> guestStrategy<span class="token punctuation">,</span> regularStrategy<span class="token punctuation">,</span> premiumStrategy <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'../tmp'</span>
+
+<span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">'策略模式 es6测试'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">'客人购物折扣'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> guestCart <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ShoppingCart</span><span class="token punctuation">(</span>guestStrategy<span class="token punctuation">)</span>
+    guestCart<span class="token punctuation">.</span><span class="token function">setAmount</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span>
+    <span class="token function">expect</span><span class="token punctuation">(</span>guestCart<span class="token punctuation">.</span><span class="token function">checkout</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>to<span class="token punctuation">.</span><span class="token function">equal</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">'常规折扣'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> guestCart <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ShoppingCart</span><span class="token punctuation">(</span>regularStrategy<span class="token punctuation">)</span>
+    guestCart<span class="token punctuation">.</span><span class="token function">setAmount</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span>
+    <span class="token function">expect</span><span class="token punctuation">(</span>guestCart<span class="token punctuation">.</span><span class="token function">checkout</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>to<span class="token punctuation">.</span><span class="token function">equal</span><span class="token punctuation">(</span><span class="token number">90</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">'赠品折扣'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> guestCart <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ShoppingCart</span><span class="token punctuation">(</span>premiumStrategy<span class="token punctuation">)</span>
+    guestCart<span class="token punctuation">.</span><span class="token function">setAmount</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span>
+    <span class="token function">expect</span><span class="token punctuation">(</span>guestCart<span class="token punctuation">.</span><span class="token function">checkout</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>to<span class="token punctuation">.</span><span class="token function">equal</span><span class="token punctuation">(</span><span class="token number">80</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
 </code></pre></div><h3 id="_3-10-模板方法模式-template"><a href="#_3-10-模板方法模式-template" class="header-anchor">#</a> 3.10 模板方法模式(template)</h3> <ul><li></li></ul> <div class="language-js extra-class"><pre class="language-js"><code>
 </code></pre></div><div class="language-js extra-class"><pre class="language-js"><code>
 </code></pre></div><p>es6实现</p> <div class="language-js extra-class"><pre class="language-js"><code>
@@ -2027,7 +2120,7 @@ module<span class="token punctuation">.</span>exports <span class="token operato
 </code></pre></div><div class="language-js extra-class"><pre class="language-js"><code>
 </code></pre></div><p>es6实现</p> <div class="language-js extra-class"><pre class="language-js"><code>
 </code></pre></div><div class="language-js extra-class"><pre class="language-js"><code>
-</code></pre></div></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">9/1/2022, 2:29:55 AM</span></div></footer> <!----> </main></div><div class="global-ui"><!----></div></div>
-    <script src="/assets/js/app.6cbd4f40.js" defer></script><script src="/assets/js/2.de29bcd8.js" defer></script><script src="/assets/js/10.3d3fbc78.js" defer></script>
+</code></pre></div></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">9/1/2022, 2:50:25 AM</span></div></footer> <!----> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.cd40c836.js" defer></script><script src="/assets/js/2.de29bcd8.js" defer></script><script src="/assets/js/10.1c9d90f6.js" defer></script>
   </body>
 </html>
