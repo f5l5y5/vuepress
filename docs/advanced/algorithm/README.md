@@ -1150,19 +1150,19 @@ dp[10] dp[9] dp[6] 三个最优解 +1
     <!-- - 92.反转链表-ii -->
     <!-- - 142.环形链表II -->
     <!-- - 160.相交链表 -->
-    <!-- - 141.环形链表 -->
+    - 141.环形链表
     - 203.移除链表元素
     - 202.快乐数
   - 位运算
     - 136.只出现一次的数字
   - 树结构
+    <!-- - 100.相同的树 -->
+    <!-- - 101.对称二叉树 -->
     - 104.二叉树的最大深度
     - 226.翻转二叉树
     - 94.二叉树的中序遍历
     - 144.二叉树的前序遍历
     - 145.二叉树的后序遍历
-    - 100.相同的树
-    - 101.对称二叉树
     - 111.二叉树的最小深度
     - 114.
     - 617.
@@ -1721,6 +1721,65 @@ var getIntersectionNode = function (headA, headB) {
         curB = curB === null ? headA : curB.next
     }
     return curB
+};
+```
+## leetCode-100. 相同的树
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} p
+ * @param {TreeNode} q
+ * @return {boolean}
+ */
+var isSameTree = function(p, q) {
+    if(p===null&&q===null){
+        return true
+    }
+    if(p===null||q===null){
+        return false
+    }
+    if(p.val!==q.val){
+        return false
+    }
+    return isSameTree(p.left,q.left)&&isSameTree(p.right,q.right)
+
+};
+```
+## leetCode-101.对称二叉树
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {boolean}
+ */
+var isSymmetric = function (root) {
+    const travese = (root1, root2) => {
+        if (root1===null&&root2===null) {
+            return true
+        }
+        if(root1===null||root2===null){
+            return false
+        }
+        if(root1.val===root2.val){
+            return travese(root1.left,root2.right)&&travese(root1.right,root2.left)
+        }
+        return false
+    }
+    return travese(root.left,root.right)
 };
 ```
 ## leetCode-
