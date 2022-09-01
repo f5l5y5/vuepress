@@ -1,43 +1,34 @@
-// 一个行为随着状态改变而改变的context对象
-class Order {
-    constructor() {
-        this.state = new WaitingForPayment()
+//定义一个访问者类  内部改变元素类的执行方法 奖励访问者 员工
+function bonusVisitor(employee) {
+    if (employee instanceof Manager) {
+        employee.bonus = employee.salary * 2
     }
-    nextState() {
-        this.state = this.state.next()
+    if (employee instanceof Developer) {
+        employee.bonus = employee.salary
+    }
+}
+//在数据基础类里面有一个方法接受访问者，将自身引用传入访问者。
+class Employee {
+    constructor(salary) {
+        this.bonus = 0
+        this.salary = salary
+    }
+    accept(visitor) {
+        visitor(this)
+    }
+}
+// 被访问者
+class Manager extends Employee {
+    constructor(salary) {
+        super(salary)
     }
 }
 
-// 抽象类
-class OrderStatus {
-    constructor(name, nextStatus) {
-        this.name = name
-        this.nextStatus = nextStatus
-    }
-    next() {
-        return new this.nextStatus()
+class Developer extends Employee {
+    constructor(salary) {
+        super(salary)
     }
 }
 
 
-
-//创建各种状态的对象
-class WaitingForPayment extends OrderStatus {
-    constructor() {
-        super('waitingForPayment', Shipping)
-    }
-
-}
-class Shipping extends OrderStatus {
-    constructor() {
-        super('shipping', Delivered)
-    }
-
-}
-class Delivered extends OrderStatus {
-    constructor() {
-        super('delivered', Delivered)
-    }
-}
-
-export { Order }
+export { Developer, Manager, bonusVisitor }

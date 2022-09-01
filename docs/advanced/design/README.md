@@ -2413,19 +2413,131 @@ describe('模板模式 es6测试', () => {
 ```
 
 ### 3.11 访问者模式(visitor)
-- 
+- 使用了一个访问者类，它改变了元素类的执行算法。通过这种方式，元素的执行算法可以随着访问者改变而改变。
+  - 根据模式，元素对象已接受访问者对象，这样访问者对象就可以处理元素对象上的操作。
+  - 主要将数据结构与数据操作分离。
 ```js
+//定义一个访问者类  内部改变元素类的执行方法 奖励访问者 员工
+function bonusVisitor(employee) {
+    if (employee instanceof Manager) {
+        employee.bonus = employee.salary * 2
+    }
+    if (employee instanceof Developer) {
+        employee.bonus = employee.salary
+    }
+}
+//在数据基础类里面有一个方法接受访问者，将自身引用传入访问者。
+function Employee() {
+    this.bonus = 0
+}
+Employee.prototype.accept = function (visitor) {
+    visitor(this)
+}
 
+// 被访问者
+function Manager(salary) {
+    this.salary = salary
+}
+Manager.prototype = Object.create(Employee.prototype)
+
+function Developer(salary) {
+    this.salary = salary
+}
+Developer.prototype = Object.create(Employee.prototype)
+
+module.exports = [Developer, Manager, bonusVisitor]
 ```
 
 ```js
+const expect = require('chai').expect
+const [Developer, Manager, bonusVisitor] = require('../tmp')
 
+describe('访问者模式 测试', () => {
+  it('奖金', () => {
+    //流程 就是定义一个基础类 Employee 定义奖金和accept方法 
+    //-> 被访问者继承基础类 自身有薪水 
+    //-> 访问者通过 被访问者传入的信息，判断对应的奖金 
+    var employees = []
+
+    var john = new Developer(4000)
+    var maria = new Developer(4000)
+    var christian = new Manager(10000)
+
+    employees.push(john);
+    employees.push(maria);
+    employees.push(christian);
+
+    employees.forEach(e => {
+      e.accept(bonusVisitor)
+    })
+    expect(john.bonus).to.equal(4000)
+    expect(christian.bonus).to.equal(20000)
+  })
+
+})
 ```
 es6实现
 ```js
+//定义一个访问者类  内部改变元素类的执行方法 奖励访问者 员工
+function bonusVisitor(employee) {
+    if (employee instanceof Manager) {
+        employee.bonus = employee.salary * 2
+    }
+    if (employee instanceof Developer) {
+        employee.bonus = employee.salary
+    }
+}
+//在数据基础类里面有一个方法接受访问者，将自身引用传入访问者。
+class Employee {
+    constructor(salary) {
+        this.bonus = 0
+        this.salary = salary
+    }
+    accept(visitor) {
+        visitor(this)
+    }
+}
+// 被访问者
+class Manager extends Employee {
+    constructor(salary) {
+        super(salary)
+    }
+}
 
+class Developer extends Employee {
+    constructor(salary) {
+        super(salary)
+    }
+}
+export { Developer, Manager, bonusVisitor }
 ```
 
 ```js
+const expect = require('chai').expect
+import { Developer, Manager, bonusVisitor } from '../tmp'
 
+describe('访问者模式 es6测试', () => {
+  it('奖金', () => {
+    //流程 就是定义一个基础类 Employee 定义奖金和accept方法 
+    //-> 被访问者继承基础类 自身有薪水 
+    //-> 访问者通过 被访问者传入的信息，判断对应的奖金 
+    let employees = [];
+
+    const john = new Developer(4000);
+    const maria = new Developer(4000);
+    const christian = new Manager(10000);
+
+    employees.push(john);
+    employees.push(maria);
+    employees.push(christian);
+
+    employees.forEach(e => {
+      e.accept(bonusVisitor);
+    });
+
+    expect(john.bonus).to.equal(4000);
+    expect(christian.bonus).to.equal(20000);
+  })
+
+})
 ```
