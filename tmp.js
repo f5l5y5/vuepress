@@ -1,35 +1,33 @@
-class Memento {
-    constructor(value) {
-      this.value = value;
-    }
-  }
-  
-  const originator = {
-    store: function(val) {
-      return new Memento(val);
-    },
-    restore: function(memento) {
-      return memento.value;
-    }
-  };
-  
-  class Caretaker {
-  
+class Product {
     constructor() {
-      this.values = [];
+        this.price = 0
+        this.actions = []
     }
-  
-    addMemento(memento) {
-      this.values.push(memento);
+    setBasePrice(val) {
+        this.price = val
+        this.notifyAll()
     }
-  
-    getMemento(index) {
-      return this.values[index];
+    register(observer) {
+        this.actions.push(observer)
     }
-  }
-  
-  export {
-    originator,
-    Caretaker
-  };
-  
+    unregister(observer) {
+        this.actions = this.actions.filter(el => !(el instanceof observer))
+    }
+    notifyAll() {
+        return this.actions.forEach((el) => el.update(this))
+    }
+}
+
+class Fees {
+    update(product) {
+        product.price = product.price * 1.2
+    }
+}
+
+class Proft {
+    update(product) {
+        product.price = product.price * 2
+    }
+}
+
+export { Product, Fees, Proft }

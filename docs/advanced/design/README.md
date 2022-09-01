@@ -1940,21 +1940,150 @@ describe('备忘录模式 es6测试', () => {
 ```
 
 ### 3.7 观察者模式(observer)
-- 
+- 定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。
 ```js
+//定义对象价格 收集订阅者
+function Product() {
+    this.price = 0
+    this.actions = []
+}
+// 每次价格改变 通知订阅者
+Product.prototype.setBasePrice = function (val) {
+    this.price = val
+    this.notifyAll()
+}
+// 订阅
+Product.prototype.register = function (observer) {
+    this.actions.push(observer)
+}
+// 取消订阅
+Product.prototype.unregister = function (observer) {
+    this.actions = this.actions.filter(function (el) {
+        return el !== observer
+    })
+}
+// 通知所有的依赖进行更新
+Product.prototype.notifyAll = function () {
+    return this.actions.forEach(function (el) {
+        el.update(this)
+    }.bind(this))
+}
 
+var fees = {
+    update: function (product) {
+        product.price = product.price * 1.2
+    }
+}
+
+var proft = {
+    update: function (product) {
+        product.price = product.price * 2
+    }
+}
+
+module.exports = [Product, fees, proft]
 ```
 
 ```js
+const expect = require('chai').expect
+const [Product, fees, proft] = require('../tmp')
+/**
+ * @describe 注册变量 
+ * @param {*} p 商品
+ * @param {*} f 费用
+ * @param {*} t 
+ * @returns 
+ */
+function register(p, f, t) {
+  p.register(f)
+  p.register(t)
+  return p
+}
 
+describe('观察者模式 测试', () => {
+  it('订阅者触发', () => {
+    let product = register(new Product(), fees, proft)
+    product.setBasePrice(100)
+    expect(product.price).to.equal(240)
+  })
+  it('取消一个订阅',()=>{
+    let product = register(new Product(),fees,proft)
+    product.unregister(proft)
+
+    product.setBasePrice(100)
+    expect(product.price).to.equal(120)
+  })
+
+})
 ```
 es6实现
 ```js
+class Product {
+    constructor() {
+        this.price = 0
+        this.actions = []
+    }
+    setBasePrice(val) {
+        this.price = val
+        this.notifyAll()
+    }
+    register(observer) {
+        this.actions.push(observer)
+    }
+    unregister(observer) {
+        this.actions = this.actions.filter(el => !(el instanceof observer))
+    }
+    notifyAll() {
+        return this.actions.forEach((el) => el.update(this))
+    }
+}
 
+class Fees {
+    update(product) {
+        product.price = product.price * 1.2
+    }
+}
+
+class Proft {
+    update(product) {
+        product.price = product.price * 2
+    }
+}
+
+export { Product, Fees, Proft }
 ```
 
 ```js
+const expect = require('chai').expect
+import { Product, Fees, Proft } from '../tmp'
+/**
+ * @describe 注册变量 
+ * @param {*} p 商品
+ * @param {*} f 费用
+ * @param {*} t 
+ * @returns 
+ */
+function register(p, f, t) {
+  p.register(f)
+  p.register(t)
+  return p
+}
 
+describe('观察者模式 es6测试', () => {
+  it('订阅者触发', () => {
+    let product = register(new Product(), new Fees(), new Proft())
+    product.setBasePrice(100)
+    expect(product.price).to.equal(240)
+  })
+  it('取消一个订阅', () => {
+    let product = register(new Product(), new Fees(), new Proft())
+    product.unregister(Proft)
+
+    product.setBasePrice(100)
+    expect(product.price).to.equal(120)
+  })
+
+})
 ```
 
 ### 3.8 状态模式(state)
