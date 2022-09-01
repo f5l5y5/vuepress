@@ -2316,21 +2316,100 @@ describe('策略模式 es6测试', () => {
 ```
 
 ### 3.10 模板方法模式(template)
-- 
+- 一个抽象类公开定义了执行它的方法的方式/模板。它的子类可以按需要重写方法实现，但调用将以抽象类中定义的方式进行。
+  - 定义一个操作中的算法的骨架，而将一些步骤延迟到子类中。模板方法使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。
+  - 解决一些方法通用，却在每一个子类都重新写了这一方法。
 ```js
+// 定义一个抽象类
+function Tax() { }
+Tax.prototype.calc = function (value) {
+    if (value >= 1000)
+        value = this.overThousand(value)
+    return this.complementaryFee(value)
+}
+Tax.prototype.complementaryFee = function (value) {
+    return value + 10
+}
 
+// 子类重写方法 针对value>=1000的值 每个子类需要重写overThousand方法
+function Tax1() { }
+Tax1.prototype = Object.create(Tax.prototype)
+Tax1.prototype.overThousand = function (value) {
+    return value * 1.1
+}
+
+function Tax2() { }
+Tax2.prototype = Object.create(Tax.prototype)
+Tax2.prototype.overThousand = function (value) {
+    return value * 1.2
+}
+
+module.exports = [Tax1, Tax2]
 ```
 
 ```js
+const expect = require('chai').expect
+const [Tax1, Tax2] = require('../tmp')
 
+describe('模板模式 测试', () => {
+  it('税', () => {
+    var tax1 = new Tax1()
+    var tax2 = new Tax2()
+
+    expect(tax1.calc(1000)).to.equal(1110)
+    expect(tax2.calc(1000)).to.equal(1210)
+    expect(tax2.calc(100)).to.equal(110)
+  })
+})
 ```
 es6实现
 ```js
+// 定义一个抽象类
+class Tax {
+    calc(value) {
+        if (value >= 1000)
+            value = this.overThousand(value)
+        return this.complementaryFee(value)
+    }
+    complementaryFee(value) {
+        return value + 10
+    }
+}
 
+// 子类重写方法 针对value>=1000的值 每个子类需要重写overThousand方法
+class Tax1 extends Tax {
+    constructor() {
+        super()
+    }
+    overThousand(value) {
+        return value * 1.1
+    }
+}
+class Tax2 extends Tax {
+    constructor() {
+        super()
+    }
+    overThousand(value) {
+        return value * 1.2
+    }
+}
+export { Tax1, Tax2 }
 ```
 
 ```js
+const expect = require('chai').expect
+import { Tax1, Tax2 } from '../tmp'
 
+describe('模板模式 es6测试', () => {
+  it('税', () => {
+    const tax1 = new Tax1()
+    const tax2 = new Tax2()
+
+    expect(tax1.calc(1000)).to.equal(1110)
+    expect(tax2.calc(1000)).to.equal(1210)
+    expect(tax2.calc(100)).to.equal(110)
+  })
+})
 ```
 
 ### 3.11 访问者模式(visitor)
