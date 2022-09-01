@@ -1,33 +1,43 @@
-class Product {
+// 一个行为随着状态改变而改变的context对象
+class Order {
     constructor() {
-        this.price = 0
-        this.actions = []
+        this.state = new WaitingForPayment()
     }
-    setBasePrice(val) {
-        this.price = val
-        this.notifyAll()
-    }
-    register(observer) {
-        this.actions.push(observer)
-    }
-    unregister(observer) {
-        this.actions = this.actions.filter(el => !(el instanceof observer))
-    }
-    notifyAll() {
-        return this.actions.forEach((el) => el.update(this))
+    nextState() {
+        this.state = this.state.next()
     }
 }
 
-class Fees {
-    update(product) {
-        product.price = product.price * 1.2
+// 抽象类
+class OrderStatus {
+    constructor(name, nextStatus) {
+        this.name = name
+        this.nextStatus = nextStatus
+    }
+    next() {
+        return new this.nextStatus()
     }
 }
 
-class Proft {
-    update(product) {
-        product.price = product.price * 2
+
+
+//创建各种状态的对象
+class WaitingForPayment extends OrderStatus {
+    constructor() {
+        super('waitingForPayment', Shipping)
+    }
+
+}
+class Shipping extends OrderStatus {
+    constructor() {
+        super('shipping', Delivered)
+    }
+
+}
+class Delivered extends OrderStatus {
+    constructor() {
+        super('delivered', Delivered)
     }
 }
 
-export { Product, Fees, Proft }
+export { Order }

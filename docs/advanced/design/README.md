@@ -2087,21 +2087,120 @@ describe('观察者模式 es6测试', () => {
 ```
 
 ### 3.8 状态模式(state)
-- 
+- 允许对象在内部状态发生改变时改变它的行为，对象看起来好像修改了它的类。
+  - 我们创建表示各种状态的对象和一个行为随着状态对象改变而改变的 context 对象。
 ```js
+// 一个行为随着状态改变而改变的context对象
+function Order() {
+    this.state = new WaitingForPayment()
 
+    this.nextState = function () {
+        this.state = this.state.next()
+    }
+}
+//创建各种状态的对象
+function WaitingForPayment() {
+    this.name = 'waitingForPayment'
+    this.next = function () {
+        return new Shipping()
+    }
+}
+
+function Shipping() {
+    this.name = 'shipping'
+    this.next = function () {
+        return new Delivered()
+    }
+}
+
+function Delivered() {
+    this.name = 'delivered'
+    this.next = function () {
+        return this
+    }
+}
+
+module.exports = Order
 ```
 
 ```js
+const expect = require('chai').expect
+const Order = require('../tmp')
 
+describe('状态模式 测试', () => {
+  it('订单', () => {
+    var order = new Order()
+    expect(order.state.name).to.equal('waitingForPayment')
+    order.nextState()
+    expect(order.state.name).to.equal('shipping')
+    order.nextState()
+    expect(order.state.name).to.equal('delivered')
+  })
+
+})
 ```
 es6实现
 ```js
+// 一个行为随着状态改变而改变的context对象
+class Order {
+    constructor() {
+        this.state = new WaitingForPayment()
+    }
+    nextState() {
+        this.state = this.state.next()
+    }
+}
 
+// 抽象类
+class OrderStatus {
+    constructor(name, nextStatus) {
+        this.name = name
+        this.nextStatus = nextStatus
+    }
+    next() {
+        return new this.nextStatus()
+    }
+}
+
+
+
+//创建各种状态的对象
+class WaitingForPayment extends OrderStatus {
+    constructor() {
+        super('waitingForPayment', Shipping)
+    }
+
+}
+class Shipping extends OrderStatus {
+    constructor() {
+        super('shipping', Delivered)
+    }
+
+}
+class Delivered extends OrderStatus {
+    constructor() {
+        super('delivered', Delivered)
+    }
+}
+
+export { Order }
 ```
 
 ```js
+const expect = require('chai').expect
+import { Order } from '../tmp'
 
+describe('状态模式 es6测试', () => {
+  it('订单', () => {
+    var order = new Order()
+    expect(order.state.name).to.equal('waitingForPayment')
+    order.nextState()
+    expect(order.state.name).to.equal('shipping')
+    order.nextState()
+    expect(order.state.name).to.equal('delivered')
+  })
+
+})
 ```
 
 ### 3.9 策略模式(strategy)
