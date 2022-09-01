@@ -2204,21 +2204,115 @@ describe('状态模式 es6测试', () => {
 ```
 
 ### 3.9 策略模式(strategy)
-- 
+- 一个类的行为或其算法可以在运行时更改。
+  - 创建表示各种策略的对象和一个行为随着策略对象改变而改变的 context 对象。策略对象改变 context 对象的执行算法。
+  - 定义一系列的算法,把它们一个个封装起来, 并且使它们可相互替换。
 ```js
+// 策略对象 discount对应不同的折扣算法
+function ShoppingCart(discount) {
+    this.discount = discount
+    this.amount = 0
+}
+ShoppingCart.prototype.setAmount = function (amount) {
+    this.amount = amount
+}
+ShoppingCart.prototype.checkout = function () {
+    return this.discount(this.amount)
+}
+// 策略算法
+function guestStrategy(amount) {
+    return amount
+}
 
+function regularStrategy(amount) {
+    return amount * 0.9
+}
+
+function premiumStrategy(amount) {
+    return amount * 0.8
+}
+
+module.exports = [ShoppingCart, guestStrategy, regularStrategy, premiumStrategy]
 ```
 
 ```js
+const expect = require('chai').expect
+const [ShoppingCart, guestStrategy, regularStrategy, premiumStrategy] = require('../tmp')
 
+describe('策略模式 测试', () => {
+  it('客人购物折扣', () => {
+    var guestCart = new ShoppingCart(guestStrategy)
+    guestCart.setAmount(100)
+    expect(guestCart.checkout()).to.equal(100)
+  })
+  it('常规折扣', () => {
+    var guestCart = new ShoppingCart(regularStrategy)
+    guestCart.setAmount(100)
+    expect(guestCart.checkout()).to.equal(90)
+  })
+  it('赠品折扣', () => {
+    var guestCart = new ShoppingCart(premiumStrategy)
+    guestCart.setAmount(100)
+    expect(guestCart.checkout()).to.equal(80)
+  })
+
+})
 ```
 es6实现
 ```js
+// 策略对象 discount对应不同的折扣算法
+class ShoppingCart {
+    constructor(discount) {
+        this.discount = discount
+        this.amount = 0
+    }
+    setAmount(amount) {
+        this.amount = amount
+    }
+    checkout() {
+        return this.discount(this.amount)
+    }
+}
 
+// 策略算法
+
+function guestStrategy(amount) {
+    return amount
+}
+
+function regularStrategy(amount) {
+    return amount * 0.9
+}
+
+function premiumStrategy(amount) {
+    return amount * 0.8
+}
+
+export { ShoppingCart, guestStrategy, regularStrategy, premiumStrategy }
 ```
 
 ```js
+const expect = require('chai').expect
+import { ShoppingCart, guestStrategy, regularStrategy, premiumStrategy } from '../tmp'
 
+describe('策略模式 es6测试', () => {
+  it('客人购物折扣', () => {
+    var guestCart = new ShoppingCart(guestStrategy)
+    guestCart.setAmount(100)
+    expect(guestCart.checkout()).to.equal(100)
+  })
+  it('常规折扣', () => {
+    var guestCart = new ShoppingCart(regularStrategy)
+    guestCart.setAmount(100)
+    expect(guestCart.checkout()).to.equal(90)
+  })
+  it('赠品折扣', () => {
+    var guestCart = new ShoppingCart(premiumStrategy)
+    guestCart.setAmount(100)
+    expect(guestCart.checkout()).to.equal(80)
+  })
+
+})
 ```
 
 ### 3.10 模板方法模式(template)
