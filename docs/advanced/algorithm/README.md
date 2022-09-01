@@ -1147,12 +1147,12 @@ dp[10] dp[9] dp[6] 三个最优解 +1
     <!-- - 21.合并两个有序链表 -->
     <!-- - 876.链表的中间结点 -->
     <!-- - 234.回文链表 -->
-    - 141.环形链表
+    <!-- - 92.反转链表-ii -->
+    <!-- - 142.环形链表II -->
+    <!-- - 160.相交链表 -->
+    <!-- - 141.环形链表 -->
     - 203.移除链表元素
     - 202.快乐数
-    - 160.相交链表
-    - 142.环形链表II
-    - 92.反转链表-ii
   - 位运算
     - 136.只出现一次的数字
   - 树结构
@@ -1611,9 +1611,117 @@ var isPalindrome = function (head) {
     return true
 };
 ```
-## leetCode-
+## leetCode-92. 反转链表 II
 ```js
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} left
+ * @param {number} right
+ * @return {ListNode}
+ */
+var reverseBetween = function (head, left, right) {
+    //先移动到left 再反转left-right这么多次
+    if (left >= right) {
+        return head
+    }
+    let dummy = {
+        next: head
+    }
+    let tmp = dummy
+    //先移动到left位置
+    for (let i = 0; i < left - 1; i++) {
+        tmp = tmp.next
+    }
+    // left-right位置进行反转
+    let prev = tmp.next
+    let cur = prev.next
+    for (let j = 0; j < right - left; j++) {
+        let next = cur.next
+        cur.next = prev
+        prev = cur
+        cur = next
+    }
+    //修改指针的指向
+    tmp.next.next = cur
+    tmp.next = prev
 
+    return dummy.next
+};
+```
+## leetCode-142. 环形链表 II
+```js
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var detectCycle = function (head) {
+    //进行两次撞击， 第一次撞击是在环形链表上 第二次是入口
+    if (head === null) {
+        return null
+    }
+    let slow = fast = head
+    while (fast !== null) {
+        slow = slow.next
+        if (fast.next !== null) {
+            fast = fast.next.next
+        } else {
+            return null
+        }
+        if (fast === slow) {
+            let cur = head
+            while (cur !== slow) {
+                cur = cur.next
+                slow = slow.next
+            }
+            return cur
+        }
+    }
+    return null
+};
+```
+## leetCode-160. 相交链表
+```js
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+
+/**
+ * @param {ListNode} headA
+ * @param {ListNode} headB
+ * @return {ListNode}
+ */
+var getIntersectionNode = function (headA, headB) {
+    if(headA===null||headB===null){
+        return null
+    }
+    //思路1: 先找到head的长度  两个拼接在一起。a1->a2->b1->b2->b3 b1->b2->b3->a1->a2 一起遍历即可找到相同的 headA->headB
+    let curA = headA
+    let curB = headB
+    while (curA !== curB) {
+        curA = curA === null ? headB : curA.next
+        curB = curB === null ? headA : curB.next
+    }
+    return curB
+};
 ```
 ## leetCode-
 ```js
