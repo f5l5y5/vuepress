@@ -1059,6 +1059,22 @@ var inorderTraversal = function(root) {
     dfs(root)
     return arr
 };
+//迭代写法
+var preorderTraversal = function (root) {
+    let res = []
+    if (root === null) {
+        return []
+    }
+    let stack = [root]
+    while (stack.length) {
+        let cur = stack.pop()
+        res.push(cur.val)
+        cur.right && stack.push(cur.right)
+        cur.left && stack.push(cur.left)
+    }
+    return res
+
+};
 ```
 
 ### leetCode-145 二叉树的后序遍历
@@ -1158,13 +1174,13 @@ dp[10] dp[9] dp[6] 三个最优解 +1
   - 树结构
     <!-- - 100.相同的树 -->
     <!-- - 101.对称二叉树 -->
-    - 104.二叉树的最大深度
-    - 226.翻转二叉树
-    - 94.二叉树的中序遍历
-    - 144.二叉树的前序遍历
-    - 145.二叉树的后序遍历
-    - 111.二叉树的最小深度
-    - 114.
+    <!-- - 104.二叉树的最大深度 -->
+    <!-- - 226.翻转二叉树 -->
+    <!-- - 94.二叉树的中序遍历 -->
+    <!-- - 144.二叉树的前序遍历 -->
+    <!-- - 145.二叉树的后序遍历 -->
+    <!-- - 111.二叉树的最小深度 -->
+    <!-- - 114.二叉树展开为链表 -->
     - 617.
     - 236.
     - 543.
@@ -1751,6 +1767,24 @@ var isSameTree = function(p, q) {
     return isSameTree(p.left,q.left)&&isSameTree(p.right,q.right)
 
 };
+// 
+var isSameTree = function (p, q) {
+    function travese(p, q) {
+        if (p === null && q === null) {
+            return true
+        }
+        if (p === null || q === null) {
+            return false
+        }
+        let left = travese(p.left, q.left)
+        let right = travese(p.right, q.right)
+        if (p.val === q.val && left && right) {
+            return true
+        }
+        return false
+    }
+    return travese(p, q)
+};
 ```
 ## leetCode-101.对称二叉树
 ```js
@@ -1781,6 +1815,106 @@ var isSymmetric = function (root) {
     }
     return travese(root.left,root.right)
 };
+```
+## leetCode-111. 二叉树的最小深度
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var minDepth = function (root) {
+    //递归 
+    if (root === null) {
+        return 0
+    }
+    if (root.left === null && root.right === null) {
+        return 1
+    }
+    if (root.left === null) {
+        return 1 + minDepth(root.right)
+    }
+    if (root.right === null) {
+        return 1 + minDepth(root.left)
+    }
+    if (root.left && root.right) {
+        return Math.min(minDepth(root.left), minDepth(root.right)) + 1
+    }
+};
+var minDepth = function (root) {
+    //迭代
+    if(root===null){
+        return 0
+    }
+    const stack = [root]
+    //需要层级的变量
+    let dep = 0
+    //每次弹出结点 相当于一个深度
+    while(true){
+        let size = stack.length
+        dep++
+        while(size--){
+            let node = stack.shift()
+            if(!node.left&&!node.right){
+                return dep
+            }
+            node.left && stack.push(node.left)
+            node.right && stack.push(node.right)
+        }
+    }
+};
+```
+## leetCode-114 **二叉树展开为链表**
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {void} Do not return anything, modify root in-place instead.
+ */
+function preTravese(root,list) {
+    if (root !== null) {
+        list.push(root)
+        preTravese(root.left, list)
+        preTravese(root.right, list)
+    }
+}
+//使用前序遍历
+var flatten = function (root) {
+    let list = []
+    preTravese(root, list)
+    for (let i = 1; i < list.length; i++) {
+        const pre = list[i-1] //pre就是root
+        const cur = list[i]
+        pre.left = null
+        pre.right = cur
+    }
+};
+```
+## leetCode-
+```js
+
+```
+## leetCode-
+```js
+
+```
+## leetCode-
+```js
+
 ```
 ## leetCode-
 ```js
