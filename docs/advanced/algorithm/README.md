@@ -1181,10 +1181,11 @@ dp[10] dp[9] dp[6] 三个最优解 +1
     <!-- - 145.二叉树的后序遍历 -->
     <!-- - 111.二叉树的最小深度 -->
     <!-- - 114.二叉树展开为链表 -->
-    - 617.
-    - 236.
-    - 543.
-    - 572.
+
+    <!-- - 617.合并二叉树 -->
+    <!-- - 236.二叉树的最近公共祖先 -->
+    <!-- - 543.二叉树的直径 -->
+    <!-- - 572.另一棵树的子树 -->
     - 110.
     - 222.
     - 257.
@@ -1903,6 +1904,142 @@ var flatten = function (root) {
         pre.right = cur
     }
 };
+```
+## leetCode-617 合并二叉树
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root1
+ * @param {TreeNode} root2
+ * @return {TreeNode}
+ */
+var mergeTrees = function(root1, root2) {
+// 思路 root1不存在返回root2 root2不存在返回root1
+    function dfs(root1,root2){
+        if(!root1){
+            return root2
+        }
+        if(!root2){
+            return root1
+        }
+        // 都存在 让两个值进行相加
+        root1.val += root2.val
+        //此时root1的左边就是累积相加
+        //递归 左右结点是否还有子节点 
+        root1.left = dfs(root1.left,root2.left)
+        root1.right = dfs(root1.right,root2.right)
+        return root1
+    }
+
+    return dfs(root1,root2)
+};
+```
+## leetCode-236 二叉树的最近公共祖先
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {TreeNode} p
+ * @param {TreeNode} q
+ * @return {TreeNode}
+ */
+var lowestCommonAncestor = function (root, p, q) {
+    if (root === null) {
+        return null
+    }
+    if (root === p || root === q) {
+        return root
+    }
+    let left = lowestCommonAncestor(root.left, p, q)
+    let right = lowestCommonAncestor(root.right, p, q)
+    if (left && right) {
+        return root
+    }
+    return left ? left : right
+};
+```
+## leetCode-543 二叉树的直径
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var diameterOfBinaryTree = function (root) {
+    let len = 0
+    function dfs(root) {
+        if (root === null) {
+            return null
+        }
+        let left = dfs(root.left)
+        let right = dfs(root.right)
+        len = Math.max(len, left + right)
+
+        return Math.max(left, right) + 1
+    }
+    dfs(root)
+    return len
+};
+```
+## leetCode-572 另一棵树的子树
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {TreeNode} subRoot
+ * @return {boolean}
+ */
+var isSubtree = function (root, subRoot) {
+    //不停的比较 某一个子树 是不是和subRoot相同
+    if (root === null) {
+        return false
+    }
+    if (root.val === subRoot.val) {
+        if (isSameTree(root, subRoot)) {
+            return true
+        }
+    }
+    return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot)
+};
+
+function isSameTree(p, q) {
+    return JSON.stringify(p) === JSON.stringify(q)
+}
+```
+## leetCode-
+```js
+
+```
+## leetCode-
+```js
+
 ```
 ## leetCode-
 ```js
