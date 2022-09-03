@@ -1186,9 +1186,9 @@ dp[10] dp[9] dp[6] 三个最优解 +1
     <!-- - 236.二叉树的最近公共祖先 -->
     <!-- - 543.二叉树的直径 -->
     <!-- - 572.另一棵树的子树 -->
-    - 110.
-    - 222.
-    - 257.
+    <!-- - 110.平衡二叉树 -->
+    <!-- - 222.完全二叉树的节点个数 -->
+    - 257.二叉树的所有路径
     - 每层对比
     - 102.
     - 107.
@@ -2033,17 +2033,120 @@ function isSameTree(p, q) {
     return JSON.stringify(p) === JSON.stringify(q)
 }
 ```
-## leetCode-
+## leetCode-110 平衡二叉树
 ```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {boolean}
+ */
+var isBalanced = function (root) {
 
+    function travese(node) {
+        if (node === null) {
+            return 0
+        }
+        let leftDepth = travese(node.left)
+        if (leftDepth === -1) {
+            return -1
+        }
+        let rightDepth = travese(node.right)
+        if (rightDepth === -1) {
+            return -1
+        }
+
+        if (Math.abs(leftDepth - rightDepth) > 1) {
+            return -1
+        } else {
+            return Math.max(leftDepth, rightDepth) + 1
+        }
+        return true
+    }
+    return travese(root) !== -1
+};
 ```
-## leetCode-
+## leetCode-222 完全二叉树的节点个数
 ```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var countNodes = function (root) {
 
+    function travese(node) {
+        if (node === null) {
+            return 0
+        }
+        let leftNum = travese(node.left)
+        let rightNum = travese(node.right)
+        return leftNum + rightNum + 1
+    }
+
+    return travese(root)
+
+};
 ```
-## leetCode-
+## leetCode-257 二叉树的所有路径
 ```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {string[]}
+ */
+var binaryTreePaths = function (root) {
+    // let ret = []
+    // function travese(node, path) {
+    //     if (node === null) {
+    //         return null
+    //     }
+    //     if (node.left === null && node.right === null) {
+    //         ret.push(path + node.val)
+    //     }
+    //     travese(node.left, path + node.val + '->')
+    //     travese(node.right, path + node.val + '->')
+    // }
 
+    // travese(root, '')
+    // return ret
+    //用数组保存结果
+    let ret = []
+    function travese(node, path) {
+        if (node === null) {
+            return null
+        }
+        if (node.left === null && node.right === null) {
+            path.push(node.val)
+            ret.push(path.join('->'))
+        }
+        travese(node.left, path.concat(node.val))
+        travese(node.right, path.concat(node.val))
+    }
+
+    travese(root, [])
+    return ret
+};
 ```
 ## leetCode-
 ```js
