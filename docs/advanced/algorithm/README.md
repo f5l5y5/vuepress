@@ -1188,11 +1188,11 @@ dp[10] dp[9] dp[6] 三个最优解 +1
     <!-- - 572.另一棵树的子树 -->
     <!-- - 110.平衡二叉树 -->
     <!-- - 222.完全二叉树的节点个数 -->
-    - 257.二叉树的所有路径
+    <!-- - 257.二叉树的所有路径 -->
     - 每层对比
-    - 102.
-    - 107.
-    - 199.
+    <!-- - 102.二叉树的层序遍历 -->
+    <!-- - 107.二叉树的层序遍历 II -->
+    <!-- - 199.二叉树的右视图 -->
     - 637.
     - 116.
     - 117.
@@ -2148,9 +2148,128 @@ var binaryTreePaths = function (root) {
     return ret
 };
 ```
-## leetCode-
+## leetCode-102 二叉树的层序遍历
 ```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[][]}
+ */
+//  [3] 1
+// [9,20] 2
+var levelOrder = function (root) {
+    //适合用栈的方式去树的遍历 适合层序遍历
+    let ret = []
+    if (root === null) {
+        return ret
+    }
+    let queue = [root]//遍历进行队列保存
+    //每次遍历保存当层的数据量
+    while (queue.length) {
+        let len = queue.length
+        let curLevel = []
+        while (len > 0) {
+            //每次从头部弹出
+            let node = queue.shift()
+            //放入结果
+            curLevel.push(node.val)
+            //如果当前的结点有左右结点，放入队列中等待下次层序遍历
+            node.left && queue.push(node.left)
+            node.right && queue.push(node.right)
+            len--
+        }
+        //遍历队列，每次遍历都是一个层级 i变量没有使用到
+        // for (let i = 0; i < len; i++) {
+        //     let node = queue.shift()
+        //     curLevel.push(node.val)
+        //     node.left && queue.push(node.left)
+        //     node.right && queue.push(node.right)
+        // }
+        ret.push(curLevel)
+    }
 
+
+    return ret
+};
+```
+## leetCode-107 二叉树的层序遍历 II
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[][]}
+ */
+ //思路正常层序遍历逻辑 返回是放在头部即可
+var levelOrderBottom = function (root) {
+    let ret = []
+    if (root === null) {
+        return ret
+    }
+    let queue = [root]
+    while (queue.length) {
+        let len = queue.length
+        let curLevel = []
+        while (len > 0) {
+            let node = queue.shift()
+            curLevel.push(node.val)
+            node.left && queue.push(node.left)
+            node.right && queue.push(node.right)
+            len--
+        }
+        ret.unshift(curLevel)
+    }
+    return ret
+};
+```
+## leetCode-199 二叉树的右视图
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var rightSideView = function (root) {
+    //每层遍历的最右结点
+    let ret = []
+    if (root === null) {
+        return ret
+    }
+    let queue = [root]
+    while (queue.length) {
+        let len = queue.length
+        while (len--) {
+            let node = queue.shift()
+            //巧妙的地方，是每次左右结点push后当len===0 说明是最右边结点
+            if (len === 0) {
+                ret.push(node.val)
+            }
+            node.left && queue.push(node.left)
+            node.right && queue.push(node.right)
+        }
+    }
+    return ret
+};
 ```
 ## leetCode-
 ```js
