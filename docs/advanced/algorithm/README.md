@@ -5,6 +5,7 @@
 - jsx 解析 用的是栈
 - 缓存模块用的是链表
 - vue3 的虚拟 dom diff，使用的是最长递增子序列
+- KeepAlive使用了LRUcache进行缓存
 
 ## 2.了解算法的复杂度
 
