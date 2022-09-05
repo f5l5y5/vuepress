@@ -1194,10 +1194,11 @@ dp[10] dp[9] dp[6] 三个最优解 +1
     <!-- - 102.二叉树的层序遍历 -->
     <!-- - 107.二叉树的层序遍历 II -->
     <!-- - 199.二叉树的右视图 -->
-    - 637.
-    - 116.
-    - 117.
-    - 429.
+
+    <!-- - 637.二叉树的层平均值 -->
+    <!-- - 116.填充每个节点的下一个右侧节点指针 -->
+    <!-- - 117.填充每个节点的下一个右侧节点指针 II -->
+    <!-- - 429.N 叉树的层序遍历 -->
     - 515.
     - 112.
     - 404.
@@ -2268,6 +2269,127 @@ var rightSideView = function (root) {
             node.left && queue.push(node.left)
             node.right && queue.push(node.right)
         }
+    }
+    return ret
+};
+```
+## leetCode-637 二叉树的层平均值
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var averageOfLevels = function (root) {
+    let ret = []
+    if (root === null) {
+        return ret
+    }
+    let queue = [root]
+    while (queue.length) {
+        //使用while循环
+        // let originLen = len = queue.length
+        // let sum = 0
+        // while (len--) {
+        //     let node = queue.shift()
+        //     sum += node.val
+        //     node.left && queue.push(node.left)
+        //     node.right && queue.push(node.right)
+        // }
+        // ret.push(sum / originLen)
+        //使用for循环len不会被--
+        let len = queue.length
+        let sum = 0
+        for (let i = 0; i < len; i++) {
+            let node = queue.shift()
+            sum += node.val
+            node.left && queue.push(node.left)
+            node.right && queue.push(node.right)
+        }
+        ret.push(sum / len)
+    }
+    return ret
+};
+```
+## leetCode-116/117 填充每个节点的下一个右侧节点指针/II
+```js
+/**
+ * // Definition for a Node.
+ * function Node(val, left, right, next) {
+ *    this.val = val === undefined ? null : val;
+ *    this.left = left === undefined ? null : left;
+ *    this.right = right === undefined ? null : right;
+ *    this.next = next === undefined ? null : next;
+ * };
+ */
+
+/**
+ * @param {Node} root
+ * @return {Node}
+ */
+//思路 
+/**
+[1]
+[2,3]
+[4,5,6,7]
+让queue每次弹出的值的next为queue的第一个值
+ */
+var connect = function (root) {
+    if (root === null) {
+        return root
+    }
+    let queue = [root]
+    while (queue.length) {
+        let len = queue.length
+        while (len--) {
+            let node = queue.shift()
+            //如果是最后一个，默认是null
+            node.next = len > 0 ? queue[0] : null
+            node.left && queue.push(node.left)
+            node.right && queue.push(node.right)
+        }
+    }
+    return root
+};
+```
+## leetCode-429 N 叉树的层序遍历
+```js
+/**
+ * // Definition for a Node.
+ * function Node(val,children) {
+ *    this.val = val;
+ *    this.children = children;
+ * };
+ */
+
+/**
+ * @param {Node|null} root
+ * @return {number[][]}
+ */
+var levelOrder = function (root) {
+    let ret = []
+    if (root === null) {
+        return ret
+    }
+    let queue = [root]
+    while (queue.length) {
+        let len = queue.length
+        let curLevel = []
+        while (len--) {
+            let node = queue.shift()
+            curLevel.push(node.val)
+            node.children.forEach(child => {
+                child && queue.push(child)
+            })
+        }
+        ret.push(curLevel)
     }
     return ret
 };
