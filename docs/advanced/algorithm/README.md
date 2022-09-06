@@ -1199,9 +1199,10 @@ dp[10] dp[9] dp[6] 三个最优解 +1
     <!-- - 116.填充每个节点的下一个右侧节点指针 -->
     <!-- - 117.填充每个节点的下一个右侧节点指针 II -->
     <!-- - 429.N 叉树的层序遍历 -->
-    - 515.
-    - 112.
-    - 404.
+
+    <!-- - 515.在每个树行中找最大值 -->
+    <!-- - 112.路径总和 -->
+    <!-- - 404.左叶子之和 -->
     - 98.
     - 99.
     - 108.
@@ -2393,6 +2394,106 @@ var levelOrder = function (root) {
     }
     return ret
 };
+```
+## leetCode-515 在每个树行中找最大值
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var largestValues = function (root) {
+    let ret = []
+    if (root === null) {
+        return ret
+    }
+    let queue = [root]
+    while (queue.length) {
+        let len = queue.length
+        let maxVal = queue[0].val
+        while (len--) {
+            let node = queue.shift()
+            maxVal = maxVal > node.val ? maxVal : node.val
+            node.left && queue.push(node.left)
+            node.right && queue.push(node.right)
+        }
+        ret.push([maxVal])
+    }
+    return ret
+};
+```
+## leetCode-112 路径总和
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {number} targetSum
+ * @return {boolean}
+ */
+var hasPathSum = function (root, targetSum) {
+    if (root === null) {
+        return false
+    }
+    if (!root.left && !root.right) {
+        return root.val === targetSum
+    }
+    //每次递归减去当前的val值
+    let offset = targetSum - root.val
+    return hasPathSum(root.left, offset) || hasPathSum(root.right, offset)
+};
+```
+## leetCode-404 左叶子之和
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var sumOfLeftLeaves = function (root) {
+    let leftSum = 0
+    function travese(node) {
+        if (node === null) {
+            return
+        }
+        //left有嵌套走递归
+        if (node.left && !node.left.left && !node.left.right) {
+            leftSum += node.left.val
+        }
+        travese(node.left)
+        travese(node.right)
+    }
+    travese(root)
+    return leftSum
+};
+```
+## leetCode-
+```js
+
+```
+## leetCode-
+```js
+
 ```
 ## leetCode-
 ```js
