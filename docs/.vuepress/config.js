@@ -67,6 +67,7 @@ module.exports = {
                     { text: '数据结构算法', items: [{ text: '算法', link: '/advanced/algorithm/' }] },
                     { text: '', items: [{ text: '设计模式', link: '/advanced/design/' }] },
                     { text: '', items: [{ text: '重构', link: '/advanced/refactoring/' }] },
+                    { text: '网络', items: [{ text: 'http状态码', link: '/advanced/network/http' }] },
                 ]
             },
             {
@@ -258,6 +259,17 @@ module.exports = {
                     children: [
                         ['', '重构原则'],
                         ['/advanced/refactoring/refactoring-2', '代码重构']
+                    ]
+                },
+            ],
+            '/advanced/network/': [
+                {
+                    title: '网络',
+                    collapsable: true,
+                    sidebarDepth: 2,
+                    children: [
+                        ['', '网络简介'],
+                        ['/advanced/network/http', 'http笔记']
                     ]
                 },
             ],
