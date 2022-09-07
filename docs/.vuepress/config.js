@@ -72,14 +72,12 @@ module.exports = {
             {
                 text: '书籍',
                 items: [
-                    { text: '书籍清单',  link: '/books/' },
+                    { text: '书籍清单', link: '/books/' },
                 ]
             },
             {
                 text: 'Github',
-                items: [
-                    { text: 'Github', link: 'https://github.com/f5l5y5/vuepress' }
-                ]
+                link: 'https://github.com/f5l5y5/vuepress'
             }
         ],
         sidebar: {
