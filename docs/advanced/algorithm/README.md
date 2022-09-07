@@ -1203,8 +1203,9 @@ dp[10] dp[9] dp[6] 三个最优解 +1
     <!-- - 515.在每个树行中找最大值 -->
     <!-- - 112.路径总和 -->
     <!-- - 404.左叶子之和 -->
-    - 98.
-    - 99.
+
+    <!-- - 98.验证二叉搜索树 -->
+    <!-- - 99.恢复二叉搜索树 -->
     - 108.
     - 109.
     - 654.
@@ -2487,13 +2488,95 @@ var sumOfLeftLeaves = function (root) {
     return leftSum
 };
 ```
-## leetCode-
+## 统计.xxx.js文件的数量
 ```js
-
+fs = require('fs')
+const path = require('path')
+const dir = path.resolve(__dirname, './')
+let files = fs.readdirSync(dir)
+console.log(files);
+let len = files.filter(f => /^\d+\..+\.js$/.test(f)).length
+console.log('打印***一共刷了' + len + '题')
 ```
-## leetCode-
-```js
 
+## leetCode-98 验证二叉搜索树
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {boolean}
+ */
+var isValidBST = function (root) {
+    // 思路 左边小 右边大。中序遍历 一个有序数组
+    let prev = -Infinity
+    function travese(node) {
+        if (node === null) {
+            return true
+        }
+        let left = travese(node.left)
+        if (prev >= node.val) {
+            //递增结点被破环
+            return false
+        }
+        prev = node.val
+        let right = travese(node.right)
+        //左右树必须是符合条件
+        return left && right
+    }
+    return travese(root)
+
+};
+```
+## leetCode-99 恢复二叉搜索树
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {void} Do not return anything, modify root in-place instead.
+ */
+var recoverTree = function (root) {
+    //定义一个数组 数组是有序的， 如果不是，将两个位置进行调换
+    let arr = []
+    let first
+    let second
+    function travese(node) {
+        if (node === null) {
+            return
+        }
+        travese(node.left)
+        arr.push(node)
+        travese(node.right)
+    }
+    travese(root)
+    for (let i = 0; i < arr.length - 1; i++) {
+        if (arr[i].val > arr[i + 1].val) {
+            //出错了
+            //找到两个值移动位置
+            if (!first) {
+                //第一次遇见
+                first = arr[i]
+            }
+            second = arr[i + 1]
+        }
+    }
+    let tmp = first.val
+    first.val = second.val
+    second.val = tmp
+};
 ```
 ## leetCode-
 ```js
