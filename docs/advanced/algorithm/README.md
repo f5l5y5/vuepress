@@ -1222,7 +1222,7 @@ dp[10] dp[9] dp[6] 三个最优解 +1
     <!-- - 225. 用队列实现栈 -->
     <!-- - 232.用栈实现队列 -->
     - 1047.
-    - 150.
+    <!-- - 150.逆波兰表达式求值 -->
     - 151.
     - console.trace() 调用栈 哪些函数执行了
 - 算法思想
@@ -2905,6 +2905,77 @@ MyQueue.prototype.empty = function() {
  * var param_3 = obj.peek()
  * var param_4 = obj.empty()
  */
+```
+## leetCode-150 逆波兰表达式求值
+```js
+/**
+ * @param {string[]} tokens
+ * @return {number}
+ */
+var evalRPN = function (tokens) {
+    //依次取出
+    let stack = []
+    let tmp
+    for (let i = 0; i < tokens.length; i++) {
+        const t = tokens[i]
+        if (t === '+') {
+            tmp = stack.pop() + stack.pop()
+            stack.push(tmp)
+        } else if (t === '-') {
+            tmp = stack.pop()
+            tmp = stack.pop() - tmp
+            stack.push(tmp)
+        } else if (t === '*') {
+            tmp = stack.pop() * stack.pop()
+            stack.push(tmp)
+        } else if (t === '/') {
+            tmp = stack.pop()
+            //floor() 负数会出现问题
+            tmp = Math.trunc(stack.pop() / tmp) 
+            stack.push(tmp)
+        }else{
+            stack.push(Number(t))
+        }
+    }
+    return stack.pop()
+};
+```
+```js
+/**
+ * @param {string[]} tokens
+ * @return {number}
+ */
+var evalRPN = function (tokens) {
+    //依次取出
+    let stack = []
+    let tmp
+    //使用设计模式进行简化
+    let calc = {
+        '+':(a,b)=>a+b,
+        '-':(a,b)=>b-a,
+        '*':(a,b)=>a*b,
+        '/':(a,b)=>(b-a)|0, //位运算去除小数
+    }
+    for (let i = 0; i < tokens.length; i++) {
+        const t = tokens[i]
+        if(t in calc){
+            stack.push(calc[t](stack.pop(),stack.pop()))
+        }else{
+            stack.push(Number(t))
+        }
+    }
+
+    return stack.pop()
+};
+```
+
+## leetCode-
+```js
+
+```
+## leetCode-
+```js
+
 ```
 ## leetCode-
 ```js
