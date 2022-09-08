@@ -1219,8 +1219,8 @@ dp[10] dp[9] dp[6] 三个最优解 +1
     - 20.
     - 71.
     - =
-    - 225.
-    - 232.
+    <!-- - 225. 用队列实现栈 -->
+    <!-- - 232.用栈实现队列 -->
     - 1047.
     - 150.
     - 151.
@@ -2788,9 +2788,123 @@ var insertIntoBST = function (root, val) {
     return root
 };
 ```
-## leetCode-
+## leetCode-225  用队列实现栈
 ```js
+// 思路
+// ->[]->.     <->[]
+//队列每次push 1，2，3 [1,2,3] -> 
+//拿到3，只能先弹出[1,2]（因为队列） 再弹出3 放入队列2 [1，2]   []
 
+var MyStack = function () {
+    this.queue1 = []
+    this.queue2 = []
+};
+
+/** 
+ * @param {number} x
+ * @return {void}
+ */
+MyStack.prototype.push = function (x) {
+    this.queue1.push(x)
+};
+
+/**
+ * @return {number}
+ */
+MyStack.prototype.pop = function () {
+    //1.队列1没有数据 两个队列交换后 弹出数据
+    if (!this.queue1.length) {
+        [this.queue1, this.queue2] = [this.queue2, this.queue1]
+    }
+    //2.队列1有数据 队列1清空 备份到队列2
+    while (this.queue1.length > 1) {
+        this.queue2.push(this.queue1.shift())
+    }
+    return this.queue1.shift()
+};
+
+/**
+ * @return {number}
+ */
+MyStack.prototype.top = function () {
+    const x = this.pop()
+    this.queue1.push(x)
+    return x
+};
+
+/**
+ * @return {boolean}
+ */
+MyStack.prototype.empty = function () {
+    return !this.queue1.length && !this.queue2.length
+};
+
+/**
+ * Your MyStack object will be instantiated and called as such:
+ * var obj = new MyStack()
+ * obj.push(x)
+ * var param_2 = obj.pop()
+ * var param_3 = obj.top()
+ * var param_4 = obj.empty()
+ */
+```
+## leetCode-232 用栈实现队列
+```js
+// [1,2,3].  [3,2]  
+// 栈-> 队列.    [1,2,3] 只有push和pop方法->拿到1 先pop出[3,2]放入stackOut 1push到stackIn
+//-> 
+var MyQueue = function() {
+    this.stackIn = []
+    this.stackOut = []
+};
+
+/** 
+ * @param {number} x
+ * @return {void}
+ */
+MyQueue.prototype.push = function(x) {
+    this.stackIn.push(x)
+};
+
+/**
+ * @return {number}
+ */
+MyQueue.prototype.pop = function() {
+    // 如果stackOut 有数据 直接弹出数据
+    if(this.stackOut.length){
+        return this.stackOut.pop()
+    }
+    // 如果stack1 有数据 进行push到stack2
+    while(this.stackIn.length){
+        this.stackOut.push(this.stackIn.pop())
+    }
+    return this.stackOut.pop()
+};
+
+/**
+ * @return {number}
+ */
+MyQueue.prototype.peek = function() {
+    const x = this.pop()
+    this.stackOut.push(x)
+    return x
+};
+
+/**
+ * @return {boolean}
+ */
+MyQueue.prototype.empty = function() {
+    return !this.stackIn.length && !this.stackOut.length
+};
+
+/**
+ * Your MyQueue object will be instantiated and called as such:
+ * var obj = new MyQueue()
+ * obj.push(x)
+ * var param_2 = obj.pop()
+ * var param_3 = obj.peek()
+ * var param_4 = obj.empty()
+ */
 ```
 ## leetCode-
 ```js
