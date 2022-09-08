@@ -1209,9 +1209,10 @@ dp[10] dp[9] dp[6] 三个最优解 +1
     <!-- - 108.将有序数组转换为二叉搜索树 -->
     <!-- - 109.有序链表转换二叉搜索树 -->
     <!-- - 654.最大二叉树 -->
-    - 230.
-    - 700.
-    - 701.
+
+    <!-- - 230.二叉搜索树中第K小的元素 -->
+    <!-- - 700.二叉搜索树中的搜索 -->
+    <!-- - 701.二叉搜索树中的插入操作 -->
     - 96.
     - 堆
   - 栈
@@ -2699,9 +2700,93 @@ var constructMaximumBinaryTree = function(nums) {
     return root
 };
 ```
-## leetCode-
+## leetCode-230 二叉搜索树中第K小的元素
 ```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {number} k
+ * @return {number}
+ */
+var kthSmallest = function (root, k) {
+    let count = 0
+    let stack = []
+    while (root || stack.length) {
+        while (root) {
+            stack.push(root)
+            root = root.left
+        }
+        root = stack.pop()
+        count++
+        if (count === k) {
+            return root.val
+        }
+        root = root.right
+    }
 
+};
+```
+## leetCode-700 二叉搜索树中的搜索
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {number} val
+ * @return {TreeNode}
+ */
+var searchBST = function (root, val) {
+    if (root === null) {
+        return root
+    }
+    if (root.val === val) {
+        return root
+    } else if (root.val > val) {
+        return searchBST(root.left, val)
+    } else if (root.val < val) {
+        return searchBST(root.right, val)
+    }
+};
+```
+## leetCode-701 二叉搜索树中的插入操作
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {number} val
+ * @return {TreeNode}
+ */
+var insertIntoBST = function (root, val) {
+    if(root===null){
+        return new TreeNode(val)
+    }
+    if (root.val > val) {
+        root.left = insertIntoBST(root.left, val)
+    } else if (root.val < val) {
+        root.right = insertIntoBST(root.right, val)
+    }
+    return root
+};
 ```
 ## leetCode-
 ```js
