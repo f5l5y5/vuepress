@@ -1221,9 +1221,9 @@ dp[10] dp[9] dp[6] 三个最优解 +1
     - =
     <!-- - 225. 用队列实现栈 -->
     <!-- - 232.用栈实现队列 -->
-    - 1047.
     <!-- - 150.逆波兰表达式求值 -->
-    - 151.
+    <!-- - 1047.删除字符串中的所有相邻重复项 -->
+    <!-- - 151.反转字符串中的单词 -->
     - console.trace() 调用栈 哪些函数执行了
 - 算法思想
   - 排序
@@ -2969,13 +2969,69 @@ var evalRPN = function (tokens) {
 };
 ```
 
-## leetCode-
+## leetCode-1047 删除字符串中的所有相邻重复项
 ```js
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var removeDuplicates = function (s) {
+    let stack = []
+    for (const x of s) {
+        let len = stack.length
+        if (len && stack[len - 1] === x) {
+            stack.pop()
+            continue
+        }
+        stack.push(x)
+    }
 
+    // for (let i = 0; i < s.length; i++) {
+    //     let c
+    //     let x = s[i]
+    //     if (stack.length && x === (c = stack.pop())) {
+    //         continue;
+    //     }
+    //     c && stack.push(c)
+    //     stack.push(x)
+    // }
+    return stack.join('')
+};
 ```
-## leetCode-
+## leetCode-151 反转字符串中的单词
 ```js
-
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var reverseWords = function (s) {
+    // return s.trim().split(' ').filter(v=>v).reverse().join(' ')
+    // 定义左右
+    let left = 0
+    let right = s.length - 1
+    let queue = []
+    let word = ''
+    while (s.charAt(left) === ' ') {
+        left++
+    }
+    while (s.charAt(right) === ' ') {
+        right--
+    }
+    //先找到第一个和最后一个的位置
+    while (left <= right) {
+        let ch = s.charAt(left)
+        //如果没有遇到空格 并且有word 放到到队列中开头 [is,sky]
+        if (ch === ' ' && word) {
+            queue.unshift(word)
+            word = ''
+        } else if (ch !== ' ') {
+            word += ch
+        }
+        left++
+    }
+    queue.unshift(word)
+    return queue.join(' ')
+};
 ```
 ## leetCode-
 ```js
