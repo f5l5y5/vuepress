@@ -1206,9 +1206,9 @@ dp[10] dp[9] dp[6] 三个最优解 +1
 
     <!-- - 98.验证二叉搜索树 -->
     <!-- - 99.恢复二叉搜索树 -->
-    - 108.
-    - 109.
-    - 654.
+    <!-- - 108.将有序数组转换为二叉搜索树 -->
+    <!-- - 109.有序链表转换二叉搜索树 -->
+    <!-- - 654.最大二叉树 -->
     - 230.
     - 700.
     - 701.
@@ -2577,6 +2577,131 @@ var recoverTree = function (root) {
     first.val = second.val
     second.val = tmp
 };
+```
+## leetCode-108 将有序数组转换为二叉搜索树
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {number[]} nums
+ * @return {TreeNode}
+ */
+var sortedArrayToBST = function (nums) {
+    if (!nums.length) {
+        return null
+    }
+    //中序遍历 
+    //数组中间的节点 作为树的根结点
+    let mid = Math.floor(nums.length / 2)
+    const root = new TreeNode(nums[mid])
+    root.left = sortedArrayToBST(nums.slice(0, mid))
+    root.right = sortedArrayToBST(nums.slice(mid + 1))
+    return root
+};
+```
+## leetCode-109 有序链表转换二叉搜索树
+```js
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {TreeNode}
+ */
+var sortedListToBST = function(head) {
+    // 递归
+    let arr = []
+    let cur = head
+    while(cur){
+        arr.push(cur.val)
+        cur = cur.next
+    }
+    return sortedArrayToBST(arr)
+};
+// 借用108题
+var sortedArrayToBST = function (nums) {
+    if (!nums.length) {
+        return null
+    }
+    //中序遍历 
+    //数组中间的节点 作为树的根结点
+    let mid = Math.floor(nums.length / 2)
+    const root = new TreeNode(nums[mid])
+    root.left = sortedArrayToBST(nums.slice(0, mid))
+    root.right = sortedArrayToBST(nums.slice(mid + 1))
+    return root
+};
+```
+```js
+var sortedListToBST = function (head) {
+    // 递归 如何获取中间节点 使用快慢指针
+
+    function travese(head, tail) {
+        if (head === tail) {
+            return null
+        }
+        let slow = fast = head
+        // 遍历出中间节点 创建链表
+        while (fast !== tail && fast.next !== tail) {
+            slow = slow.next
+            fast = fast.next.next
+        }
+        let root = new TreeNode(slow.val)
+        //定义头尾进行递归
+        root.left = travese(head, slow)
+        root.right = travese(slow.next, tail)
+        return root
+    }
+    return travese(head, null)
+};
+```
+## leetCode-654 最大二叉树
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {number[]} nums
+ * @return {TreeNode}
+ */
+var constructMaximumBinaryTree = function(nums) {
+    if(!nums.length){
+        return null
+    }
+    let max = Math.max(...nums)
+    let index = nums.indexOf(max)
+    let root = new TreeNode(max)
+    root.left = constructMaximumBinaryTree(nums.slice(0,index))
+    root.right = constructMaximumBinaryTree(nums.slice(index+1))
+    return root
+};
+```
+## leetCode-
+```js
+
 ```
 ## leetCode-
 ```js
