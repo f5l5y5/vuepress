@@ -160,3 +160,240 @@ ppi= x^2+y^2 开根号除以屏幕尺寸
    3. 更清晰的dpr 例如：dpr为2的设备 1*1pxcss = 1*1 设备独立像素 = 2*2 物理像素
 3. 缺点：同一个元素在不同设备上，呈现效果不一样，例如375的盒子，375/375和375/414（不是等比例显示）
    1. 解决是做适配
+
+## 缩放
+
+### pc的缩放
+- 放大时：先把视口变小，然后进行等比例缩放成屏幕大小
+  - 视口变小 
+  - 元素的css像素值不变，px是相对单位：1px css像素所占面积变大
+- 缩小时：先把视口变大，然后进行等比例缩放成屏幕大小
+  - 视口变大
+  - 元素的css像素值不变，px是相对单位：1px css像素所占面积变小
+
+### 移动端缩放
+- 放大时
+  - 布局视口不变
+  - 视觉视口变小
+- 缩小时
+  - 布局视口不变
+  - 视觉视口变大
+  
+**注意：移动端缩放不会影响页面布局，因为缩放时，布局视口没有变化，简记：移动端缩放没有改变布局视口任何东西**
+
+## viewport
+  meta-viewport标签是2007苹果引进，用于移动端布局视口的控制。
+1. viewport相关选项
+  1. width布局视口的宽度
+     1. 设备宽度标识 = 设备独立像素
+  2. initial-scale 【系统】初始缩放比例1.0
+     1. 比值 (屏幕宽度)设备独立像素/布局视口宽度 如果设置了，布局视口默认为设备独立像素也就等于width=device-width
+     2. 如果1/2都设置了 谁大听谁的
+  3. maximum-scale 允许【用户】缩放的最大比例
+     1.  (屏幕宽度)设备独立像素/布局视口宽度
+  4. minimum-scale 允许【用户】缩放的最小比例
+  5. user-scalable 是否允许用户缩放
+     1. 通过手指缩放页面
+  6. viewport-fit 设置为cover值可以解决刘海屏留白问题
+
+## 适配
+一、为什么要适配 <br>
+ 由于移动端设备的屏幕尺寸大小不一，会出现同一个元素在两个不同手机上显示效果不一样（比例不同）要想现实一致，要进行适配。**无论采用何种适配方式，中心原则永远不变，等比**
+ <br>
+ 主流适配方式
+ 1. viewport适配
+ 2. rem适配
+ 3. vw适配
+
+### 1.viewport适配
++ 方法:拿到设计稿后，设置布局视口宽度为设计稿宽度，然后按照设计稿的宽度进行布局即可
++ 优点：不用复杂计算，直接使用设计稿的px值
++ 缺点：
+  + 不能使用完整的meta标签，会导致某些安卓手机上有兼容性问题
+  + 不希望适配的东西，例如边框也强制参与了适配
+  + 图片会失真
+
+### 2.rem适配
+em和rem
+- em是父元素字体的单位 font-size
+- rem 根节点的字体大小 font-size
+
+|375px |           414px|
+|---|---|
+|345px         |380.88px(计算出来)|
+|根字体设置为100px| |
+|3.75rem |  |
+|3.45rem|     |
+
+1. 方案一 淘宝 百度
+   1. 设置理想视口
+   2. ip6根字体设置为100px ,设计稿根字体的大小等于 （设备独立像素比值 * 100）/ 设计稿宽度
+   3. 编写样式 直接以rem为单位，值为 设计稿/100
+   4. 增加js代码进行实时适配
+2. 优势 编写代码直接移动小数点即可
+
+
+```js
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset="UTF-8" />
+      <title>rem适配方案一</title>
+      <meta name="viewport" content=" width=device-width initial-scale=1.0 maximum-scale=1 minimum-scale=1 user-scalable=no viewport-fit=cover">
+      <style>
+        *{
+          margin: 0;
+          padding: 0;
+        }
+        #demo{
+          width: 3.45rem;
+          height: 1.5rem;
+          margin: 0 auto;
+          margin-top: 0.15rem;
+          background-color: #87CEEB;
+          border: 0.01rem solid black;	/* 边框参与适配*/
+          /* border: 1px solid black; */  /* 边框不参与适配*/
+        }
+      </style>
+    </head>
+    <body>
+      <div id="demo"></div>
+      <script type="text/javascript" >
+        function adapter (){
+          //获取手机横向的设备独立像素
+          const dip = document.documentElement.clientWidth
+          //计算根字体大小(100是我们自己指定的，375是设计稿宽度)
+          const rootFontSize = (dip * 100)/375
+          //设置根字体
+          document.documentElement.style.fontSize = rootFontSize + 'px'
+        }
+        adapter()
+
+        window.onresize = adapter
+      </script>
+    </body>
+  </html>
+```
+
+2. 方案二 搜狐唯品会
+   1. 设置理想视口
+   2. 根字体=设备独立像素/10 （根字体为 375 / 10 = 37.5 手机屏幕宽度是10rem 345是？345/37.5rem  ip6p是41.4px 设置根字体特别简单编码恶心）
+   3. 编写样式：直接以rem为单位，值为：设计值/（设计稿宽度/10）
+   4. 增加js代码进行实时适配
+
+
+```js
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>rem适配方案二</title>
+		<meta name="viewport" content=" width=device-width initial-scale=1.0 maximum-scale=1 minimum-scale=1 user-scalable=no viewport-fit=cover">
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#demo{
+				width: 9.2rem;
+				height: 4rem;
+				margin: 0 auto;
+				margin-top: 0.4rem;
+				background-color: #87CEEB;
+				/* border: 0.01rem solid black;	边框参与适配 */
+				/* border: 1px solid black; */  /* 边框不参与适配*/
+			}
+		</style>
+	</head>
+	<body>
+		<div id="demo"></div>
+		<script type="text/javascript" >
+			function adapter (){
+				//获取手机横向的设备独立像素
+				const dip = document.documentElement.clientWidth
+				//计算根字体大小(100是我们自己指定的，375是设计稿宽度)
+				const rootFontSize = dip / 10
+				//设置根字体
+				document.documentElement.style.fontSize = rootFontSize + 'px'
+			}
+
+			window.onresize = adapter
+		</script>
+	</body>
+</html>
+```
+
+### 方案二less版本
+```less
+/* 安装easy-less 进行编译 */
+/*  在less中直接写 345/(375/10)rem ()会有空格 出现样式不生效情况 如 9.2 rem */
+/*  所以将单位定义在变量上 */
+@font:375/10rem;
+* {
+    margin: 0;
+    padding: 0;
+}
+/*  加括号 会出现空格 导致样式不生效 */
+#demo {
+    width:(345/@font);
+    height: (150/@font);
+    margin-top: (15/@font);
+    margin: 0 auto;
+    background-color: skyblue;
+}
+```
+
+### 方案一less版本
+按照根元素设置为100，单位是345/100 rem即可
+```less
+@font:100rem;
+*{
+	margin: 0;
+	padding: 0;
+}
+#demo{
+	width: 345/@font;
+	height: 150/@font;
+	margin: 0 auto;
+	margin-top: 15/@font;
+	background-color: #87CEEB;
+	/* border: 0.01rem solid black; */	/* 边框参与适配*/
+	border: 1px solid black;  /* 边框不参与适配*/
+}
+
+```
+
+## 设计稿750/800
+- 针对方案一只需要修改设计稿宽度 375->750；less文件对应的宽度设置为2倍。 如345px  690/@font；800同理
+- 针对方案二只需要修改less文件中 @font为750/10rem 对应宽度设置为2倍。 如345px  690/@font；800同理
+
+### 3.vw适配 
+vw和vh是两个相对单位
+- 1vw是等于布局视口宽度的1%
+- 1vh是等于布局视口高度的1%
+
+有兼容性问题 [点击查看](https://caniuse.com/)
+```less
+@base:375/100vw; //345/375*100vw 
+*{
+    margin: 0;
+    padding: 0;
+}
+#demo{
+    width: (345/@base);
+    height: (150/@base);
+    background-color:skyblue;
+    margin: 0 auto;
+    margin-top: (15/@base);
+    border: (1/@base) solid black;
+}
+```
+### 4 1物理像素边框
+高清屏幕下1px对应更多的物理像素 所以1px像素边框看起来比较粗，使用媒体查询
+```css
+@media screen add(-webkit-min-device-pixel-ratio:2){
+  #demo{
+    border:0.5 solid black;
+  }
+}
+```
