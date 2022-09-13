@@ -389,11 +389,220 @@ vw和vh是两个相对单位
 }
 ```
 ### 4 1物理像素边框
-高清屏幕下1px对应更多的物理像素 所以1px像素边框看起来比较粗，使用媒体查询
+高清屏幕下1px对应更多的物理像素 所以1px像素边框看起来比较粗，使用媒体查询,真机调试效果明显
 ```css
-@media screen add(-webkit-min-device-pixel-ratio:2){
-  #demo{
-    border:0.5 solid black;
+@media screen and (-webkit-min-device-pixel-ratio:2) {
+    #demo {
+        border: 0.5 solid black;
+    }
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:3) {
+    #demo {
+        border: 0.333px solid black;
+    }
+}
+```
+使用伪元素 上下边框
+<img :src="$withBase('/project/h5/1border.png')" alt="">
+
+```css
+#demo{
+  position: relative;
+  width: 3.45rem;
+  height: 1.5rem;
+  background-color: pink;
+  margin: 0 auto;
+  margin-top: 0.15rem;
+}
+#demo::after{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: black;
+}
+#demo::before{
+  position: absolute;
+  top: 0;
+  right: 0;
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: black;
+}
+@media screen and (-webkit-min-device-pixel-ratio:2){
+  #demo::after{
+    transform:scaleY(0.5);
+  }
+  #demo::before{
+    transform:scaleY(0.5);
   }
 }
+@media screen and (-webkit-min-device-pixel-ratio:3){
+  #demo::after{
+    transform:scaleY(0.333);
+  }
+  #demo::before{
+    transform:scaleY(0.333);
+  }
+}
+```
+
+## 移动端事件
+事件类型
++ touchstart 元素上触摸开始时触发
++ touchmove 元素上触摸移动时触发
++ touchend 手指从元素上离开时触发
++ touchcancel 触摸被打断时触发
+
+这几个事件最早出现于IOS safari中，为了向开发人员转达一些特殊的信息。 <br>
+应用场景
++ touchstart 事件可用于元素触摸的交互，比如页面跳转，标签页切换
++ touchmove 事件可用于页面的滑动特效，网页游戏，画板
++ touchend 事件主要跟 touchmove 事件结合使用
++ touchcancel 使用率不高
++ 注意：
+  + touchmove 事件触发后，即使手指离开了元素，touchmove 事件也会持续触发
+  + 触发 touchmove 与 touchend 事件，一定要先触发 touchstart
+  + 事件的作用在于实现移动端的界面交互
+
+事件绑定
+ - box.ontouchstart
+ - box.addEventListener('touchstart',cb)
+
+事件e
+- touches 屏幕上拥有的触点数  一个手指一个触点
+- targetTouches: 当前元素上的触点数
+- changedTouches: 同时按下几个手指(改变了的触点数)
+
+<img :src="$withBase('/project/h5/me.png')" alt="">
+
+点击穿透
+- **touch事件结束后会默认触发元素的click事件**，如没有设置完美视口，则事件触发的时间间隔为350ms左右，如设置完美视口则时间间隔为50ms左右。
+```js
+//测试代码
+<button id="btn">点我</button>
+<script>
+    let btn = document.getElementById('btn')
+    let time
+    btn.addEventListener('click',()=>{
+        console.log('你点击了我',Date.now()-time);
+    })
+    btn.addEventListener('touchstart',()=>{
+        time = Date.now()
+        console.log('你触摸了我');
+    })
+</script>
+```
+- 如果touch事件隐藏了元素，则click动作将作用到新的元素上，触发新元素的click事件或页面跳转，此现象称为点击穿透
+```html
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=\, initial-scale=1.0">
+    <title>点击穿透</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        #app {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-color: skyblue;
+        }
+
+        .banner {
+            display: block;
+            background-color: orange;
+            width: 100%;
+            height: 200px;
+        }
+
+        .shade {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        /* h1 如果是180 点击按钮在 橙色区域上方 并且屏蔽层消失，且后方有click点击事件 才会触发点击穿透 */
+        /* 1.必须绑定touch* 如touchstart 引起元素消失 2.如果引起消失，后面有click事件 */
+        h1{ 
+            margin-top: 100px;
+            color: white;
+        }
+        button {
+            width: 100px;
+            height: 50px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <a class="banner" href="http://www.baidu.com">点我去百度</a>
+        <div class="shade">
+            <h1>恭喜一等奖！</h1>
+            <button id="btn">关闭</button>
+        </div>
+    </div>
+
+    <script>
+        const shade = document.querySelector('.shade')
+        const btn = document.getElementById('btn')
+        btn.addEventListener('touchstart',(e)=>{
+            shade.style.display = 'none'
+        })
+    </script>
+</body>
+
+</html>
+```
+解决方案：
+1.  阻止默认行为 e.preventDefault()
+2.  使背后元素不具备click特性，用touch*事件代替click
+  ```js
+  <div class="banner">点我去百度</div>
+  const banner = document.querySelector('.banner')
+  banner.addEventListener('touchstart', () => {
+      window.location.href = 'http://www.baidu.com'
+  })
+  ```
+3. 让背后的元素暂时失去click事件，300ms再复原
+```js
+#anode{
+  pointer-events:none;
+}
+btn.addEventListener('touchstart',()=>{
+  shade.style.display='none'
+  setTimeout(() => {
+    anode.style.pointerEvents = 'auto'
+  }, 500);
+})
+
+```
+4. 让隐藏的元素延迟300ms左右再隐藏
+```js
+btn.addEventListener('touchstart', (e) => {
+    setTimeout(()=>{
+        shade.style.display = 'none'
+    },300)
+})
 ```
