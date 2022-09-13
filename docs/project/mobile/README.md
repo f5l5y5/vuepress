@@ -606,3 +606,40 @@ btn.addEventListener('touchstart', (e) => {
     },300)
 })
 ```
+
+## 图片高清显示
+为什么移动端需要@2x或者@3x的图片 ?
+:::tip
+移动端开发过程中，@2x或者@3x的图标，是因为手机的dpr(设备像素比不同)，我们> 需要根据dpr来修改不同大小的图标，来解决不同设备用户视觉体验。
+dpr=2说明1css最小像素点对应2个物理像素，如果图片的ui最小宽度达不到会出现失真
+:::
+
+```less
+@media screen and (-webkit-min-device-pixel-ratio:2){
+  .logo{
+    content: url(../imgs/logo@2x.png);
+  }
+}
+@media screen and (-webkit-min-device-pixel-ratio:3){
+  .logo{
+    content: url(../imgs/logo@3x.png);
+  }
+}
+```
+使用scss，通过mixin,动态修改图标的背景图片。通过@media (媒体查询)，判断设备的dpr。
+```scss
+@mixin bg-image($url) {
+    background-image: url($url + "@2x.png");
+    @media (-webkit-min-device-pixel-ratio: 3),(min-device-pixel-ratio: 3) {
+        background-image: url($url + "@3x.png");
+    }
+}
+// 调用
+div{
+  width:30px;
+  height:30px;
+  background-size:30px  30px;
+  background-repeat:no-repeat;
+  @include bg-image('logo');      
+}
+```
