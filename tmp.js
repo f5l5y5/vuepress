@@ -1,34 +1,65 @@
-//定义一个访问者类  内部改变元素类的执行方法 奖励访问者 员工
-function bonusVisitor(employee) {
-    if (employee instanceof Manager) {
-        employee.bonus = employee.salary * 2
-    }
-    if (employee instanceof Developer) {
-        employee.bonus = employee.salary
-    }
-}
-//在数据基础类里面有一个方法接受访问者，将自身引用传入访问者。
-class Employee {
-    constructor(salary) {
-        this.bonus = 0
-        this.salary = salary
-    }
-    accept(visitor) {
-        visitor(this)
-    }
-}
-// 被访问者
-class Manager extends Employee {
-    constructor(salary) {
-        super(salary)
-    }
+const data = { a: 1 }
+const p = new Proxy(data, {
+	get(target, key) {
+		return target[key]
+	},
+	set(target, key, newVal) {
+		target[key] = newVal
+	}
+})
+data.a = 12
+
+console.log(p.a)
+
+const func = x => {
+	console.log('打印***11', x)
 }
 
-class Developer extends Employee {
-    constructor(salary) {
-        super(salary)
-    }
+const pf = new Proxy(func, {
+	apply(target, thisArg, argArray) {
+		console.log('打印***target', target)
+		console.log('打印***thisArg', thisArg)
+		console.log('打印***argArray', argArray)
+		target.call(thisArg, ...argArray)
+	}
+})
+
+pf(11)
+
+// const obj = {
+// 	foo: 1,
+// 	get() {
+// 		return this.foo + 2
+// 	}
+// }
+// // console.log(obj.foo)
+// const outObj = { foo: 2 }
+// //指定接收者 receiver，你可以把它理解为函数调用过程中的 this
+// console.log(Reflect.get(obj, 'foo', outObj))
+
+var obj = {
+	foo: 1,
+
+	bar: 2,
+
+	get fn() {
+		return this.foo + this.bar
+	}
 }
 
+var outObj = {
+	foo: 4,
 
-export { Developer, Manager, bonusVisitor }
+	bar: 4
+}
+
+console.log(Reflect.get(obj, 'foo'))
+// 1
+
+console.log(Reflect.get(obj, 'fn'))
+
+//3
+
+console.log(Reflect.get(obj, 'fn', outObj))
+
+// 8

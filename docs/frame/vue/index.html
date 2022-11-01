@@ -11,7 +11,14 @@
 		<div id="app"></div>
 		<script>
 			const bucket = new WeakMap()
-			const data = { foo: 1, bar: 2 }
+			const data = {
+				foo: 1,
+				bar: 2,
+				get bar() {
+					console.log('打印***访问器属性')
+					return this.bar
+				}
+			}
 			const obj = new Proxy(data, {
 				get(target, key) {
 					track(target, key)
@@ -149,9 +156,6 @@
 			}
 			// const objk = computed(() => obj.foo + obj.bar)
 
-			// effect(() => {
-			// 	console.log('打印***objk.value', objk.value)
-			// })
 			// watch 函数接收两个参数，source 是响应式数据，cb 是回调函数
 			function watch(source, cb, options = {}) {
 				let getter
@@ -199,19 +203,22 @@
 				return value
 			}
 
-			watch(
-				() => obj,
-				(newVal, oldVal) => {
-					console.log('obj 值改变了', a, b)
-				},
-				{
-					immediate: true,
-					flush: 'post'
-				}
-			)
+			effect(() => {
+				console.log(obj.bar)
+			})
+			// watch(
+			// 	() => obj,
+			// 	(newVal, oldVal) => {
+			// 		console.log('obj 值改变了', a, b)
+			// 	},
+			// 	{
+			// 		immediate: true,
+			// 		flush: 'post'
+			// 	}
+			// )
 
-			obj.foo++
-			obj.foo++
+			// obj.foo++
+			// obj.foo++
 			// obj.foo++
 		</script>
 	</body>
