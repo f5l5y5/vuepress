@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Vue</title>
+	</head>
+	<body>
+		<script>
+			const bucket = new WeakMap()
+			const data = { ok: true, text: 'hello,world' }
+			const obj = new Proxy(data, {
+				get(target, key) {
+					track(target, key)
+					return target[key]
+				},
+				set(target, key, newVal) {
+					target[key] = newVal
+					trigger(target, key)
+					return true
+				}
+			})
+
+			function track(target, key) {
+				if (!activeEffect) return
+
+				// 如果不存在这个代理的数据 新增
+				let depsMap = bucket.get(target)
+				if (!depsMap) {
+					bucket.set(target, (depsMap = new Map()))
+				}
+				// 代理数据中的属性没有 新增
+				let deps = depsMap.get(key)
+				if (!deps) {
+					depsMap.set(key, (deps = new Set()))
+				}
+				deps.add(activeEffect)
+				// 调用时添加
+				activeEffect.deps.push(deps)
+			}
+
+			function trigger(target, key) {
+				// 找出对应属性的副作用函数
+				let depsMap = bucket.get(target)
+				if (!depsMap) return
+				// set()
+				let effects = depsMap.get(key)
+				const effectsRun = new Set(effects)
+
+				// 进行更新 需要执行副作用函数
+				effectsRun && effectsRun.forEach(fn => fn())
+			}
+
+			// 默认第一次执行就是为()=>{ document.body.innerText = obj.text }
+			let activeEffect
+			// 相当于包装一层,利用回调函数进行去除名称
+			function effect(fn) {
+				const effectFn = () => {
+					// 执行时先清除
+					cleanup(effectFn)
+					activeEffect = effectFn
+					fn()
+				}
+				effectFn.deps = []
+				effectFn()
+			}
+
+			function cleanup(effectFn) {
+				for (let i = 0; i < effectFn.deps.length; i++) {
+					const deps = effectFn.deps[i]
+					deps.delete(effectFn)
+				}
+				effectFn.deps.length = 0
+			}
+
+			effect(() => {
+				console.log('打印***effect Run')
+				document.body.innerText = obj.ok ? obj.text : 'not'
+			})
+
+			setTimeout(() => {
+				obj.ok = false
+			}, 2000)
+		</script>
+	</body>
+</html>

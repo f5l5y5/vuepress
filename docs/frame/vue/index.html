@@ -201,9 +201,21 @@
 					getter = () => traverse(source)
 				}
 				let newVal, oldVal
+				// cleanup 用来存储用户注册的过期回调
+				let cleanup
+				// 定义 onInvalidate 函数
+				function onInvalidate(fn) {
+					// 将过期回调存储到 cleanup 中
+					cleanup = fn
+				}
 				const job = () => {
 					newVal = effectFn()
-					cb(newVal, oldVal)
+					// 在调用回调函数 cb 之前，先调用过期回调
+					if (cleanup) {
+						cleanup()
+					}
+					// 将 onInvalidate 作为回调函数的第三个参数，以便用户使用
+					cb(newVal, oldVal, onInvalidate)
 					oldVal = newVal
 				}
 
@@ -238,6 +250,7 @@
 				}
 				return value
 			}
+			let finalData
 
 			effect(() => {
 				// console.log(obj.bar)
