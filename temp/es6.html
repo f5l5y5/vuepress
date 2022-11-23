@@ -10,15 +10,29 @@
 </html>
 
 <script>
-	function testable(target) {
-		target.isTestable = true
-	}
-	@testable
-	class MyTestableClass {
-		constructor(name) {
-			this.name = name
+	Function.prototype.myBind = function (ctx) {
+		if (typeof this !== 'function') {
+			throw Error(`${this} 不是一个函数`)
+		}
+		let args = [...arguments].slice(1),
+			fn = ctx
+		return function Fn() {
+			return fn.apply(this instanceof Fn ? this : context, args.concat(...arguments))
 		}
 	}
 
-	console.log('打印***MyTestableClass.isTestable', MyTestableClass.isTestable)
+	const p = {
+		name: 'jack',
+		say() {
+			;[...arguments].forEach(i => {
+				console.log('打印***arr', i)
+			})
+			return this.name
+		}
+	}
+	const s = {
+		name: 'solid'
+	}
+
+	console.log('打印***s.say.call(p)', p.say.bind(s))
 </script>
