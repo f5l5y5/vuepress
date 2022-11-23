@@ -23,3 +23,12 @@ const Person = class {
 	}
 }
 ```
+
+## Decorator 装饰器
+
+装饰器是一种函数，用来增强 JavaScript 类（class）的功能,写成@ + 函数名，可以用来装饰四种类型的值。
+
+1. 类
+2. 类的属性
+3. 类的方法
+4. 属性存取器（accessor）
