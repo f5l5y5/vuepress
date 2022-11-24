@@ -1,6 +1,6 @@
 ## 常用函数的实现
 
-### call
+### call 实现
 
 call 函数的实现步骤：
 
@@ -80,6 +80,16 @@ bind 函数的实现步骤：
 4. 函数内部使用 apply 来绑定函数调用，需要判断函数作为构造函数的情况，这个时候需要传入当前函数的 this 给 apply 调用，其余情况都传入指定的上下文对象。
 
 ```js
+function person() {
+	return console.log('打印***this instanceof person', this instanceof person)
+}
+person() //false 普通函数
+
+new person() //true 构造函数 原型上存在构造函数 使用window进行条用
+content 是传入的对象 外部this是函数 内部this默认是Fn
+```
+
+```js
 // bind 函数实现
 Function.prototype.myBind = function (context) {
 	// 判断调用对象是否为函数
@@ -90,7 +100,7 @@ Function.prototype.myBind = function (context) {
 	var args = [...arguments].slice(1),
 		fn = this
 	return function Fn() {
-		// 根据调用方式，传入不同绑定值
+		// 根据调用方式，传入不同绑定值 如果是作为构造函数调用 传入Fn的this 外部调用传入context
 		return fn.apply(this instanceof Fn ? this : context, args.concat(...arguments))
 	}
 }
