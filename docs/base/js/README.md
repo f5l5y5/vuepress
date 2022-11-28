@@ -105,3 +105,35 @@ Function.prototype.myBind = function (context) {
 	}
 }
 ```
+
+### Object.create 方法
+
+思路： 传入的对象作为原型
+
+```js
+function create(obj) {
+	function F() {}
+	F.prototype = ojb
+	return new F()
+}
+```
+
+### instanceof 方法
+
+用法：instanceof 运算符用于判断构造函数的 prototype 属性是否出现在对象的原型链中的任何位置。
+
+```js
+function myInstanceof(left, right) {
+	// 获取对象的原型
+	let proto = Object.getPrototypeOf(left)
+	// 获取构造函数的 prototype 对象
+	let prototype = right.prototype
+	// 判断构造函数的 prototype 对象是否在对象的原型链上
+	while (true) {
+		if (!proto) return false
+		if (proto === prototype) return true
+		// 不存在继续寻找原型链的原型
+		proto = Object.getPrototypeOf(proto)
+	}
+}
+```
