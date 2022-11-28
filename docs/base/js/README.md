@@ -137,3 +137,36 @@ function myInstanceof(left, right) {
 	}
 }
 ```
+
+### new 方法实现
+
+实现：在调用 new 的过程中会发生以上四件事情：
+（1）首先创建了一个新的空对象
+（2）设置原型，将对象的原型设置为函数的 prototype 对象。
+（3）让函数的 this 指向这个对象，执行构造函数的代码（为这个新对象添加属性）
+（4）判断函数的返回值类型，如果是值类型，返回创建的对象。如果是引用类型，就返回这个引用类型的对象。
+
+```js
+function objectFactory() {
+	// 1. 创建一个新对象
+	let newObject = null
+	// 获取需要new的函数
+	let constructor = Array.prototype.shift.call(arguments)
+	console.log('打印***constructor', constructor)
+	let result = null
+	// 判断是不是一个函数 不是则返回
+	if (typeof constructor !== 'function') {
+		console.log('type error', typeof constructor)
+		return
+	}
+	// 2.设置原型 将函数的原型赋值给新对象 create将传入的作为原型对象
+	newObject = Object.create(constructor.prototype)
+	console.log('打印***newObject', newObject)
+	// 3. 将 this 指向新建对象，并执行函数
+	result = constructor.apply(newObject, arguments)
+	console.log('打印***result', result)
+	// 4.判断函数的返回值类型，如果是值类型，返回创建的对象。如果是引用类型，就返回这个引用类型的对象。
+	let flag = result && (typeof result === 'object' || typeof result === 'function')
+	return flag ? result : newObject
+}
+```
