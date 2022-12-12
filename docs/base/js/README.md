@@ -177,7 +177,7 @@ function objectFactory() {
 
 ```js
 const PENDING = 'pending'
-const RESOLVED = 'resolved'
+const FULFILLED = 'fulfilled'
 const REJECTED = 'rejected'
 
 function MyPromise(fn) {
@@ -191,10 +191,10 @@ function MyPromise(fn) {
 	this.value = null
 
 	// 用于保存 resolve 的回调函数
-	this.resolvedCallbacks = []
+	this.onFulfilledCallbacks = []
 
 	// 用于保存 reject 的回调函数
-	this.rejectedCallbacks = []
+	this.onRejectedCallbacks = []
 
 	// 状态转变为 resolved 方法
 	function resolve(value) {
@@ -208,13 +208,13 @@ function MyPromise(fn) {
 			// 只有状态为 pending 时才能转变，
 			if (self.state === PENDING) {
 				// 修改状态
-				self.state = RESOLVED
+				self.state = FULFILLED
 
 				// 设置传入的值
 				self.value = value
 
 				// 执行回调函数
-				self.resolvedCallbacks.forEach(callback => {
+				self.onFulfilledCallbacks.forEach(callback => {
 					callback(value)
 				})
 			}
@@ -234,7 +234,7 @@ function MyPromise(fn) {
 				self.value = value
 
 				// 执行回调函数
-				self.rejectedCallbacks.forEach(callback => {
+				self.onRejectedCallbacks.forEach(callback => {
 					callback(value)
 				})
 			}
@@ -250,11 +250,11 @@ function MyPromise(fn) {
 	}
 }
 
-MyPromise.prototype.then = function (onResolved, onRejected) {
+MyPromise.prototype.then = function (onFulfilled, onRejected) {
 	// 首先判断两个参数是否为函数类型，因为这两个参数是可选参数
-	onResolved =
-		typeof onResolved === 'function'
-			? onResolved
+	onFulfilled =
+		typeof onFulfilled === 'function'
+			? onFulfilled
 			: function (value) {
 					return value
 			  }
@@ -268,18 +268,61 @@ MyPromise.prototype.then = function (onResolved, onRejected) {
 
 	// 如果是等待状态，则将函数加入对应列表中
 	if (this.state === PENDING) {
-		this.resolvedCallbacks.push(onResolved)
-		this.rejectedCallbacks.push(onRejected)
+		this.onFulfilledCallbacks.push(onFulfilled)
+		this.onRejectedCallbacks.push(onRejected)
 	}
 
 	// 如果状态已经凝固，则直接执行对应状态的函数
 
-	if (this.state === RESOLVED) {
-		onResolved(this.value)
+	if (this.state === FULFILLED) {
+		onFulfilled(this.value)
 	}
 
 	if (this.state === REJECTED) {
 		onRejected(this.value)
 	}
+}
+```
+
+### 简单 promise then 方法实现
+
+配合上面 需要修改如下
+
+```js
+MyPromise.then = function (onFulfilled, onRejected) {
+	// 保存前一个promise的this
+	const self = this
+	return new MyPromise((resolve, reject) => {
+		// 封装前一个promise成功时执行的函数
+		let fulfilled = () => {
+			try {
+				const result = onFulfilled(self.value) // 承前
+				return result instanceof MyPromise ? result.then(resolve, reject) : resolve(result) //启后
+			} catch (err) {
+				reject(err)
+			}
+		}
+		// 封装前一个promise失败时执行的函数
+		let rejected = () => {
+			try {
+				const result = onRejected(self.reason)
+				return result instanceof MyPromise ? result.then(resolve, reject) : reject(result)
+			} catch (err) {
+				reject(err)
+			}
+		}
+		switch (self.status) {
+			case PENDING:
+				self.onFulfilledCallbacks.push(fulfilled)
+				self.onRejectedCallbacks.push(rejected)
+				break
+			case FULFILLED:
+				fulfilled()
+				break
+			case REJECT:
+				rejected()
+				break
+		}
+	})
 }
 ```
