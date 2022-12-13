@@ -10,29 +10,149 @@
 </html>
 
 <script>
-	Function.prototype.myBind = function (ctx) {
-		if (typeof this !== 'function') {
-			throw Error(`${this} 不是一个函数`)
+	const PENDING = 'pending'
+	const FULFILLED = 'fulfilled'
+	const REJECTED = 'rejected'
+
+	function MyPromise(fn) {
+		// 保存初始化状态
+		var self = this
+
+		// 初始化状态
+		this.state = PENDING
+
+		// 用于保存 resolve 或者 rejected 传入的值
+		this.value = null
+
+		// 用于保存 resolve 的回调函数
+		this.onFulfilledCallbacks = []
+
+		// 用于保存 reject 的回调函数
+		this.onRejectedCallbacks = []
+
+		// 状态转变为 resolved 方法
+		function resolve(value) {
+			// 判断传入元素是否为 Promise 值，如果是，则状态改变必须等待前一个状态改变后再进行改变
+			if (value instanceof MyPromise) {
+				return value.then(resolve, reject)
+			}
+
+			// 保证代码的执行顺序为本轮事件循环的末尾
+			setTimeout(() => {
+				// 只有状态为 pending 时才能转变，
+				if (self.state === PENDING) {
+					// 修改状态
+					self.state = FULFILLED
+
+					// 设置传入的值
+					self.value = value
+
+					// 执行回调函数
+					self.onFulfilledCallbacks.forEach(callback => {
+						callback(value)
+					})
+				}
+			}, 0)
 		}
-		let args = [...arguments].slice(1),
-			fn = ctx
-		return function Fn() {
-			return fn.apply(this instanceof Fn ? this : context, args.concat(...arguments))
+
+		// 状态转变为 rejected 方法
+		function reject(value) {
+			// 保证代码的执行顺序为本轮事件循环的末尾
+			setTimeout(() => {
+				// 只有状态为 pending 时才能转变
+				if (self.state === PENDING) {
+					// 修改状态
+					self.state = REJECTED
+
+					// 设置传入的值
+					self.value = value
+
+					// 执行回调函数
+					self.onRejectedCallbacks.forEach(callback => {
+						callback(value)
+					})
+				}
+			}, 0)
+		}
+
+		// 将两个方法传入函数执行
+		try {
+			fn(resolve, reject)
+		} catch (e) {
+			// 遇到错误时，捕获错误，执行 reject 函数
+			reject(e)
 		}
 	}
 
-	const p = {
-		name: 'jack',
-		say() {
-			;[...arguments].forEach(i => {
-				console.log('打印***arr', i)
-			})
-			return this.name
-		}
-	}
-	const s = {
-		name: 'solid'
+	MyPromise.prototype.then = function (onFulfilled, onReject) {
+		const self = this
+		return new MyPromise((resolve, reject) => {
+			let fulfilled = () => {
+				try {
+					const result = onFulfilled(self.value)
+					return result instanceof MyPromise ? result.then(resolve, reject) : resolve(result)
+				} catch (err) {
+					reject(err)
+				}
+			}
+			let rejected = () => {
+				try {
+					const result = onReject(self.value)
+					return result instanceof MyPromise ? result.then(resolve, reject) : reject(result)
+				} catch (err) {
+					reject(err)
+				}
+			}
+			switch (self.state) {
+				case PENDING:
+					self.onFulfilledCallbacks.push(fulfilled)
+					self.onRejectedCallbacks.push(rejected)
+					break
+				case FULFILLED:
+					fulfilled()
+					break
+				case REJECTED:
+					rejected()
+					break
+			}
+		})
 	}
 
-	console.log('打印***s.say.call(p)', p.say.bind(s))
+	// let p = new MyPromise((resolve, reject) => {
+	// 	console.log('打印***1', 1)
+	// 	resolve(1)
+	// 	return new MyPromise(res => {
+	// 		console.log('打印***2', 2)
+	// 		res(3)
+	// 	})
+	// })
+	// const p1 = p
+	// 	.then(res => {
+	// 		console.log('打印***p', res)
+	// 	})
+	// 	.then(re => {
+	// 		console.log('打印***rej', re)
+	// 	})
+
+	let p = new MyPromise((resolve, reject) => {
+		setTimeout(() => {
+			resolve(1)
+		}, 1000)
+	})
+	let p1 = new MyPromise((resolve, reject) => {
+		setTimeout(() => {
+			resolve(2)
+		}, 2000)
+	})
+
+	MyPromise.race = function (args) {
+		return new MyPromise((resolve, reject) => {
+			for (let i = 0; i < args.length; i++) {
+				args[i].then(resolve, reject)
+			}
+		})
+	}
+
+	const rp = MyPromise.race([p, p1])
+	console.log('打印***rp', rp)
 </script>
