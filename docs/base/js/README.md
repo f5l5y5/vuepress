@@ -385,3 +385,57 @@ MyPromise.all = function (promises) {
 	})
 }
 ```
+
+### 简单防抖 debounce 实现
+
+函数防抖是指在事件被触发 n 秒后再执行回调，如果在这 n 秒内事件又被触发，则重新计时。这可以使用在一些点击请求的事件上，避免因为用户的多次点击向后端发送多次请求。正常需要加第三个参数，控制触发的时机。
+<br/>
+
+<img :src="$withBase('/base/js/debounce.jpg')" alt="debounce">
+
+```js
+function debounce(fn, wait) {
+	let timer = null
+
+	return function () {
+		let context = this,
+			args = arguments
+
+		// 如果此时存在定时器的话，则取消之前的定时器重新记时
+		if (timer) {
+			clearTimeout(timer)
+			timer = null
+		}
+
+		// 设置定时器，使事件间隔指定事件后执行
+		timer = setTimeout(() => {
+			// 避免this丢失
+			fn.apply(context, args)
+		}, wait)
+	}
+}
+```
+
+### 简单节流 throttle 实现
+
+函数节流是指规定一个单位时间，在这个单位时间内，只能有一次触发事件的回调函数执行，如果在同一个单位时间内某事件被触发多次，只有一次能生效。节流可以使用在 scroll 函数的事件监听上，通过事件节流来降低事件调用的频率。一般是窗口变化使用
+
+```js
+function throttle(fn, delay) {
+	// 记录时间 初始化会立即执行
+	let curTime = Date.now()
+
+	return function () {
+		let context = this,
+			args = arguments,
+			nowTime = Date.now()
+
+		// 事件调用时，如果当前时间减去记录时间没有超过delay时间，立即执行一次
+		if (nowTime - curTime >= delay) {
+			// 闭包保存当前的时间，每次执行重新记录
+			curTime = Date.now()
+			return fn.apply(context, args)
+		}
+	}
+}
+```
