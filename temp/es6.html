@@ -118,33 +118,6 @@
 		})
 	}
 
-	// let p = new MyPromise((resolve, reject) => {
-	// 	console.log('打印***1', 1)
-	// 	resolve(1)
-	// 	return new MyPromise(res => {
-	// 		console.log('打印***2', 2)
-	// 		res(3)
-	// 	})
-	// })
-	// const p1 = p
-	// 	.then(res => {
-	// 		console.log('打印***p', res)
-	// 	})
-	// 	.then(re => {
-	// 		console.log('打印***rej', re)
-	// 	})
-
-	let p = new MyPromise((resolve, reject) => {
-		setTimeout(() => {
-			resolve(1)
-		}, 1000)
-	})
-	let p1 = new MyPromise((resolve, reject) => {
-		setTimeout(() => {
-			resolve(2)
-		}, 2000)
-	})
-
 	MyPromise.race = function (args) {
 		return new MyPromise((resolve, reject) => {
 			for (let i = 0; i < args.length; i++) {
@@ -153,6 +126,51 @@
 		})
 	}
 
-	const rp = MyPromise.race([p, p1])
-	console.log('打印***rp', rp)
+	MyPromise.all = function (promises) {
+		return new MyPromise((resolve, reject) => {
+			if (!Array.isArray(promises)) {
+				throw new TypeError('arguments must be a array')
+			}
+			// 计算处理的promise实例数量
+			let resolvedCounter = 0
+			const promisesNum = promises.length
+			// 保存每个promise的结果
+			const resolvedResult = []
+			for (let i = 0; i < promisesNum; i++) {
+				// 使用Promise.resolve对返回的结果进行包装， 可以触发成功或者失败回调
+				Promise.resolve(promises[i]).then(
+					value => {
+						resolvedCounter++
+						resolvedResult[i] = value
+						if (resolvedCounter === promisesNum) {
+							return resolve(resolvedResult)
+						}
+					},
+					error => {
+						return reject(error)
+					}
+				)
+			}
+		})
+	}
+
+	let p1 = new MyPromise((resolve, reject) => {
+		setTimeout(() => {
+			resolve(1)
+		}, 1000)
+	})
+	let p2 = new MyPromise((resolve, reject) => {
+		setTimeout(() => {
+			resolve(2)
+		}, 2000)
+	})
+	let p3 = new MyPromise((resolve, reject) => {
+		setTimeout(() => {
+			resolve(3)
+		}, 3000)
+	})
+
+	MyPromise.all([p3, p1, p2]).then(res => {
+		console.log('打印***res', res)
+	})
 </script>

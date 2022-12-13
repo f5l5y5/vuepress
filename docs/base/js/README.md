@@ -329,7 +329,7 @@ MyPromise.then = function (onFulfilled, onRejected) {
 
 ### Promise.race 方法实现
 
-## 该方法的参数是 Promise 实例数组, 然后其 then 注册的回调方法是数组中的某一个 Promise 的状态变为 fulfilled 的时候就执行. 因为 Promise 的状态只能改变一次, 那么我们只需要把 Promise.race 中产生的 Promise 对象的 resolve 方法, 注入到数组中的每一个 Promise 实例中的回调函数中即可.
+该方法的参数是 Promise 实例数组, 然后其 then 注册的回调方法是数组中的某一个 Promise 的状态变为 fulfilled 的时候就执行. 因为 Promise 的状态只能改变一次, 那么我们只需要把 Promise.race 中产生的 Promise 对象的 resolve 方法, 注入到数组中的每一个 Promise 实例中的回调函数中即可.
 
 静态方法
 
@@ -338,6 +338,49 @@ Promise.race = function (args) {
 	return new Promise((resolve, reject) => {
 		for (let i = 0, len = args.length; i < len; i++) {
 			args[i].then(resolve, reject)
+		}
+	})
+}
+```
+
+### Promise.all 方法实现
+
+1. 核心思路
+
+1) 接收一个 Promise 实例的数组或具有 Iterator 接口的对象作为参数
+2) 这个方法返回一个新的 promise 对象，
+3) 遍历传入的参数，用 Promise.resolve()将参数"包一层"，使其变成一个 promise 对象
+4) 参数所有回调成功才是成功，返回值数组与参数顺序一致
+5) 参数数组其中一个失败，则触发失败状态，第一个触发失败的 Promise 错误信息作为 Promise.all 的错误信息。
+
+2. 实现代码
+   一般来说，Promise.all 用来处理多个并发请求，也是为了页面数据构造的方便，将一个页面所用到的在不同接口的数据一起请求过来，不过，如果其中一个接口失败了，多个请求也就失败了，页面可能啥也出不来，这就看当前页面的耦合程度了
+
+```js
+MyPromise.all = function (promises) {
+	return new MyPromise((resolve, reject) => {
+		if (!Array.isArray(promises)) {
+			throw new TypeError('arguments must be a array')
+		}
+		// 计算处理的promise实例数量
+		let resolvedCounter = 0
+		const promisesNum = promises.length
+		// 保存每个promise的结果
+		const resolvedResult = []
+		for (let i = 0; i < promisesNum; i++) {
+			// 使用Promise.resolve对返回的结果进行包装， 可以触发成功或者失败回调
+			Promise.resolve(promises[i]).then(
+				value => {
+					resolvedCounter++
+					resolvedResult[i] = value
+					if (resolvedCounter === promisesNum) {
+						return resolve(resolvedResult)
+					}
+				},
+				error => {
+					return reject(error)
+				}
+			)
 		}
 	})
 }
