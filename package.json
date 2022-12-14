@@ -1,25 +1,28 @@
 {
-  "name": "blog",
-  "version": "1.0.0",
-  "description": "yinuo-blog",
-  "main": "index.js",
-  "scripts": {
-    "dev": "vuepress dev docs",
-    "build": "vuepress build docs",
-    "test": "mocha test --compilers js:babel-core/register"
-  },
-  "keywords": [
-    "web",
-    "roadmap"
-  ],
-  "author": "",
-  "license": "MIT",
-  "devDependencies": {
-    "babel-core": "^6.25.0",
-    "babel-preset-es2015": "^6.24.1",
-    "@vuepress/plugin-back-to-top": "^1.9.7",
-    "mocha": "^2.4.5",
-    "chai": "^3.5.0",
-    "vuepress": "^1.9.7"
-  }
+	"name": "blog",
+	"version": "1.0.0",
+	"description": "yinuo-blog",
+	"main": "index.js",
+	"scripts": {
+		"dev": "vuepress dev docs",
+		"build": "vuepress build docs",
+		"test": "mocha test --compilers js:babel-core/register"
+	},
+	"keywords": [
+		"web",
+		"roadmap"
+	],
+	"author": "",
+	"license": "MIT",
+	"devDependencies": {
+		"@vuepress/plugin-back-to-top": "^1.9.7",
+		"babel-core": "^6.25.0",
+		"babel-preset-es2015": "^6.24.1",
+		"chai": "^3.5.0",
+		"mocha": "^2.4.5",
+		"vuepress": "^1.9.7"
+	},
+	"dependencies": {
+		"@anyfork/vuepress-plugin-code-copy": "^0.1.0-beta.2"
+	}
 }

@@ -12,54 +12,28 @@
 </html>
 
 <script>
-	const btnNode = document.getElementById('btn')
-
-	// 防抖 点击多次，按最后一次点击的计算
-	function debounce(fn, wait) {
-		let timer = null
-
-		return function () {
-			let context = this,
-				args = arguments
-
-			// 如果此时存在定时器的话，则取消之前的定时器重新记时
-			if (timer) {
-				clearTimeout(timer)
-				timer = null
-			}
-
-			// 设置定时器，使事件间隔指定事件后执行
-			timer = setTimeout(() => {
-				// 避免this丢失
-				fn.apply(context, args)
-			}, wait)
+	function getType(value) {
+		if (value === null) {
+			return value + ''
+		}
+		if (typeof value === 'object') {
+			let valueClass = Object.prototype.toString.call(value)
+			let type = valueClass.split(' ')[1].split('')
+			type.pop()
+			return type.join('').toLowerCase()
+		} else {
+			return typeof value
 		}
 	}
 
-	function throttle(fn, delay) {
-		// 记录时间 初始化会立即执行
-		let curTime = Date.now()
-
-		return function () {
-			let context = this,
-				args = arguments,
-				nowTime = Date.now()
-
-			// 事件调用时，如果当前时间减去记录时间没有超过delay时间，立即执行一次
-			if (nowTime - curTime >= delay) {
-				// 闭包保存当前的时间，每次执行重新记录
-				curTime = Date.now()
-				return fn.apply(context, args)
-			}
-		}
-	}
-
-	btnNode.addEventListener('click', throttle(clickEvent, 2000))
-
-	function clickEvent(e) {
-		// console.log('打印***this', this)
-		console.log('打印***666', e)
-	}
-
-	// 节流 一定事件内多次点击 只触发一次
+	getType(1)
+	getType('a')
+	getType(true)
+	getType(null)
+	getType(undefined)
+	getType(Symbol(1))
+	getType(() => {})
+	getType({ a: 1 })
+	getType(new Map())
+	getType(new Set())
 </script>
