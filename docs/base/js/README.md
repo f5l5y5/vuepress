@@ -460,3 +460,53 @@ function getType(value) {
 	}
 }
 ```
+
+### 函数柯里化
+
+是指把接收多个参数的函数变换成接收单一参数的函数，嵌套返回直到所有参数都被使用并返回最终结果。更简单地说，柯里化是一个函数变换的过程，是将函数从调用方式：f(a,b,c)变换成调用方式：f(a)(b)(c)的过程。
+
+---
+
+定义一个函数 sum，则 sum.length 的长度是形参的个数
+
+---
+
+用处：
+
+1. 延迟计算
+2. 参数复用
+3. 动态生成函数
+
+```js
+// 简单例子
+function addThreeNum(a, b, c) {
+	return a + b + c
+}
+
+function addThreeNumCurry(a) {
+	return function (b) {
+		return function (c) {
+			return a + b + c
+		}
+	}
+}
+```
+
+柯里化实现
+
+```js
+function curry(fn) {
+	return function nest(...args) {
+		if (args.length >= fn.length) {
+			return fn(...args)
+		} else {
+			return function (arg) {
+				return nest(...args, arg)
+			}
+		}
+	}
+}
+//使用
+const addCurry = curry(addThreeNum)
+const sum = addCurry(1)(2)(3)
+```
