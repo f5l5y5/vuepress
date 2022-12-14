@@ -12,58 +12,42 @@
 </html>
 
 <script>
-	let monthlyCost = 0
-	function cost(money) {
-		monthlyCost += money
+	// let arr = [1, 2, 3]
+	// let copyArr = Object.assign(arr)
+	// console.log('打印***copyArr===arr', copyArr === arr, copyArr)
+
+	let o1 = {
+		a: 1
+		// o: { c: 2 }
 	}
+	let o2 = shallowCopy(o1)
+	// // let o2 = { ...obj }
 
-	cost(100)
-	cost(200)
-	cost(300)
-	console.log('打印***monthlyCost', monthlyCost)
-	// cost(100)(200)(300)
+	o1.a = 2
+	console.log('打印***obj===o2', o1 === o2, o1, o2)
+	// let arr = [1, 2, 3, 4]
+	// console.log(arr.slice()) // [1,2,3,4]
+	// console.log(arr.slice() === arr) //false
 
-	function addThreeNum(a, b, c) {
-		return a + b + c
-	}
-
-	const cur2 = curry(addThreeNum, 1)
-	console.log('打印***cur2(1)', cur2(1))
-
-	console.log('打印***', addThreeNum(1, 2, 3))
-
-	function addThreeNumCurry(a) {
-		return function (b) {
-			return function (c) {
-				return a + b + c
+	function shallowCopy(object) {
+		if (!object || typeof object !== 'object') return
+		let newObject = Array.isArray(object) ? [] : {}
+		for (let key in object) {
+			if (object.hasOwnProperty(key)) {
+				newObject[key] = object[key]
 			}
 		}
+		return newObject
 	}
 
-	console.log(addThreeNumCurry(1)(2)(3))
-
-	function curry(fn) {
-		return function nest(...args) {
-			if (args.length >= fn.length) {
-				return fn(...args)
-			} else {
-				return function (arg) {
-					return nest(...args, arg)
-				}
+	function deepCopy(object) {
+		if (!object || typeof object !== 'object') return
+		let newObject = Array.isArray(object) ? [] : {}
+		for (let key in object) {
+			if (object.hasOwnProperty(key)) {
+				newObject[key] = typeof object[key] === 'object' ? deepCopy(object[key]) : object[key]
 			}
 		}
+		return newObject
 	}
-
-	const addCurry = curry(addThreeNum)
-
-	console.log('打印***addCurry', addCurry(1)(2)(3))
-
-	function esCurry(fn) {
-		return function (...args) {
-			return fn.length === args.length ? fn(...args) : arguments.callee(...args)
-		}
-	}
-
-	const esc = esCurry(addThreeNum)
-	console.log('打印***es(1)(2)(3)', esc(1)(2)(3))
 </script>

@@ -510,3 +510,26 @@ function curry(fn) {
 const addCurry = curry(addThreeNum)
 const sum = addCurry(1)(2)(3)
 ```
+
+### 深浅拷贝方式
+
+1. Object.assign
+    1. Object.assign({}, obj) 不同 Object.assign(obj)相同
+2. 扩展运算符
+3. 数组方法 slice arr.slice()
+4. concat arr.concat()
+
+深拷贝实现：
+
+```js
+function deepCopy(object) {
+	if (!object || typeof object !== 'object') return
+	let newObject = Array.isArray(object) ? [] : {}
+	for (let key in object) {
+		if (object.hasOwnProperty(key)) {
+			newObject[key] = typeof object[key] === 'object' ? deepCopy(object[key]) : object[key]
+		}
+	}
+	return newObject
+}
+```
