@@ -12,42 +12,19 @@
 </html>
 
 <script>
-	// let arr = [1, 2, 3]
-	// let copyArr = Object.assign(arr)
-	// console.log('打印***copyArr===arr', copyArr === arr, copyArr)
-
-	let o1 = {
-		a: 1
-		// o: { c: 2 }
-	}
-	let o2 = shallowCopy(o1)
-	// // let o2 = { ...obj }
-
-	o1.a = 2
-	console.log('打印***obj===o2', o1 === o2, o1, o2)
-	// let arr = [1, 2, 3, 4]
-	// console.log(arr.slice()) // [1,2,3,4]
-	// console.log(arr.slice() === arr) //false
-
-	function shallowCopy(object) {
-		if (!object || typeof object !== 'object') return
-		let newObject = Array.isArray(object) ? [] : {}
-		for (let key in object) {
-			if (object.hasOwnProperty(key)) {
-				newObject[key] = object[key]
-			}
-		}
-		return newObject
-	}
-
-	function deepCopy(object) {
-		if (!object || typeof object !== 'object') return
-		let newObject = Array.isArray(object) ? [] : {}
-		for (let key in object) {
-			if (object.hasOwnProperty(key)) {
-				newObject[key] = typeof object[key] === 'object' ? deepCopy(object[key]) : object[key]
-			}
-		}
-		return newObject
-	}
+	// Promise.resolve(1).then(2).then(Promise.resolve(3)).then(console.log)
+	const promise1 = new Promise((resolve, reject) => {
+		setTimeout(() => {
+			resolve('success')
+		}, 1000)
+	})
+	const promise2 = promise1.then(() => {
+		throw new Error('error!!!')
+	})
+	console.log('promise1', promise1)
+	console.log('promise2', promise2)
+	setTimeout(() => {
+		console.log('promise1', promise1)
+		console.log('promise2', promise2)
+	}, 2000)
 </script>

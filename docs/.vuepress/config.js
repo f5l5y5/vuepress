@@ -30,7 +30,8 @@ module.exports = {
 						text: '部署',
 						items: [
 							{ text: 'CICD', link: '/engineer/deploy/' },
-							{ text: 'vuepress', link: '/engineer/vuepress/' }
+							{ text: 'vuepress', link: '/engineer/vuepress/' },
+							{ text: 'vitepress', link: '/engineer/vitepress/' }
 						]
 					},
 					{
@@ -136,6 +137,12 @@ module.exports = {
 					collapsable: true,
 					sidebarDepth: 2,
 					children: [['/engineer/vuepress/', 'vuepress笔记']]
+				},
+				{
+					title: 'vitepress',
+					collapsable: true,
+					sidebarDepth: 2,
+					children: [['/engineer/vitepress/', 'vitepress笔记']]
 				},
 				{
 					title: 'webpack',
