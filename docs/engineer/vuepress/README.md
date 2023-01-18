@@ -1,6 +1,9 @@
-<!-- # vuepress博客搭建及自动化部署 -->
+# vuepress 博客搭建及自动化部署
+
 ## 1.博客搭建
-### 1.1初始化项目
+
+### 1.1 初始化项目
+
 ```
 # 初始化项目
 cd ~/Desktop
@@ -18,7 +21,9 @@ mkdir docs
 echo '# Hello VuePress!' > docs/README.md
 
 ```
+
 ### 1.2 添加脚本
+
 ```
 {
   "scripts": {
@@ -29,58 +34,64 @@ echo '# Hello VuePress!' > docs/README.md
 }
 
 ```
+
 ### 1.3 运行调试
-使用yarn docs
+
+使用 yarn docs
 
 ### 1.4 设置博客基本内容
-- 添加标题 在config.js中title 
-- 添加nav themeConfig中配置
-- 添加sidebar 
-- 此处的base设置为/ 设置为其他域名进行CNAME解析不成功
+
+-   添加标题 在 config.js 中 title
+-   添加 nav themeConfig 中配置
+-   添加 sidebar
+-   此处的 base 设置为/ 设置为其他域名进行 CNAME 解析不成功
+
 ```javascript
 module.exports = {
-    title: '一诺滚雪球', //标题
-    description: '前端知识',
-    theme: 'reco',
-    base: '/',
-    themeConfig: {
-        sidebar: [
-            {
-                title: 'home',   // 必要的
-                path: '/',      // 可选的, 标题的跳转链接，应为绝对路径且必须存在
-                collapsable: true, // 可选的, 默认值是 true,
-                sidebarDepth: 1,    // 可选的, 默认值是 1
-                children: [
-                    { title: '介绍', path: '/home/intro' },
-                    { title: 'vuepress搭建过程', path: '/home/vuepress' }
-                ]
-            },
-            {
-                title: 'about',   // 必要的
-                path: '/',      // 可选的, 标题的跳转链接，应为绝对路径且必须存在
-                collapsable: true, // 可选的, 默认值是 true,
-                sidebarDepth: 1    // 可选的, 默认值是 1
-            }
-        ],
-        nav: [
-            // 单个地址
-            { text: '首页', link: '/' },
-            // 多个地址
-            {
-                text: '博客地址',
-                items: [
-                    { text: 'Github', link: 'https://github.com/f5l5y5/vuepress' },
-                ]
-            }
-        ]
-    }
+	title: '一诺滚雪球', //标题
+	description: '前端知识',
+	theme: 'reco',
+	base: '/',
+	themeConfig: {
+		sidebar: [
+			{
+				title: 'home', // 必要的
+				path: '/', // 可选的, 标题的跳转链接，应为绝对路径且必须存在
+				collapsable: true, // 可选的, 默认值是 true,
+				sidebarDepth: 1, // 可选的, 默认值是 1
+				children: [
+					{ title: '介绍', path: '/home/intro' },
+					{ title: 'vuepress搭建过程', path: '/home/vuepress' }
+				]
+			},
+			{
+				title: 'about', // 必要的
+				path: '/', // 可选的, 标题的跳转链接，应为绝对路径且必须存在
+				collapsable: true, // 可选的, 默认值是 true,
+				sidebarDepth: 1 // 可选的, 默认值是 1
+			}
+		],
+		nav: [
+			// 单个地址
+			{ text: '首页', link: '/' },
+			// 多个地址
+			{
+				text: '博客地址',
+				items: [{ text: 'Github', link: 'https://github.com/f5l5y5/vuepress' }]
+			}
+		]
+	}
 }
 ```
+
 图片使用
+
 ```
 <img :src="$withBase('/engineer/vuepress/git-pages.png')" alt="git-page">
 ```
-### 1.5 配置sh脚本文件进行部署
+
+### 1.5 配置 sh 脚本文件进行部署
+
 ```sh
 #!/usr/bin/env sh
 
@@ -104,30 +115,35 @@ git push -f git@github.com:f5l5y5/vuepress.git master:gh-page
 cd -
 
 ```
-运行命令 vs-code命令终端切换到git bash 使用sh deploy.sh  或者配置的脚本 yarn deploy
+
+运行命令 vs-code 命令终端切换到 git bash 使用 sh deploy.sh 或者配置的脚本 yarn deploy
 
 添加自定义域名
-echo 'blog.yinuosnowball.top' > CNAME 添加这条记录 否则每次deploy自定义域名重置
+echo 'blog.yinuosnowball.top' > CNAME 添加这条记录 否则每次 deploy 自定义域名重置
 
-### 1.6 github-page配置
+### 1.6 github-page 配置
 
 <img :src="$withBase('/git-pages.png')" alt="foo">
 每次推送到远程，本地需要手动进行构建推送
 
-## 2.git-action自动化部署
+## 2.git-action 自动化部署
+
 避免上述手动推送,现在配置自动化构建
 
-### 2.1 生成personal token
+### 2.1 生成 personal token
+
 Settings -> Developer settings -> Personal access tokens，对应地址就是 Token 生成。然后点击右上方的 Generate new token，
 
-### 2.2 找到项目的setting 
-secrets Actions 下添加刚生成的token
+### 2.2 找到项目的 setting
+
+secrets Actions 下添加刚生成的 token
 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
 
+### 2.3 项目下的 action
 
-### 2.3  项目下的action
-新建一个workflow 新增main.yml
+新建一个 workflow 新增 main.yml
 配置添加，保留默认配置
+
 ```
 name: CI
 on:
@@ -145,7 +161,9 @@ jobs:
       - uses: actions/checkout@v3
 
 ```
+
 新增配置
+
 ```
  # 生成静态文件
       - name: Build
@@ -160,16 +178,15 @@ jobs:
           FOLDER: docs/.vuepress/dist # vuepress 生成的静态文件存放的地方
 ```
 
-如果直接时doc的整个文件git中设置为/root
+如果直接时 doc 的整个文件 git 中设置为/root
 
 <img :src="$withBase('/engineer/vuepress/define-page.png')" alt="define-page">
 
 ## 3.具体配置
 
-
 ### 3.1 首页配置
 
-docs/README.md 
+docs/README.md
 
 ```jsx
 ---
@@ -194,16 +211,16 @@ footer: 暮从碧山下，山月随人归。却顾所来径，苍苍横翠微。
 
 ```jsx
 module.exports = {
-    base: '/',
-    title: '一诺滚雪球',
-    themeConfig: {
-        //头部logo
-        logo: '/logo.jpeg',
-		}
+	base: '/',
+	title: '一诺滚雪球',
+	themeConfig: {
+		//头部logo
+		logo: '/logo.jpeg'
+	}
 }
 ```
 
-### 3.3 顶部nav
+### 3.3 顶部 nav
 
 ```jsx
 nav: [
@@ -235,6 +252,7 @@ nav: [
 ```
 
 ### 3.4 侧边导航栏
+
 #### 3.4.1 数组形式
 
 ```jsx
@@ -249,14 +267,16 @@ sidebar: {
 
 <img :src="$withBase('/engineer/vuepress/nav-array.png')" alt="define-page">
 
-#### 3.4.2 混合使用  
-如果md文件有一级标题，还是取这个
+#### 3.4.2 混合使用
+
+如果 md 文件有一级标题，还是取这个
+
 ```jsx
 '/base/html/': [
                 '',
                 'form',
                 {
-                    title: '表单',   // 必要的 
+                    title: '表单',   // 必要的
                     path: 'input',      // 可选的, 标题的跳转链接，应为绝对路径且必须存在
                     collapsable: true, // 可选的, 默认值是 true,
                     sidebarDepth: 2,    // 可选的, 默认值是 1
@@ -266,17 +286,17 @@ sidebar: {
 
 <img :src="$withBase('/engineer/vuepress/nav-mix.png')" alt="define-page">
 
-#### 3.4.3 正确配置
+#### 3.4.3 地址+名称配置
 
 ```jsx
 sidebar: {
             '/base/html/': [
                 {
-                    title: 'HTML',   
-                    collapsable: true, 
+                    title: 'HTML',
+                    collapsable: true,
                     sidebarDepth: 2,    // 可选的, 默认值是 1      此时生效上述写法不会生效
                     children: [
-                        ['/base/html/form', 'form1'], //form1为左侧菜单的名称 
+                        ['/base/html/form', 'form1'], //form1为左侧菜单的名称
                         ['/base/html/input', 'input']
                     ]
                 },
@@ -284,10 +304,10 @@ sidebar: {
         }
 ```
 
-完整的配置  
+完整的配置
 
 ::: tip
-⚠️ 注意 children中路径不加/默认是找algorithm的sort.md ,加末尾加/ 说明是sort文件夹里面的README.md文件  ['/advanced/algorithm/sort', '排序算法'],
+⚠️ 注意 children 中路径不加/默认是找 algorithm 的 sort.md ,加末尾加/ 说明是 sort 文件夹里面的 README.md 文件 ['/advanced/algorithm/sort', '排序算法'],<br/>下面"设计模式"设置的 children 属性，使用文件名或地址
 :::
 
 ```jsx
@@ -326,8 +346,8 @@ sidebar: {
 
 <img :src="$withBase('/engineer/vuepress/nav-siderbar.png')" alt="define-page">
 
+<!-- ### 3.5 侧边栏简写
 
-### 3.5 侧边栏简写
 ```js
 '/engineer/': [
     {
@@ -348,7 +368,5 @@ sidebar: {
     },
 ],
 ```
-<img :src="$withBase('/engineer/vuepress/351.png')" alt="define-page">
 
-
-
+<img :src="$withBase('/engineer/vuepress/351.png')" alt="define-page"> -->
