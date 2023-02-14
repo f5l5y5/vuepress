@@ -37,6 +37,17 @@ const baseSidebar = {
 				['/base/js/es6', 'ES6']
 			]
 		}
+	],
+	'/base/js/': [
+		{
+			title: 'JS',
+			collapsable: true,
+			sidebarDepth: 2,
+			children: [
+				['', '介绍'],
+				['/base/js/ts', 'ts学习']
+			]
+		}
 	]
 }
 
