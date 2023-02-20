@@ -1,7 +1,7 @@
 const { nav, sidebar } = require('./catalogue/index.js')
 
 module.exports = {
-	base: '/',
+	base: '/vuepress',
 	title: '一诺滚雪球',
 	themeConfig: {
 		//头部logo
